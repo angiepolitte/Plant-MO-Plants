@@ -10,7 +10,7 @@ public class ExampleOneController {
 
     @GetMapping("/example-one")
     public String exampleOne() {
-        return "This is the example one return message";
+        return "This is the test that returns a message if it's connected. Hooray!";
     }
 }
 

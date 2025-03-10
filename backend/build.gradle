@@ -25,11 +25,11 @@ repositories {
 
 dependencies {
 
-//	the dependency below is commented out by Angie to test if the application is connecting to the front end,
-//	once a database needs to be set up, delete this pseudocode and make the implementation live to build your database
+// this dependency is commented out to test without a repo
 //	*****
 //	implementation 'org.springframework.boot:spring-boot-starter-data-jpa'
 //	*****
+
 
 
 //	these dependencies are commented out to test the api/controller routes.

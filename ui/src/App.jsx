@@ -1,24 +1,24 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { GlobalDataProvider } from './context/GlobalDataProvider'
-import ExampleOne from './pages/ExampleOne'
-import ExampleTwo from './pages/ExampleTwo'
+import { BrowserRouter as Router, Route, Routes } from 'react-router-dom'; 
+import './App.css'; 
+import ExampleOne from './pages/ExampleOne'; 
+import ExampleTwo from './pages/ExampleTwo'; 
+
 
 function App() {
-  const [count, setCount] = useState(0)
-
   return (
-    <>
+    <Router>
       <div>
-        <GlobalDataProvider>
-          <ExampleOne />
-          <ExampleTwo />
-        </GlobalDataProvider>
+        <Routes>
+          {/* Define the route for ExampleOne */}
+          <Route path="/" element={<ExampleOne />} />
+          
+          {/* Define the route for ExampleTwo */}
+          <Route path="/example-two" element={<ExampleTwo />} />
+        </Routes>
       </div>
-    </>
-  )
+    </Router>
+  );
 }
 
-export default App
+export default App;
+
