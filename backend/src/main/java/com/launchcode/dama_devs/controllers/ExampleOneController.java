@@ -8,9 +8,9 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/api")
 public class ExampleOneController {
 
-    @GetMapping("/example-one")
+    @GetMapping("/jelly-beans")
     public String exampleOne() {
-        return "This is the test that returns a message if it's connected. Hooray!";
+        return "Hooray!  Did you notice all the yummy endpoints matching?";
     }
 }
 

@@ -12,9 +12,9 @@ import java.util.Map;
 @RequestMapping("/api")
 public class ExampleTwoController {
 
-    @GetMapping("/example-two")
+    @GetMapping("/hershey-kisses")
     public String exampleOne() {
-        return "And this returns a message if it's connected, too! Yippee!";
+        return "Yippee! Check out the React endpoints, too!  They can be different and even more delicious!?";
     }
 }
 
