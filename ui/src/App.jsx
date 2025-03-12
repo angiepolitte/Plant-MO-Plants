@@ -3,12 +3,14 @@ import './App.css';
 import ExampleOne from './pages/ExampleOne'; 
 import ExampleTwo from './pages/ExampleTwo'; 
 import Props from './reusable-code/props';
+import WeatherWidget from './reusable-code/WeatherWidget';
 
 
 function App() {
   return (
     
     <Router>
+      <WeatherWidget />
       {/* test for using props
       <Props />      */}
       <div>
