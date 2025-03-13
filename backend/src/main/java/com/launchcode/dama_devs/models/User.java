@@ -5,8 +5,8 @@ import jakarta.validation.constraints.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 @Entity
-public class user extends AbstractEntity{
-    private final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
+public class User extends AbstractEntity {
+    private static final BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
 
     @NotNull
     private String username;
@@ -14,14 +14,20 @@ public class user extends AbstractEntity{
     @NotNull
     private String pwHash;
 
-    public user(){}
+    public User() {}
 
-    public user(String username, String password) {
+    public User(String username, String password) {
         this.username = username;
         this.pwHash = encoder.encode(password);
     }
 
-    public Boolean isMatchingPassword(String password){
-        return encoder.matches(password,pwHash);
+    public boolean isMatchingPassword(String password) {
+        return encoder.matches(password, pwHash);
     }
+
+    public String getUsername() {
+
+        return username;
+    }
+
 }
