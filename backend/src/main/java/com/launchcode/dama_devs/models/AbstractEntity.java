@@ -7,14 +7,20 @@ import jakarta.validation.constraints.NotNull;
 
 import java.util.Objects;
 
+
 @MappedSuperclass
 public class AbstractEntity {
     @Id
     @GeneratedValue
     private int id;
 
+
+
+    //getters and setters
+
     public int getId() {
         return id;
+
     }
 
     @Override
@@ -27,6 +33,8 @@ public class AbstractEntity {
 
     @Override
     public int hashCode() {
+        
         return Objects.hashCode(id);
+
     }
 }

@@ -1,4 +1,7 @@
 package com.launchcode.dama_devs.models;
 
-public class Garden {
+import jakarta.persistence.Entity;
+
+@Entity
+public class Garden extends AbstractEntity {
 }
