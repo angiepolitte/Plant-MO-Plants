@@ -1,9 +1,9 @@
 package com.launchcode.dama_devs.controllers;
 
+import com.launchcode.dama_devs.models.data.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
-import com.launchcode.dama_devs.data.UserRepository;
 import com.launchcode.dama_devs.models.User;
 import com.launchcode.dama_devs.models.dto.LoginFormDTO;
 import com.launchcode.dama_devs.models.dto.RegisterFormDTO;
@@ -19,6 +19,7 @@ import java.util.Optional;
 
 @Controller
 public class UserController {
+
     @Autowired
     private UserRepository userRepository;
 
