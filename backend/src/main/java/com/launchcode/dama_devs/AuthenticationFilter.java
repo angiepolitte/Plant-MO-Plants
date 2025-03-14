@@ -18,7 +18,7 @@ public class AuthenticationFilter implements HandlerInterceptor {
     private UserRepository userRepository;
 
     @Autowired
-    UserController userController;
+    private UserController userController;
 
     private static final List<String> whitelist = Arrays.asList("/login", "/register", "/logout", "/css");
 
