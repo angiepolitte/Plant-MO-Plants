@@ -1,8 +1,8 @@
 package com.launchcode.dama_devs.models;
-
-import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotNull;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import jakarta.persistence.Entity;
+
 
 @Entity
 public class User extends AbstractEntity {
@@ -29,5 +29,6 @@ public class User extends AbstractEntity {
 
         return username;
     }
+
 
 }
