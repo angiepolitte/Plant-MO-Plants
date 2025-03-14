@@ -3,6 +3,8 @@ package com.launchcode.dama_devs.models;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.Id;
 import jakarta.persistence.MappedSuperclass;
+import jakarta.validation.constraints.NotNull;
+
 import java.util.Objects;
 
 
@@ -11,6 +13,7 @@ public class AbstractEntity {
     @Id
     @GeneratedValue
     private int id;
+
 
 
     //getters and setters
@@ -30,6 +33,8 @@ public class AbstractEntity {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id);
+        
+        return Objects.hashCode(id);
+
     }
 }
