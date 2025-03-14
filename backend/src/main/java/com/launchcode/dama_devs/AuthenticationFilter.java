@@ -1,8 +1,8 @@
 package com.launchcode.dama_devs;
 
 import com.launchcode.dama_devs.controllers.UserController;
-import com.launchcode.dama_devs.data.UserRepository;
 import com.launchcode.dama_devs.models.User;
+import com.launchcode.dama_devs.models.data.UserRepository;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
@@ -15,10 +15,10 @@ import java.util.List;
 
 public class AuthenticationFilter implements HandlerInterceptor {
     @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
     @Autowired
-    UserController userController;
+    private UserController userController;
 
     private static final List<String> whitelist = Arrays.asList("/login", "/register", "/logout", "/css");
 
