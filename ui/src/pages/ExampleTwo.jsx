@@ -19,7 +19,7 @@ function ExampleTwo() {
   }, []);
 
   const handleNavigate = () => {
-    navigate('/chocolate-ice-cream'); // Navigate back to ExampleOne page
+    navigate('/dashboard'); // Navigate back to ExampleOne page
   };
 
   return (
@@ -28,7 +28,7 @@ function ExampleTwo() {
       <p>{comment}</p> {/* Display the fetched comment */}
       
       {/* Button to navigate to ExampleOne */}
-      <button onClick={handleNavigate}>Go to Example One</button>
+      <button onClick={handleNavigate}>Go to Dashboard</button>
     </div>
   );
 }
