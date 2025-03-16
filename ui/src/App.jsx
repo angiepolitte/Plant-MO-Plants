@@ -4,17 +4,20 @@ import ExampleOne from './pages/ExampleOne';
 import ExampleTwo from './pages/ExampleTwo'; 
 import Props from './reusable-code/props';
 import WeatherWidget from './reusable-code/WeatherWidget';
-
+import Dashboard from './reusable-code/Dashboard';
 
 function App() {
   return (
     
     <Router>
       <WeatherWidget />
+      <Dashboard />
+      
       {/* test for using props
       <Props />      */}
       <div>
         <Routes>
+         
 
           {/* "/"  will be the default for startup, so I added this route to take me to first page. */}
           <Route path="/" element={<Navigate to="/chocolate-ice-cream" />} /> {/* Redirect */}
@@ -24,6 +27,7 @@ function App() {
 
           {/* Define the route for ExampleTwo - intentionally naming it somthing completely different so you can see the React routes can have different names.*/}
           <Route path="/jolly-ranchers" element={<ExampleTwo />} />
+
         </Routes>
       </div>
     </Router>
