@@ -4,29 +4,30 @@ import ExampleOne from './pages/ExampleOne';
 import ExampleTwo from './pages/ExampleTwo'; 
 import Props from './reusable-code/props';
 import WeatherWidget from './reusable-code/WeatherWidget';
-import Dashboard from './reusable-code/Dashboard';
+import DashboardPage from './pages/DashboardPage';
+import StarterPage from './pages/StarterPage';
 
 function App() {
   return (
     
     <Router>
       <WeatherWidget />
-      <Dashboard />
+      {/* <Dashboard /> */}
       
       {/* test for using props
       <Props />      */}
       <div>
         <Routes>
          
-
-          {/* "/"  will be the default for startup, so I added this route to take me to first page. */}
-          <Route path="/" element={<Navigate to="/chocolate-ice-cream" />} /> {/* Redirect */}
-
+          <Route path="/" element={<StarterPage />} />
+      
           {/* Define the route for ExampleOne - intentionally naming it somthing completely different so you can see the React routes can have different names.*/}
           <Route path="/chocolate-ice-cream" element={<ExampleOne />} /> 
 
           {/* Define the route for ExampleTwo - intentionally naming it somthing completely different so you can see the React routes can have different names.*/}
           <Route path="/jolly-ranchers" element={<ExampleTwo />} />
+
+          <Route path="/dashboard" element={<DashboardPage />} />
 
         </Routes>
       </div>
