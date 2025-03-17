@@ -6,12 +6,14 @@ import Props from './reusable-code/props';
 import WeatherWidget from './reusable-code/WeatherWidget';
 import DashboardPage from './pages/DashboardPage';
 import StarterPage from './pages/StarterPage';
+import Forecast from './reusable-code/FiveDayForecast';
 
 function App() {
   return (
     
     <Router>
       <WeatherWidget />
+      {/* <Forecast /> */}
       {/* <Dashboard /> */}
       
       {/* test for using props
