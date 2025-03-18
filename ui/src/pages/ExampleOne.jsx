@@ -1,6 +1,7 @@
 import { useNavigate } from 'react-router-dom'; // Import useNavigate hook
 import { useState, useEffect } from 'react';
 
+
 function ExampleOne() {
   const navigate = useNavigate();
   const [comment, setComment] = useState("Loading...");

@@ -1,0 +1,72 @@
+.forecastContainer {
+  width: auto;
+  height: auto;
+  background: #6b9080; 
+  color: white;
+  padding: 10px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2);
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.forecastList {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  width: 100%;
+  margin-top: 10px;
+}
+
+.forecastItem {
+  background: #cce3de; /* Background for each day */
+  border-radius: 6px;
+  padding: 5px;
+  width: 50px; /* Ensure even spacing */
+  text-align: center;
+  font-size: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.date {
+  font-weight: bold;
+}
+
+.forecastIcon {
+  width: 30px;
+  height: 30px;
+}
+
+.tempHigh {
+  color: #d9534f; /* Red for high temp */
+  font-weight: bold;
+}
+
+.tempLow {
+  color: #5bc0de; /* Blue for low temp */
+  font-size: 10px;
+}
+.searchButton {
+  width: 75px;
+  height: 30px; /* Adjust height as needed */
+  background-color: #6b9080; /* Match theme */
+  color: white;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 12px; /* Adjust if text is too large */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
+  font-weight: bold;
+  transition: background 0.3s ease;
+}
+
+.searchButton:hover {
+  background-color: #587e6b; /* Slightly darker on hover */
+}

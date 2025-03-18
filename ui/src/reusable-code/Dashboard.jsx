@@ -1,5 +1,6 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, Grid, Card, CardContent, Container, Box } from "@mui/material";
+import Forecast from "./FiveDayForecast";
 
 const Dashboard = () => {
   return (
@@ -14,7 +15,7 @@ const Dashboard = () => {
       <Container maxWidth="lg" sx={{ flexGrow: 1, padding: 2 }}>
         <Grid container spacing={2}>
           {/* Left: Garden Containers (2 rows, 3 columns) */}
-          <Grid item xs={8}>
+          <Grid item xs={6}>
             <Grid container spacing={2}>
               {[...Array(6)].map((_, index) => (
                 <Grid item xs={4} key={index}>
@@ -29,14 +30,14 @@ const Dashboard = () => {
           </Grid>
 
           {/* Right Side */}
-          <Grid item xs={4}>
+          <Grid item xs={6}>
             <Grid container spacing={2}>
               {/* 5-Day Weather Forecast */}
               <Grid item xs={12}>
-                <Card sx={{ height: 150 }}>
+                <Card sx={{ minHeight: 250, height: "auto" }}>
                   <CardContent>
-                    <Typography variant="h6">5-Day Weather Forecast</Typography>
-                    {/* Weather details go here */}
+                    {/* props forecast below */}
+                    <Forecast />
                   </CardContent>
                 </Card>
               </Grid>
