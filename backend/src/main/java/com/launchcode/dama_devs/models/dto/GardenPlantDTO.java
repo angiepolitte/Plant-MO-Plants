@@ -20,7 +20,4 @@ public class GardenPlantDTO {
 
     public GardenPlantDTO() {
     }
-
-    ;
-
 }
