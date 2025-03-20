@@ -35,7 +35,7 @@ public class Garden extends AbstractEntity {
     @Setter
     @NotNull
     private String gardenMoistureLevel;
-
+    it push -u origin garden-model
     @Getter
     @Setter
     @NotNull
