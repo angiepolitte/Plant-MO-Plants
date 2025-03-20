@@ -15,6 +15,32 @@ import java.util.List;
 @Entity
 public class Garden extends AbstractEntity {
 
+    //Setters included so user can edit the garden values in the future via the dashboard.
+    @Getter
+    @Setter
+    @NotNull
+    private String gardenName;
+
+    @Getter
+    @Setter
+    @NotNull
+    private String gardenHardinessZone;
+
+    @Getter
+    @Setter
+    @NotNull
+    private String gardenLightLevel;
+
+    @Getter
+    @Setter
+    @NotNull
+    private String gardenMoistureLevel;
+
+    @Getter
+    @Setter
+    @NotNull
+    private String gardenSoilType;
+
     //garden-plant relationship
     @Getter
     @ManyToMany
@@ -28,12 +54,32 @@ public class Garden extends AbstractEntity {
     @JoinColumn(name = "user_id")
     private User user;
 
-    //constructor
-    public Garden(User user) {
+    //constructors
+    public Garden(User user, String gardenName, String gardenHardinessZone, String gardenLightLevel, String gardenMoistureLevel, String gardenSoilType) {
         this.user = user;
+        this.gardenName = gardenName;
+        this.gardenHardinessZone = gardenHardinessZone;
+        this.gardenLightLevel = gardenLightLevel;
+        this.gardenMoistureLevel = gardenMoistureLevel;
+        this.gardenSoilType = gardenSoilType;
     }
 
-    //this is usually housed with the getters and setters.
+    public Garden() {
+    }
+
+    @Override
+    public String toString() {
+        return "Garden{" +
+                "gardenName='" + gardenName + '\'' +
+                ", gardenHardinessZone='" + gardenHardinessZone + '\'' +
+                ", gardenLightLevel='" + gardenLightLevel + '\'' +
+                ", gardenMoistureLevel='" + gardenMoistureLevel + '\'' +
+                ", gardenSoilType='" + gardenSoilType + '\'' +
+                ", plants=" + plants +
+                ", user=" + user +
+                '}';
+    }
+
     // Allows a plant to be added to plants list.
     public void addPlant(Plant plant){
         this.plants.add(plant);
