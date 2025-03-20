@@ -5,8 +5,12 @@ import com.launchcode.dama_devs.models.data.GardenRepository;
 import com.launchcode.dama_devs.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import com.launchcode.dama_devs.models.services.GardenService;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 
-@Controller
+@RestController
+@RequestMapping("/api/dashboard")
 public class GardenController {
 
     @Autowired
@@ -15,4 +19,60 @@ public class GardenController {
     //used for user-garden relationship
     @Autowired
     private UserRepository userRepository;
+
+    private final GardenService gardenService;
+
+    public GardenController(GardenService gardenService) {
+        this.gardenService = gardenService;
+    }
+
+    //Show all gardens in dashboard
+    @GetMapping
+    public List<Garden> getAllGardens() {
+        return gardenService.getAllGardens();
+    }
+
+    //Go to a specific garden
+    @GetMapping("/{id}")
+    public ResponseEntity<Garden> getGardenbyId(@PathVariable ID id) {
+        Garden garden = gardenService.getGardenbyId(id);
+        if (garden != null) {
+            return ResponseEntity.ok(garden);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    //Create a new garden
+    @PostMapping
+    public ResponseEntity<Garden> createGarden(@RequestBody Garden garden) {
+        Garden savedGarden = gardenService.saveGarden(garden);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedGarden);
+    }
+
+    //Update an existing garden
+    @PutMapping("/{id}")
+    public ResponseEntity<Garden> updateGarden(@PathVariable ID id, @RequestBody Garden garden) {
+        Garden existingGarden = gardenService.saveGarden(garden);
+
+        if (existingGarden != null) {
+            garden.setId(id);
+            Garden updatedGarden = gardenService.saveGarden(garden);
+            return ResponseEntity.ok(updatedGarden);
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
+
+    //Delete an existing garden
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteGarden(@PathVariable ID id) {
+        Garden garden = gardenService.getGardenById(id);
+        if (garden != null) {
+            gardenService.deleteGarden(id);
+            return ResponseEntity.status(HttpStatus.NO_Content).build();
+        } else {
+            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
+        }
+    }
 }
