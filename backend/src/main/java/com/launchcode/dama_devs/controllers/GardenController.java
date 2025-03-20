@@ -27,7 +27,7 @@ public class GardenController {
     }
 
     //Show all gardens in dashboard
-    @GetMapping
+    @GetMapping("/")
     public List<Garden> getAllGardens() {
         return gardenService.getAllGardens();
     }
