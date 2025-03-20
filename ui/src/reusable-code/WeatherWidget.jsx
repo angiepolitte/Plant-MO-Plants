@@ -4,14 +4,12 @@ import styles from "./WeatherWidget.module.css";
 
 const WeatherWidget = () => {
   const [weatherData, setWeatherData] = useState(null);
-  const apiKey = import.meta.env.VITE_WEATHER_API_KEY; // API Key from .env file
-  const location = "Saint Louis"; // Default location, this locatio will eventually be adjusted to whatever the user enters for a zipcode
+  const location = "Saint Louis"; // Default location, this locatio will eventually be adjusted to whatever the user enters for a city
 
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        const response = await axios.get(
-          `https://api.openweathermap.org/data/2.5/weather?q=${location}&appid=${apiKey}&units=imperial`
+        const response = await axios.get(`https://localhost:8080/current?city=${location}`
         );
         setWeatherData(response.data);
       } catch (error) {
