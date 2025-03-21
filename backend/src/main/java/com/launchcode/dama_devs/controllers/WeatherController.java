@@ -11,7 +11,7 @@ import org.springframework.web.reactive.function.client.WebClient;
 import reactor.core.publisher.Mono;
 
 @RestController
-@RequestMapping
+@RequestMapping("/weather")
 public class WeatherController {
 
     @Value("${weather.api.key}")
@@ -21,20 +21,25 @@ public class WeatherController {
 
     // WebClient is need to make the HTTP requests with the URL
     public WeatherController(WebClient.Builder webClientBuilder) {
-        this.webClient = webClientBuilder.baseUrl("https://api.openweathermap.org/data/2.5").build();
+        this.webClient = webClientBuilder.baseUrl("https://api.openweathermap.org/data/2.5/").build();
     }
     // makes the API calls to get the data with all the correct headers necessary for open weather
     private Mono<String> fetchWeatherData(String endpoint, String queryParam, String value) {
-        return webClient.get()
-                .uri(uriBuilder -> uriBuilder
-                        .path("/" + endpoint)
-                        .queryParam(queryParam, value)
-                        .queryParam("appid", apiKey)
-                        .queryParam("units", "imperial")
-                        .build())
-                .accept(MediaType.APPLICATION_JSON)
-                .retrieve()
-                .bodyToMono(String.class);
+        try {
+            return webClient.get()
+                    .uri(uriBuilder -> uriBuilder
+                            .path(endpoint)
+                            .queryParam(queryParam, value)
+                            .queryParam("appid", apiKey)
+                            .queryParam("units", "imperial")
+                            .build())
+                    .accept(MediaType.APPLICATION_JSON)
+                    .retrieve()
+                    .bodyToMono(String.class);
+        } catch (Exception e) {
+            e.printStackTrace();  // Log the error
+            return Mono.error(new RuntimeException("Error calling weather API", e));
+        }
     }
 
     // current weather for widget, in React, its default is set to Saint Louis until we have the user enter zip code
