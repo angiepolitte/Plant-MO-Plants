@@ -14,9 +14,9 @@ const Forecast = () => {
     try {
       let url;
       if (/^\d{5}$/.test(city)) {  // Checks if input is a 5-digit zip code
-        url = `https://localhost:8080/forecast/zip?zip=${city}`;
+        url = `http://localhost:8080/weather/forecast/zip?zip=${city}`;
       } else {
-        url = `https://localhost:8080/forecast?city=${city}`;
+        url = `http://localhost:8080/weather/forecast?city=${city}`;
       }
   
       const response = await fetch(url);
