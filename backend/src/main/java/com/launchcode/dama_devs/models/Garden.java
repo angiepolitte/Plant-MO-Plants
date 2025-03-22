@@ -24,22 +24,22 @@ public class Garden extends AbstractEntity {
     @Getter
     @Setter
     @NotNull
-    private String gardenHardinessZone;
+    private String gardenZone;
 
     @Getter
     @Setter
     @NotNull
-    private String gardenLightLevel;
+    private String gardenLight;
 
     @Getter
     @Setter
     @NotNull
-    private String gardenMoistureLevel;
-    it push -u origin garden-model
+    private String gardenWater;
+
     @Getter
     @Setter
     @NotNull
-    private String gardenSoilType;
+    private String gardenSoil;
 
     //garden-plant relationship
     @Getter
@@ -55,13 +55,13 @@ public class Garden extends AbstractEntity {
     private User user;
 
     //constructors
-    public Garden(User user, String gardenName, String gardenHardinessZone, String gardenLightLevel, String gardenMoistureLevel, String gardenSoilType) {
+    public Garden(User user, String gardenName, String gardenZone, String gardenLight, String gardenWater, String gardenSoil) {
         this.user = user;
         this.gardenName = gardenName;
-        this.gardenHardinessZone = gardenHardinessZone;
-        this.gardenLightLevel = gardenLightLevel;
-        this.gardenMoistureLevel = gardenMoistureLevel;
-        this.gardenSoilType = gardenSoilType;
+        this.gardenZone = gardenZone;
+        this.gardenLight = gardenLight;
+        this.gardenWater = gardenWater;
+        this.gardenSoil = gardenSoil;
     }
 
     public Garden() {
@@ -71,10 +71,10 @@ public class Garden extends AbstractEntity {
     public String toString() {
         return "Garden{" +
                 "gardenName='" + gardenName + '\'' +
-                ", gardenHardinessZone='" + gardenHardinessZone + '\'' +
-                ", gardenLightLevel='" + gardenLightLevel + '\'' +
-                ", gardenMoistureLevel='" + gardenMoistureLevel + '\'' +
-                ", gardenSoilType='" + gardenSoilType + '\'' +
+                ", gardenZone='" + gardenZone + '\'' +
+                ", gardenLight='" + gardenLight + '\'' +
+                ", gardenWater='" + gardenWater + '\'' +
+                ", gardenSoil='" + gardenSoil + '\'' +
                 ", plants=" + plants +
                 ", user=" + user +
                 '}';
