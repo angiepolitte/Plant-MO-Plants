@@ -14,12 +14,12 @@ public class DamaDevsApplication implements CommandLineRunner {
     @Autowired
     private CsvToDatabase csvToDatabase;
 
-    public static void main(String...args) {
+    public static void main(String[] args) {
         SpringApplication.run(DamaDevsApplication.class, args);
 
     }
     @Override
-    public void run(String[] args) {
+    public void run(String...args) {
         try {
             csvToDatabase.insertRecords("backend/src/main/resources/plant_data.csv");
 
