@@ -1,6 +1,7 @@
 package com.launchcode.dama_devs.models;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
@@ -45,6 +46,7 @@ public class Plant extends AbstractEntity {
 
     //constructor
     public Plant(String commonName, String scientificName, String plantZone, String plantCycle, String plantType, String plantLight, String plantWater, String plantSoil, String plantDescription, String plantHeight, String plantSpread, String colorOfInterest, String seasonOfInterest, Boolean attractsBirds, Boolean attractsButterflies, Boolean attractsPollinators, Boolean isEdible, Boolean resistsDeer, Boolean toxicToAnimals) {
+
         this.commonName = commonName;
         this.scientificName = scientificName;
         this.plantZone = plantZone;
