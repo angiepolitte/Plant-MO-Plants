@@ -20,11 +20,8 @@ public class GardenController {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
     private final GardenService gardenService;
-
-    public GardenController(GardenService gardenService) {
-        this.gardenService = gardenService;
-    }
 
     //Show all gardens in dashboard
     @GetMapping("/")
