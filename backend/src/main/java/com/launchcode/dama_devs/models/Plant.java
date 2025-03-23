@@ -10,96 +10,40 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
+@Getter
+@NotNull
 public class Plant extends AbstractEntity {
 
     //declared fields with getters. Did not use setters bc plant data is immutable.
-    @Getter
-    @NotNull
     private String commonName;
-
-    @Getter
-    @NotNull
     private String scientificName;
-
-    @Getter
-    @NotNull
     private String plantZone;
-
-    @Getter
-    @NotNull
     private String plantCycle;
-
-    @Getter
-    @NotNull
     private String plantType;
-
-    @Getter
-    @NotNull
     private String plantLight;
-
-    @Getter
-    @NotNull
     private String plantWater;
-
-    @Getter
-    @NotNull
     private String plantSoil;
-
-    @Getter
-    @NotNull
     private String plantDescription;
-
-    @Getter
-    @NotNull
     private String plantHeight;
-
-    @Getter
-    @NotNull
     private String plantSpread;
-
-    @Getter
-    @NotNull
     private String colorOfInterest;
-
-    @Getter
-    @NotNull
     private String seasonOfInterest;
-
-    @Getter
-    @NotNull
     private Boolean attractsBirds;
-
-   @Getter
-   @NotNull
-   private Boolean attractsButterflies;
-
-   @Getter
-   @NotNull
-   private Boolean attractsPollinators;
-
-   @Getter
-   @NotNull
-   private Boolean isEdible;
-
-   @Getter
-   @NotNull
-   private Boolean resistsDeer;
-
-   @Getter
-   @NotNull
-   private Boolean toxicToAnimals;
+    private Boolean attractsButterflies;
+    private Boolean attractsPollinators;
+    private Boolean isEdible;
+    private Boolean resistsDeer;
+    private Boolean toxicToAnimals;
 
     //plant-garden relationship
-    @Getter
     @ManyToMany(mappedBy = "plants")
     private final List<Garden> gardens = new ArrayList<>();
 
     //plant-comment relationship
-    @Getter
     @OneToMany(mappedBy = "plant")
     private final List<Comment> comments = new ArrayList<>();
 
-//constructor
+    //constructor
     public Plant(String commonName, String scientificName, String plantZone, String plantCycle, String plantType, String plantLight, String plantWater, String plantSoil, String plantDescription, String plantHeight, String plantSpread, String colorOfInterest, String seasonOfInterest, Boolean attractsBirds, Boolean attractsButterflies, Boolean attractsPollinators, Boolean isEdible, Boolean resistsDeer, Boolean toxicToAnimals) {
         this.commonName = commonName;
         this.scientificName = scientificName;
