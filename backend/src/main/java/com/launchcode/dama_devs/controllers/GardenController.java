@@ -34,7 +34,7 @@ public class GardenController {
 
     //Go to a specific garden
     @GetMapping("/{id}")
-    public ResponseEntity<Garden> getGardenbyId(@PathVariable ID id) {
+    public ResponseEntity<Garden> getGardenbyId(@PathVariable Integer id) {
         Garden garden = gardenService.getGardenbyId(id);
         if (garden != null) {
             return ResponseEntity.ok(garden);
@@ -52,7 +52,7 @@ public class GardenController {
 
     //Update an existing garden
     @PutMapping("/{id}")
-    public ResponseEntity<Garden> updateGarden(@PathVariable ID id, @RequestBody Garden garden) {
+    public ResponseEntity<Garden> updateGarden(@PathVariable Integer id, @RequestBody Garden garden) {
         Garden existingGarden = gardenService.saveGarden(garden);
 
         if (existingGarden != null) {
@@ -66,7 +66,7 @@ public class GardenController {
 
     //Delete an existing garden
     @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGarden(@PathVariable ID id) {
+    public ResponseEntity<Void> deleteGarden(@PathVariable Integer id) {
         Garden garden = gardenService.getGardenById(id);
         if (garden != null) {
             gardenService.deleteGarden(id);
