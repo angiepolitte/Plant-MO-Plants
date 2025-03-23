@@ -1,13 +1,30 @@
 package com.launchcode.dama_devs;
 
+import com.launchcode.dama_devs.services.CsvToDatabase;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import java.io.IOException;
+
 
 @SpringBootApplication
-public class DamaDevsApplication {
+public class DamaDevsApplication implements CommandLineRunner {
 
-	public static void main(String[] args) {
-		SpringApplication.run(DamaDevsApplication.class, args);
-	}
+    @Autowired
+    private CsvToDatabase csvToDatabase;
 
+    public static void main(String[] args) {
+        SpringApplication.run(DamaDevsApplication.class, args);
+
+    }
+    @Override
+    public void run(String...args) {
+        try {
+            csvToDatabase.insertRecords("backend/src/main/resources/plant_data.csv");
+
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
 }
