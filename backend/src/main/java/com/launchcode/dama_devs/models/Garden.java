@@ -7,48 +7,44 @@ import jakarta.persistence.ManyToOne;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.NoArgsConstructor
 
 import java.util.ArrayList;
 import java.util.List;
 
 
 @Entity
+@Getter
+@NoArgsConstructor
 public class Garden extends AbstractEntity {
 
     //Setters included so user can edit the garden values in the future via the dashboard.
-    @Getter
     @Setter
     @NotNull
     private String gardenName;
 
-    @Getter
     @Setter
     @NotNull
     private String gardenZone;
 
-    @Getter
     @Setter
     @NotNull
     private String gardenLight;
 
-    @Getter
     @Setter
     @NotNull
     private String gardenWater;
 
-    @Getter
     @Setter
     @NotNull
     private String gardenSoil;
 
     //garden-plant relationship
-    @Getter
     @ManyToMany
     private final List<Plant> plants = new ArrayList<>();
 
     //garden-user relationship
     @Setter
-    @Getter
     @NotNull
     @ManyToOne
     @JoinColumn(name = "user_id")
@@ -62,9 +58,6 @@ public class Garden extends AbstractEntity {
         this.gardenLight = gardenLight;
         this.gardenWater = gardenWater;
         this.gardenSoil = gardenSoil;
-    }
-
-    public Garden() {
     }
 
     @Override
