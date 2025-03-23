@@ -11,69 +11,29 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Getter //works for entire class. Did not use setters bc plant data is immutable.
-public class Plant {
+@Getter
+@NotNull
+public class Plant extends AbstractEntity {
 
-    //declared fields
-    @NotNull
-    @Id
-    private int id;
-
-    @NotNull
+    //declared fields with getters. Did not use setters bc plant data is immutable.
     private String commonName;
-
-    @NotNull
     private String scientificName;
-
-    @NotNull
     private String plantZone;
-
-    @NotNull
     private String plantCycle;
-
-    @NotNull
     private String plantType;
-
-    @NotNull
     private String plantLight;
-
-    @NotNull
     private String plantWater;
-
-    @NotNull
     private String plantSoil;
-
-    @NotNull
     private String plantDescription;
-
-    @NotNull
     private String plantHeight;
-
-    @NotNull
     private String plantSpread;
-
-    @NotNull
     private String colorOfInterest;
-
-    @NotNull
     private String seasonOfInterest;
-
-    @NotNull
     private Boolean attractsBirds;
-
-    @NotNull
     private Boolean attractsButterflies;
-
-    @NotNull
     private Boolean attractsPollinators;
-
-    @NotNull
     private Boolean isEdible;
-
-    @NotNull
     private Boolean resistsDeer;
-
-    @NotNull
     private Boolean toxicToAnimals;
 
     //plant-garden relationship
@@ -85,8 +45,8 @@ public class Plant {
     private final List<Comment> comments = new ArrayList<>();
 
     //constructor
-    public Plant(int id, String commonName, String scientificName, String plantZone, String plantCycle, String plantType, String plantLight, String plantWater, String plantSoil, String plantDescription, String plantHeight, String plantSpread, String colorOfInterest, String seasonOfInterest, Boolean attractsBirds, Boolean attractsButterflies, Boolean attractsPollinators, Boolean isEdible, Boolean resistsDeer, Boolean toxicToAnimals) {
-        this.id = id;
+    public Plant(String commonName, String scientificName, String plantZone, String plantCycle, String plantType, String plantLight, String plantWater, String plantSoil, String plantDescription, String plantHeight, String plantSpread, String colorOfInterest, String seasonOfInterest, Boolean attractsBirds, Boolean attractsButterflies, Boolean attractsPollinators, Boolean isEdible, Boolean resistsDeer, Boolean toxicToAnimals) {
+
         this.commonName = commonName;
         this.scientificName = scientificName;
         this.plantZone = plantZone;
@@ -116,8 +76,7 @@ public class Plant {
     @Override
     public String toString() {
         return "Plant{" +
-                "id=" + id + '\'' +
-                ", commonName='" + commonName + '\'' +
+                "commonName='" + commonName + '\'' +
                 ", scientificName='" + scientificName + '\'' +
                 ", plantZone='" + plantZone + '\'' +
                 ", plantCycle='" + plantCycle + '\'' +
