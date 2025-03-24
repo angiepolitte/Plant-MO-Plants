@@ -22,4 +22,4 @@ function DashboardPage() {
   );
 };
 
-export default DashboardPage;
+export default Dashboard;
