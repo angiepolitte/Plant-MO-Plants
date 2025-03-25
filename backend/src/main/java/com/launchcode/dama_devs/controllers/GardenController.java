@@ -1,12 +1,14 @@
 package com.launchcode.dama_devs.controllers;
 
+import org.springframework.web.bind.annotation.*;
+
 import com.launchcode.dama_devs.models.User;
 import com.launchcode.dama_devs.models.data.GardenRepository;
 import com.launchcode.dama_devs.models.data.PlantRepository;
 import com.launchcode.dama_devs.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import com.launchcode.dama_devs.models.services.GardenService;
+import org.springframework.stereotype.Controller;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 
