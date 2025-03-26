@@ -10,6 +10,8 @@ import GardenConditions from './pages/GardenConditions';
 import DashboardAdmin from './pages/DashboardAdmin';
 import GardenDetails from './pages/GardenDetails';
 import PlantsTBD from './pages/PlantsTBD';
+import GardenZone from './pages/GardenZone';
+import GardenSuccess from './pages/GardenSuccess';
 
 
 
@@ -29,7 +31,9 @@ function App() {
           <Route path="/dashboard" element={<Dashboard />} />
           <Route path="/admin-dashboard" element={<DashboardAdmin />} />
           <Route path="/create-garden" element={<CreateGarden />} />
+          <Route path="/garden-zone" element={<GardenZone />} />
           <Route path="/garden-conditions" element={<GardenConditions />} />
+          <Route path="/garden-success" element={<GardenSuccess />} />
           <Route path="/plantsTBD" element={<PlantsTBD />} />   // will be replaced with Allyson's file       
           <Route path="/garden-details" element={<GardenDetails />} />    
               
