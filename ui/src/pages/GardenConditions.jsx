@@ -11,7 +11,7 @@ function GardenConditions() {
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>Enter Garden Conditions</h1>
       <h2>and move on to Garden Success Page</h2>
-      <button onClick={handleNavigateGardenSuccess}>Plant Results/Search</button>
+      <button onClick={handleNavigateGardenSuccess}>Go to Success Page</button>
     </div>
   );
 }
