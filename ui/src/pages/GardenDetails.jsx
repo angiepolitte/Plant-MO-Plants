@@ -11,7 +11,7 @@ function GardenDetails() {
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1>Garden Details Pge</h1>
       <h2>and move on to Dashboard</h2>
-      <button onClick={handleNavigateDashboard}>Garden Conditions</button>
+      <button onClick={handleNavigateDashboard}>Dashboard</button>
     </div>
   );
 }
