@@ -1,10 +1,17 @@
 import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom'; 
-import './App.css'; 
-import ExampleOne from './pages/ExampleOne'; 
-import ExampleTwo from './pages/ExampleTwo'; 
+import './App.css';  
 import WeatherWidget from './reusable-code/WeatherWidget';
-import DashboardPage from './pages/DashboardPage';
-import StarterPage from './pages/StarterPage';
+import HomePage from './pages/HomePage';
+import Dashboard from './pages/Dashboard';
+import Login from './pages/Login';
+import CreateAccount from './pages/CreateAccount';
+import CreateGarden from './pages/CreateGarden';
+import GardenConditions from './pages/GardenConditions';
+import DashboardAdmin from './pages/DashboardAdmin';
+import GardenDetails from './pages/GardenDetails';
+import PlantsTBD from './pages/PlantsTBD';
+
+
 
 
 function App() {
@@ -14,18 +21,18 @@ function App() {
       <WeatherWidget />
       
       <div>
-        <Routes>
-         
-          <Route path="/" element={<StarterPage />} />
-      
-          {/* Define the route for ExampleOne - intentionally naming it somthing completely different so you can see the React routes can have different names.*/}
-          <Route path="/chocolate-ice-cream" element={<ExampleOne />} /> 
+        <Routes>   
 
-          {/* Define the route for ExampleTwo - intentionally naming it somthing completely different so you can see the React routes can have different names.*/}
-          <Route path="/jolly-ranchers" element={<ExampleTwo />} />
-
-          <Route path="/dashboard" element={<DashboardPage />} />
-
+          <Route path="/" element={<HomePage />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/create-account" element={<CreateAccount />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/admin-dashboard" element={<DashboardAdmin />} />
+          <Route path="/create-garden" element={<CreateGarden />} />
+          <Route path="/garden-conditions" element={<GardenConditions />} />
+          <Route path="/plantsTBD" element={<PlantsTBD />} />   // will be replaced with Allyson's file       
+          <Route path="/garden-details" element={<GardenDetails />} />    
+              
         </Routes>
       </div>
     </Router>

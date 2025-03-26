@@ -1,0 +1,1 @@
+// wording for the pop up alert to notify that account was created or logged into successfully
