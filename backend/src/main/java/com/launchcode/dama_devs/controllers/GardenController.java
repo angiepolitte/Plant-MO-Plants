@@ -40,7 +40,7 @@ public class GardenController {
     //Go to a specific garden
     @GetMapping("/{id}")
     public ResponseEntity<Garden> getGardenbyId(@PathVariable Integer id) {
-        Optional<Garden> garden = gardenService.getGardenbyId(id);
+        Optional<Garden> garden = gardenService.getGardenById(id);
         return garden.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
@@ -90,7 +90,7 @@ public class GardenController {
     //Delete an existing garden
     @DeleteMapping("/{id}")
     public ResponseEntity<Void> deleteGarden(@PathVariable Integer id) {
-        Optional<Garden> garden = gardenService.getGardenbyId(id);
+        Optional<Garden> garden = gardenService.getGardenById(id);
         if (garden.isPresent()) {
             gardenService.deleteGarden(id);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
