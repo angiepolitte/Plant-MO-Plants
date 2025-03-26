@@ -3,7 +3,7 @@ package com.launchcode.dama_devs.services;
 import com.launchcode.dama_devs.models.data.GardenRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import java.util.List;
+import com.launchcode.dama_devs.models.Garden;
 import java.util.Optional;
 
 @Service
@@ -18,7 +18,7 @@ public class GardenService {
     }
 
     //Get all user's gardens in main dashboard
-    public List<Garden> getAllGardens() {
+    public Iterable<Garden> getAllGardens() {
         return gardenRepository.findAll();
     }
 
