@@ -38,6 +38,7 @@ public class CsvToDatabase {
 
                 String commonName = row.get("commonName");
                 String scientificName = row.get("scientificName");
+                String plantImagePath = row.get("plantImagePath");
                 String plantZone = row.get("plantZone");
                 String plantCycle = row.get("plantCycle");
                 String plantType = row.get("plantType");
@@ -59,6 +60,7 @@ public class CsvToDatabase {
                 Plant plant = new Plant(
                         commonName,
                         scientificName,
+                        plantImagePath,
                         plantZone,
                         plantCycle,
                         plantType,
