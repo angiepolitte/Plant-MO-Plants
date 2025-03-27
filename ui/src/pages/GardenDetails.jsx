@@ -1,18 +1,19 @@
 import { useNavigate } from 'react-router-dom';
 
-function Login() {
+function GardenDetails() {
   const navigate = useNavigate();
 
-  const handleNavigate = () => {
+  const handleNavigateDashboard= () => {
     navigate('/dashboard'); // Make sure this path matches your route for ExampleOne
   };
 
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Login Logic</h1>
-      <button onClick={handleNavigate}>Login</button>
+      <h1>Garden Details Pge</h1>
+      <h2>and move on to Dashboard</h2>
+      <button onClick={handleNavigateDashboard}>Dashboard</button>
     </div>
   );
 }
 
-export default Login;
+export default GardenDetails;
