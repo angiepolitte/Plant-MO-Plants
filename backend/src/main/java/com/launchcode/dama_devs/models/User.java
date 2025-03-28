@@ -10,6 +10,9 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.ToString;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Entity
 @Data
 @NoArgsConstructor
@@ -50,6 +53,10 @@ public class User{
     @JsonBackReference
     @ToString.Exclude
     private Role role;
+
+    //user-garden relationship
+    @OneToMany(mappedBy = "user")
+    private final List<Garden> gardens = new ArrayList<>();
 
     public User(String username, String email, String password) {
         this.username = username;
