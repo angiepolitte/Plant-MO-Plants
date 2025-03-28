@@ -6,10 +6,12 @@ import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
+@NoArgsConstructor
 @Entity
 @Getter
 @NotNull
@@ -18,6 +20,7 @@ public class Plant extends AbstractEntity {
     //declared fields with getters. Did not use setters bc plant data is immutable.
     private String commonName;
     private String scientificName;
+    private String plantImagePath;
     private String plantZone;
     private String plantCycle;
     private String plantType;
@@ -45,10 +48,11 @@ public class Plant extends AbstractEntity {
     private final List<Comment> comments = new ArrayList<>();
 
     //constructor
-    public Plant(String commonName, String scientificName, String plantZone, String plantCycle, String plantType, String plantLight, String plantWater, String plantSoil, String plantDescription, String plantHeight, String plantSpread, String colorOfInterest, String seasonOfInterest, Boolean attractsBirds, Boolean attractsButterflies, Boolean attractsPollinators, Boolean isEdible, Boolean resistsDeer, Boolean toxicToAnimals) {
+    public Plant(String commonName, String scientificName, String plantImagePath, String plantZone, String plantCycle, String plantType, String plantLight, String plantWater, String plantSoil, String plantDescription, String plantHeight, String plantSpread, String colorOfInterest, String seasonOfInterest, Boolean attractsBirds, Boolean attractsButterflies, Boolean attractsPollinators, Boolean isEdible, Boolean resistsDeer, Boolean toxicToAnimals) {
 
         this.commonName = commonName;
         this.scientificName = scientificName;
+        this.plantImagePath = plantImagePath;
         this.plantZone = plantZone;
         this.plantCycle = plantCycle;
         this.plantType = plantType;
@@ -68,16 +72,13 @@ public class Plant extends AbstractEntity {
         this.toxicToAnimals = toxicToAnimals;
     }
 
-    //empty constructor
-    public Plant() {
-    }
-
     //toString
     @Override
     public String toString() {
         return "Plant{" +
                 "commonName='" + commonName + '\'' +
                 ", scientificName='" + scientificName + '\'' +
+                ", plantImagePath='" + plantImagePath + '\'' +
                 ", plantZone='" + plantZone + '\'' +
                 ", plantCycle='" + plantCycle + '\'' +
                 ", plantType='" + plantType + '\'' +

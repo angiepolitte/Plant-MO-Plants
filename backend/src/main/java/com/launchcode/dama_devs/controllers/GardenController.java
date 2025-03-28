@@ -1,17 +1,24 @@
 package com.launchcode.dama_devs.controllers;
 
+import com.launchcode.dama_devs.models.dto.GardenPlantDTO;
+import com.launchcode.dama_devs.services.AddPlantService;
 import org.springframework.web.bind.annotation.*;
 import com.launchcode.dama_devs.models.Garden;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.launchcode.dama_devs.services.GardenService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+
 import java.util.Optional;
 
 
 @RestController
 @RequestMapping("/api/dashboard")
 public class GardenController {
+
+
+    @Autowired
+    private AddPlantService addPlantService;
 
     private final GardenService gardenService;
 
@@ -88,4 +95,9 @@ public class GardenController {
         }
     }
 
+    @PostMapping("/garden/{gardenId}/add-plants/{plantId}")
+    public ResponseEntity<GardenPlantDTO> addPlantToGarden(@PathVariable Integer gardenId, @PathVariable Integer plantId) {
+        GardenPlantDTO addPlantToGarden = addPlantService.addPlantToGarden(gardenId, plantId);
+        return ResponseEntity.status(HttpStatus.CREATED).body(addPlantToGarden);
+    }
 }
