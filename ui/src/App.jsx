@@ -12,6 +12,7 @@ import GardenDetails from './pages/GardenDetails';
 import PlantsTBD from './pages/PlantsTBD';
 import GardenZone from './pages/GardenZone';
 import GardenSuccess from './pages/GardenSuccess';
+import Comment from './reusable-code/Comment';
 
 
 
@@ -35,7 +36,8 @@ function App() {
           <Route path="/garden-conditions" element={<GardenConditions />} />
           <Route path="/garden-success" element={<GardenSuccess />} />
           <Route path="/plantsTBD" element={<PlantsTBD />} />   // will be replaced with Allyson's file       
-          <Route path="/garden-details" element={<GardenDetails />} />    
+          <Route path="/garden-details" element={<GardenDetails />} /> 
+          <Route path="/comment" element={<Comment />} />   
               
         </Routes>
       </div>
