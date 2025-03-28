@@ -4,8 +4,6 @@ import com.launchcode.dama_devs.models.dto.GardenPlantDTO;
 import com.launchcode.dama_devs.services.AddPlantService;
 import org.springframework.web.bind.annotation.*;
 import com.launchcode.dama_devs.models.Garden;
-//import com.launchcode.dama_devs.models.data.GardenRepository;
-//import com.launchcode.dama_devs.models.data.UserRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import com.launchcode.dama_devs.services.GardenService;
 import org.springframework.http.HttpStatus;
@@ -13,19 +11,11 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
+
 @RestController
 @RequestMapping("/api/dashboard")
 public class GardenController {
 
-//    @Autowired
-//    private GardenRepository gardenRepository;
-//
-//    //used for garden-user relationship
-//    @Autowired
-//    private UserRepository userRepository;
-//
-//    @Autowired
-//    private GardenService gardenService;
 
     @Autowired
     private AddPlantService addPlantService;
