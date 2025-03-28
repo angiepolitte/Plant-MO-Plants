@@ -77,5 +77,7 @@ public class Garden extends AbstractEntity {
     public void addPlant(Plant plant){
         this.plants.add(plant);
     }
+    // Allows a plant to be removed from plants list.
+    public void removePlant(Plant plant) {this.plants.remove(plant);}
 
 }
