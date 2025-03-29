@@ -11,7 +11,7 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.Optional;
 
-
+@CrossOrigin(origins = "http://localhost:5173")
 @RestController
 @RequestMapping("/garden")
 public class GardenController {
@@ -19,12 +19,8 @@ public class GardenController {
     @Autowired
     private GardenPlantService gardenPlantService;
 
-    private final GardenService gardenService;
-
     @Autowired
-    public GardenController(GardenService gardenService) {
-        this.gardenService = gardenService;
-    }
+    private GardenService gardenService;
 
     //Show all gardens in dashboard
     @GetMapping("/")
