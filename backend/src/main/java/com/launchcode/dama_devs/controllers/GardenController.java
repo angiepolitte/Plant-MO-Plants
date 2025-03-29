@@ -1,7 +1,7 @@
 package com.launchcode.dama_devs.controllers;
 
 import com.launchcode.dama_devs.models.dto.GardenPlantDTO;
-import com.launchcode.dama_devs.services.AddPlantService;
+import com.launchcode.dama_devs.services.GardenPlantService;
 import org.springframework.web.bind.annotation.*;
 import com.launchcode.dama_devs.models.Garden;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,12 +13,11 @@ import java.util.Optional;
 
 
 @RestController
-@RequestMapping("/api/dashboard")
+@RequestMapping("/garden")
 public class GardenController {
 
-
     @Autowired
-    private AddPlantService addPlantService;
+    private GardenPlantService gardenPlantService;
 
     private final GardenService gardenService;
 
@@ -95,9 +94,15 @@ public class GardenController {
         }
     }
 
-    @PostMapping("/garden/{gardenId}/add-plants/{plantId}")
+    @PostMapping("/{gardenId}/add-plants/{plantId}")
     public ResponseEntity<GardenPlantDTO> addPlantToGarden(@PathVariable Integer gardenId, @PathVariable Integer plantId) {
-        GardenPlantDTO addPlantToGarden = addPlantService.addPlantToGarden(gardenId, plantId);
+        GardenPlantDTO addPlantToGarden = gardenPlantService.addPlantToGarden(gardenId, plantId);
         return ResponseEntity.status(HttpStatus.CREATED).body(addPlantToGarden);
+    }
+
+    @DeleteMapping("/{gardenId}/garden-detail/{plantId}")
+    public ResponseEntity<GardenPlantDTO> removePlantFromGarden(@PathVariable Integer gardenId, @PathVariable Integer plantId) {
+        GardenPlantDTO removePlantFromGarden = gardenPlantService.removePlantFromGarden(gardenId, plantId);
+        return ResponseEntity.status(HttpStatus.OK).body(removePlantFromGarden);
     }
 }
