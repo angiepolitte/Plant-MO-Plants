@@ -10,7 +10,7 @@ import java.util.Optional;
 public class GardenService {
 
     //Creates an instance of the variable
-    private final GardenRepository gardenRepository;
+    private GardenRepository gardenRepository;
 
     @Autowired
     public GardenService (GardenRepository gardenRepository) {
@@ -18,8 +18,8 @@ public class GardenService {
     }
 
     //Get all user's gardens in main dashboard
-    public Iterable<Garden> getAllGardens() {
-        return gardenRepository.findAll();
+    public Iterable<Garden> getGardensByUserId(Integer id) {
+        return gardenRepository.findByUserId(id);
     }
 
     //Get a specific user garden (display in garden detail page)

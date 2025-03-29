@@ -20,7 +20,7 @@ public class GardenController {
     @Autowired
     private AddPlantService addPlantService;
 
-    private final GardenService gardenService;
+    private GardenService gardenService;
 
     @Autowired
     public GardenController(GardenService gardenService) {
@@ -29,8 +29,8 @@ public class GardenController {
 
     //Show all gardens in dashboard
     @GetMapping("/")
-    public Iterable<Garden> getAllGardens() {
-        return gardenService.getAllGardens();
+    public Iterable<Garden> getGardensByUserId(@PathVariable Integer id) {
+        return gardenService.getGardensByUserId(id);
     }
 
     //Go to a specific garden
