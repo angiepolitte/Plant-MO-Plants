@@ -5,6 +5,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.OneToMany;
 import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Size;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -27,6 +28,8 @@ public class Plant extends AbstractEntity {
     private String plantLight;
     private String plantWater;
     private String plantSoil;
+
+    @Size(max=275)
     private String plantDescription;
     private String plantHeight;
     private String plantSpread;
