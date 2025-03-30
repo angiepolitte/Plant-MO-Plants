@@ -28,67 +28,39 @@ public class GardenController {
     }
 
     //Show all gardens in dashboard
-    @GetMapping("/")
+    @GetMapping("/{userId}")
     public Iterable<Garden> getGardensByUserId(@PathVariable Integer id) {
         return gardenService.getGardensByUserId(id);
     }
 
     //Go to a specific garden
-    @GetMapping("/{id}")
-    public ResponseEntity<Garden> getGardenbyId(@PathVariable Integer id) {
-        Optional<Garden> garden = gardenService.getGardenById(id);
+    @GetMapping("/{userId}/{gardenId}")
+    public ResponseEntity<Garden> getGardenbyId(@PathVariable Integer userId, @PathVariable Integer gardenId) {
+        Optional<Garden> garden = gardenService.getGardenById(userId, gardenId);
         return garden.map(ResponseEntity::ok)
                 .orElseGet(() -> ResponseEntity.status(HttpStatus.NOT_FOUND).build());
     }
 
     //Create a new garden
     @PostMapping
-    public ResponseEntity<Garden> createGarden(@RequestBody Garden garden) {
-        Garden savedGarden = gardenService.saveGarden(garden);
+    public ResponseEntity<Garden> createGarden(@PathVariable Integer userId, @PathVariable Integer gardenId, @RequestBody Garden garden) {
+        Garden savedGarden = gardenService.saveGarden(userId, gardenId, garden);
         return ResponseEntity.status(HttpStatus.CREATED).body(savedGarden);
     }
 
     //Update an existing garden's fields with user edits
-    @PutMapping("/{id}")
-    public ResponseEntity<Garden> updateGarden(@PathVariable Integer id, @RequestBody Garden gardenDetail) {
-        Optional<Garden> existingGardenCheck = gardenService.getGardenById(id);
-
-        if (existingGardenCheck.isPresent()) {
-            Garden existingGarden = existingGardenCheck.get();
-
-            if (gardenDetail.getGardenName() != null) {
-                existingGarden.setGardenName(gardenDetail.getGardenName());
-            }
-
-            if (gardenDetail.getGardenZone() != null) {
-                existingGarden.setGardenZone(gardenDetail.getGardenZone());
-            }
-
-            if (gardenDetail.getGardenLight() != null) {
-                existingGarden.setGardenLight(gardenDetail.getGardenLight());
-            }
-
-            if (gardenDetail.getGardenWater() != null) {
-                existingGarden.setGardenWater(gardenDetail.getGardenWater());
-            }
-
-            if (gardenDetail.getGardenSoil() != null) {
-                existingGarden.setGardenSoil(gardenDetail.getGardenSoil());
-            }
-
-            Garden updatedGarden = gardenService.saveGarden(existingGarden);
-            return ResponseEntity.ok(updatedGarden);
-        } else {
-            return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
-        }
+    @PutMapping("/{userId}/{gardenId}")
+    public ResponseEntity<Garden> updateGarden(@PathVariable Integer userId, @PathVariable Integer gardenId, @RequestBody Garden gardenDetail) {
+        Garden updatedGarden = gardenService.saveGarden(userId, gardenId, gardenDetail);
+        return ResponseEntity.ok(updatedGarden);
     }
 
     //Delete an existing garden
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteGarden(@PathVariable Integer id) {
-        Optional<Garden> garden = gardenService.getGardenById(id);
-        if (garden.isPresent()) {
-            gardenService.deleteGarden(id);
+    @DeleteMapping("/{userId}/{gardenId}")
+    public ResponseEntity<Void> deleteGarden(@PathVariable Integer userId, @PathVariable Integer gardenId, @RequestBody Garden garden) {
+        Optional<Garden> gardenToDelete = gardenService.getGardenById(userId, gardenId);
+        if (gardenToDelete.isPresent()) {
+            gardenService.deleteGarden(userId, gardenId);
             return ResponseEntity.status(HttpStatus.NO_CONTENT).build();
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
