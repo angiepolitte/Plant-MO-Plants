@@ -38,7 +38,7 @@ public class SecurityConfig {
                         //here giving permissions to everyone to access the endpoint of contact
                         .requestMatchers("/contact").permitAll()
                         //here restricted to admin to access the end point of hello
-                        .requestMatchers("/hello").hasRole("ADMIN")
+                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/csrf-token").permitAll()
                         //here other than the above requests to access you need to authenticate
                         .anyRequest().authenticated());
