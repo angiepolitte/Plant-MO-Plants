@@ -5,10 +5,12 @@ import com.launchcode.dama_devs.models.Role;
 import com.launchcode.dama_devs.models.User;
 import com.launchcode.dama_devs.models.data.RoleRepository;
 import com.launchcode.dama_devs.models.data.UserRepository;
+import com.launchcode.dama_devs.models.data.UserService;
 import com.launchcode.dama_devs.models.request.LoginRequest;
 import com.launchcode.dama_devs.models.request.SignupRequest;
 import com.launchcode.dama_devs.models.response.LoginResponse;
 import com.launchcode.dama_devs.models.response.MessageResponse;
+import com.launchcode.dama_devs.models.response.UserInfoResponse;
 import com.launchcode.dama_devs.security.jwt.JwtUtils;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,13 +20,11 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +49,9 @@ public class AuthController {
 
     @Autowired
     PasswordEncoder encoder;
+
+    @Autowired
+    UserService userService;
 
     @PostMapping("/public/signin")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginRequest loginRequest) {
@@ -123,5 +126,32 @@ public class AuthController {
 
         return ResponseEntity.ok(new MessageResponse("User registered successfully!"));
     }
+    @GetMapping("/user")
+    public ResponseEntity<?> getUserDetails(@AuthenticationPrincipal UserDetails userDetails) {
+        User user = userService.findByUsername(userDetails.getUsername());
+
+        List<String> roles = userDetails.getAuthorities().stream()
+                .map(item -> item.getAuthority())
+                .collect(Collectors.toList());
+
+        UserInfoResponse response = new UserInfoResponse(
+                user.getUserId(),
+                user.getUsername(),
+                user.getEmail(),
+                user.isAccountNonLocked(),
+                user.isAccountNonExpired(),
+                user.isCredentialsNonExpired(),
+                user.isEnabled(),
+                roles
+        );
+
+        return ResponseEntity.ok().body(response);
+    }
+
+    @GetMapping("/username")
+    public String currentUserName(@AuthenticationPrincipal UserDetails userDetails) {
+        return (userDetails != null) ? userDetails.getUsername() : "";
+    }
+
 
 }
