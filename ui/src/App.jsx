@@ -13,6 +13,7 @@ import PlantsTBD from './pages/PlantsTBD';
 import GardenZone from './pages/GardenZone';
 import GardenSuccess from './pages/GardenSuccess';
 import Comment from './reusable-code/Comment';
+import PhotoUpload from './reusable-code/PhotoUpload';
 
 
 
@@ -37,7 +38,9 @@ function App() {
           <Route path="/garden-success" element={<GardenSuccess />} />
           <Route path="/plantsTBD" element={<PlantsTBD />} />   // will be replaced with Allyson's file       
           <Route path="/garden-details" element={<GardenDetails />} /> 
-          <Route path="/comment" element={<Comment />} />   
+          <Route path="/comment" element={<Comment />} />  
+          <Route path="/photo-upload" element={<PhotoUpload />} /> 
+
               
         </Routes>
       </div>
