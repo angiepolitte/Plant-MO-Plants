@@ -23,14 +23,14 @@ public class AdminController {
     }
 
     @PutMapping("/update-role")
-    public ResponseEntity<String> updateUserRole(@RequestParam Long userId,
+    public ResponseEntity<String> updateUserRole(@RequestParam Integer userId,
                                                  @RequestParam String roleName) {
         userService.updateUserRole(userId, roleName);
         return ResponseEntity.ok("User role updated");
     }
 
     @GetMapping("/user/{id}")
-    public ResponseEntity<UserDTO> getUser(@PathVariable Long id) {
+    public ResponseEntity<UserDTO> getUser(@PathVariable Integer id) {
         return new ResponseEntity<>(userService.getUserById(id), HttpStatus.OK);
     }
 

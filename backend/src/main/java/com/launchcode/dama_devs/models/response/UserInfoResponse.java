@@ -8,7 +8,7 @@ import java.util.List;
 @Setter
 @Getter
 public class UserInfoResponse {
-    private Long id;
+    private Integer id;
     private String username;
     private String email;
     private boolean accountNonLocked;
@@ -17,7 +17,7 @@ public class UserInfoResponse {
     private boolean enabled;
     private List<String> roles;
 
-    public UserInfoResponse(Long id, String username, String email, boolean accountNonLocked, boolean accountNonExpired,
+    public UserInfoResponse(Integer id, String username, String email, boolean accountNonLocked, boolean accountNonExpired,
                             boolean credentialsNonExpired, boolean enabled, List<String> roles) {
         this.id = id;
         this.username = username;
