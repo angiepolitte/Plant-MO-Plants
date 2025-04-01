@@ -8,5 +8,9 @@ import java.util.List;
 
 @Repository
 public interface GardenRepository extends CrudRepository<Garden, Integer> {
-    List<Garden> findByUserId(Integer userId);
+    List<Garden> findByUser_UserId(Integer userId);
 }
+//@Repository
+//public interface GardenRepository extends CrudRepository<Garden, Integer> {
+//    List<Garden> findByUserId(Integer userId);
+//}

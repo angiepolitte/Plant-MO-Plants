@@ -25,13 +25,13 @@ public class GardenService {
 
     //Get all user's gardens in main dashboard
     public Iterable<Garden> getGardensByUserId(Integer userId) {
-        return gardenRepository.findByUserId(userId);
+        return gardenRepository.findByUser_UserId(userId);
     }
 
     //Get a specific user garden (display in garden detail page)
     public Optional<Garden> getGardenById(Integer userId, Integer gardenId) {
 
-        Iterable<Garden> gardens = gardenRepository.findByUserId(userId);
+        Iterable<Garden> gardens = gardenRepository.findByUser_UserId(userId);
 
         for (Garden garden : gardens) {
             if (garden.getId() == gardenId) {
@@ -46,7 +46,7 @@ public class GardenService {
 
         Optional<User> userOptional = userRepository.findById(userId);
 
-        Iterable<Garden> gardens = gardenRepository.findByUserId(userId);
+        Iterable<Garden> gardens = gardenRepository.findByUser_UserId(userId);
 
         if (!userOptional.isPresent()) {
             throw new EntityNotFoundException("User with ID" + userId + "not found.");
