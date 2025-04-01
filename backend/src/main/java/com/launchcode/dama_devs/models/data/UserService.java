@@ -6,11 +6,11 @@ import com.launchcode.dama_devs.models.dto.UserDTO;
 import java.util.List;
 
 public interface UserService {
-    void updateUserRole(Long userId, String roleName);
+    void updateUserRole(Integer userId, String roleName);
 
     List<User> getAllUsers();
 
-    UserDTO getUserById(Long id);
+    UserDTO getUserById(Integer id);
 
     User findByUsername(String username);
 }

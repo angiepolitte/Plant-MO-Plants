@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService {
     RoleRepository roleRepository;
 
     @Override
-    public void updateUserRole(Long userId, String roleName) {
+    public void updateUserRole(Integer userId, String roleName) {
         User user = userRepository.findById(userId).orElseThrow(() -> new RuntimeException("User not found"));
         AppRole appRole = AppRole.valueOf(roleName);
         Role role = roleRepository.findByRoleName(appRole)
@@ -40,7 +40,7 @@ public class UserServiceImpl implements UserService {
 
 
     @Override
-    public UserDTO getUserById(Long id) {
+    public UserDTO getUserById(Integer id) {
 //        return userRepository.findById(id).orElseThrow();
         User user = userRepository.findById(id).orElseThrow();
         return convertToDto(user);
