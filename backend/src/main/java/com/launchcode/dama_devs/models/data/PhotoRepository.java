@@ -14,9 +14,3 @@ import java.util.Optional;
 public interface PhotoRepository extends JpaRepository<Photo, Integer> {
     List<Photo> findByGardenIdAndUser_UserId(Integer gardenId, Integer userId);
 }
-
-//@Repository
-//public interface PhotoRepository extends JpaRepository<Photo, Long> {
-//    List<Photo> findByGardenIdAndUser_UserId(Integer gardenId, Long userId);
-//    List<Photo> findAll(); // Fetch all photos for testing
-//}
