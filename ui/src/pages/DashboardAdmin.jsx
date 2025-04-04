@@ -17,7 +17,7 @@ const DashboardAdmin = () => {
   const iconColors = ['#FF8F00', '#E91E63', '#6A1B9A', '#388E3C'];
 
 // admin zip code default for presenting
-  const zip = "63026";
+  const zip = "90210";
    
 
   return (
