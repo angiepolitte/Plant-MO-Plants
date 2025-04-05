@@ -10,14 +10,8 @@ import GrassIcon from '@mui/icons-material/Grass';
 import { Button } from "@mui/material";
 
   
-  // const navigate = useNavigate();
- 
-  // const handleNavigate = () => {
-  //   navigate('/'); // navigates to beginning
-  // };
-  
 const icons = [EmojiNatureIcon, LocalFloristIcon, FilterVintageIcon, GrassIcon];
-const colors = ["yellow", "pink", "blue", "green"];
+const iconColors = ['#FF8F00', '#E91E63', '#6A1B9A', '#388E3C'];
   const Dashboard = () => {
     const navigate = useNavigate();
      
@@ -56,18 +50,19 @@ const colors = ["yellow", "pink", "blue", "green"];
 
             {/* Small Square Containers Below */}
             <Grid container spacing={2} item xs={12}>
-            {icons.map((IconComponent, index) => (
-  <Grid item xs={6} sm={3} key={index}>
-    <Card sx={{ height: 150, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
-      <CardContent sx={{ textAlign: "center" }}>
-        {/* <IconComponent fontSize="large" sx={{ color: colors[index] }} />  */}
-        <Typography variant="body1">Garden {index + 1}</Typography>
-      </CardContent>
-    </Card>
-  </Grid>
-))}
-</Grid>
-          </Grid>
+                  {[EmojiNatureIcon, LocalFloristIcon, FilterVintageIcon, GrassIcon].map((IconComponent, index) => (
+                    <Grid item xs={6} sm={3} key={index}>
+                      <Card sx={{ height: 150, display: "flex", alignItems: "center", justifyContent: "center", flexDirection: "column" }}>
+                          <CardContent sx={{ textAlign: "center" }}>
+                            <IconComponent sx={{ fontSize: 50, color: iconColors[index] }} /> {/* Icon used here */}
+                            <Typography variant="body1">Garden {index + 1}</Typography>
+                          </CardContent>
+                        </Card>
+                    </Grid>
+                  ))}
+                </Grid>
+              </Grid>
+              {/* create garden button below */}
           <Grid item sx={{ display: "flex", justifyContent: "center", mt: 4 }}>
           <Button variant="contained" sx={{ backgroundColor: "#cce3de", color: "black", "&:hover": { backgroundColor: "#b0d4c2" } }}  onClick={handleNavigateToCreateGarden}>
           Create New Garden
