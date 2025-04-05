@@ -1,5 +1,6 @@
 package com.launchcode.dama_devs.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
@@ -11,11 +12,15 @@ import lombok.Setter;
 @Getter @Setter
 public class Comment extends AbstractEntity {
 
+    //comment-user relationship
+    @JsonBackReference
     @NotNull(message = "A user is required")
     @ManyToOne
     @JoinColumn(name = "user_id")
     private User user;
 
+    //comment-plant relationship
+    @JsonBackReference
     @NotNull(message = "A plant is required")
     @ManyToOne
     @JoinColumn(name = "plant_id")
