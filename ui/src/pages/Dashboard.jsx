@@ -17,9 +17,10 @@ import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
 import FilterVintageIcon from "@mui/icons-material/FilterVintage";
 import GrassIcon from "@mui/icons-material/Grass";
 import { Button } from "@mui/material";
+import PhotoFetching from "../reusable-code/PhotoFetching";
 
 const icons = [EmojiNatureIcon, LocalFloristIcon, FilterVintageIcon, GrassIcon];
-const iconColors = ["#FF8F00", "#E91E63", "#6A1B9A", "#388E3C"];
+
 const Dashboard = () => {
   const navigate = useNavigate();
 
@@ -30,82 +31,77 @@ const Dashboard = () => {
   const handleAddPhoto = () => {
     console.log("Open cover photo upload...");
   };
+  const userId = 1; //to be updated with userId
+  const userGardenId = 2; //to be updated with gardenId
+  const iconColors = ["#FF8F00", "#E91E63", "#6A1B9A", "#388E3C"];
+
+  // admin zip code default for presenting
+  const zip = "63026";
+
   return (
     <div>
       <Box
         sx={{
-          flexGrow: 1,
-          minHeight: "100vh",
           display: "flex",
           flexDirection: "column",
+          justifyContent: "center", // Center content vertically
+          alignItems: "center", // Center content horizontally
+          height: "100%",
+          minHeight: "100vh",
         }}
       >
-        {/* Navigation Bar */}
-        <AppBar position="static" sx={{ backgroundColor: "#cce3de" }}>
-          <Toolbar>
-            <Typography variant="h6" color="black">
-              Dashboard
-            </Typography>
-          </Toolbar>
-        </AppBar>
-
         <Container maxWidth="lg" sx={{ flexGrow: 1, padding: 2 }}>
-          {/* Main Grid Container (Ensures Left & Right Side-by-Side Layout) */}
           <Grid container spacing={2}>
-            {/* Left: Garden Containers */}
-            <Grid item xs={6}>
-              <Grid container spacing={2} direction="column">
-                {/* Large Container for Cover Photo */}
-                <Grid item xs={12}>
-                  <Card sx={{ minHeight: 350, height: "auto" }}>
-                    <CardContent
+            {/* Left: Garden Section */}
+            <Grid item xs={12} md={6}>
+              <Card sx={{ minHeight: 350, backgroundColor: "#F3E5F5" }}>
+                <CardContent
+                  sx={{
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    justifyContent: "center",
+                    textAlign: "center",
+                  }}
+                >
+                  <PhotoFetching gardenId={userGardenId} userId={userId} />
+                  //to be updated with userId and gardenId
+                </CardContent>
+              </Card>
+
+              {/* Small Containers with Icons */}
+              <Grid container spacing={2} sx={{ mt: 2 }}>
+                {[
+                  EmojiNatureIcon,
+                  LocalFloristIcon,
+                  FilterVintageIcon,
+                  GrassIcon,
+                ].map((IconComponent, index) => (
+                  <Grid item xs={6} sm={3} key={index}>
+                    <Card
                       sx={{
+                        height: 150,
                         display: "flex",
-                        flexDirection: "column",
                         alignItems: "center",
                         justifyContent: "center",
-                        textAlign: "center",
+                        flexDirection: "column",
+                        backgroundColor: "#F3E5F5",
                       }}
                     >
-                      <Typography variant="h6">Your Garden</Typography>
-                      {/* <GardenPhotoPlaceholder onUpload={handleAddPhoto} /> */}
-                    </CardContent>
-                  </Card>
-                </Grid>
-
-                {/* Small Square Containers Below */}
-                <Grid container spacing={2} item xs={12}>
-                  {[
-                    EmojiNatureIcon,
-                    LocalFloristIcon,
-                    FilterVintageIcon,
-                    GrassIcon,
-                  ].map((IconComponent, index) => (
-                    <Grid item xs={6} sm={3} key={index}>
-                      <Card
-                        sx={{
-                          height: 150,
-                          display: "flex",
-                          alignItems: "center",
-                          justifyContent: "center",
-                          flexDirection: "column",
-                        }}
-                      >
-                        <CardContent sx={{ textAlign: "center" }}>
-                          <IconComponent
-                            sx={{ fontSize: 50, color: iconColors[index] }}
-                          />{" "}
-                          {/* Icon used here */}
-                          <Typography variant="body1">
-                            Garden {index + 1}
-                          </Typography>
-                        </CardContent>
-                      </Card>
-                    </Grid>
-                  ))}
-                </Grid>
+                      <CardContent sx={{ textAlign: "center" }}>
+                        <IconComponent
+                          sx={{ fontSize: 50, color: iconColors[index] }}
+                        />
+                        <Typography variant="body1">
+                          Garden {index + 1}
+                        </Typography>
+                      </CardContent>
+                    </Card>
+                  </Grid>
+                ))}
               </Grid>
-              {/* create garden button below */}
+
+              {/* Create New Garden Button */}
               <Grid
                 item
                 sx={{ display: "flex", justifyContent: "center", mt: 4 }}
@@ -117,37 +113,28 @@ const Dashboard = () => {
                     color: "black",
                     "&:hover": { backgroundColor: "#b0d4c2" },
                   }}
-                  onClick={handleNavigateToCreateGarden}
+                  onClick={() => navigate("/create-garden")}
                 >
                   Create New Garden
                 </Button>
               </Grid>
             </Grid>
 
-            {/* Right: Weather & Nurseries */}
-            <Grid item xs={6}>
-              <Grid container spacing={2}>
-                {/* 5-Day Weather Forecast */}
-                <Grid item xs={12}>
-                  <Card sx={{ minHeight: 300, height: "auto" }}>
-                    <CardContent>
-                      <Forecast />
-                    </CardContent>
-                  </Card>
-                </Grid>
+            {/* Right: Weather & Nurseries Section */}
+            <Grid item xs={12} md={6}>
+              {/* Weather Forecast */}
+              <Card sx={{ minHeight: 300, backgroundColor: "#F3E5F5" }}>
+                <CardContent>
+                  <Forecast zip={zip} />
+                </CardContent>
+              </Card>
 
-                {/* Nurseries in Your Area */}
-                <Grid item xs={12}>
-                  <Card sx={{ height: 300 }}>
-                    <CardContent>
-                      <Typography variant="h6">
-                        Nurseries in Your Area
-                      </Typography>
-                      {/* Nursery details go here */}
-                    </CardContent>
-                  </Card>
-                </Grid>
-              </Grid>
+              {/* Nurseries Section */}
+              <Card sx={{ height: 300, backgroundColor: "#F3E5F5", mt: 2 }}>
+                <CardContent>
+                  <Typography variant="h6">Nurseries in Your Area</Typography>
+                </CardContent>
+              </Card>
             </Grid>
           </Grid>
         </Container>
