@@ -14,7 +14,8 @@ import GardenZone from './pages/GardenZone';
 import GardenSuccess from './pages/GardenSuccess';
 import Comment from './reusable-code/Comment';
 import PhotoUpload from './reusable-code/PhotoUpload';
-
+import Footer from './reusable-code/Footer';
+import { Container } from '@mui/material';
 
 
 
@@ -22,9 +23,12 @@ function App() {
   return (
     
     <Router>
+      <Container maxWidth={false} disableGutters sx={{ flex: 1 }}>     
+
       <WeatherWidget />
       
-      <div>
+      
+      
         <Routes>   
 
           <Route path="/" element={<HomePage />} />
@@ -43,7 +47,11 @@ function App() {
 
               
         </Routes>
+      <div>
+      <Footer /> 
       </div>
+      
+      </Container>
     </Router>
   );
 }

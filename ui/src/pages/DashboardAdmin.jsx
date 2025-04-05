@@ -96,11 +96,6 @@ const DashboardAdmin = () => {
             </Grid>
           </Grid>
         </Container>
-
-        {/* Footer */}
-        <Box component="footer" sx={{ textAlign: "center", padding: 2, backgroundColor: "#cce3de", marginBottom: "20px" }}>
-          <Typography variant="body2">&copy; 2025 DamaDevs Garden Dashboard</Typography>
-        </Box>
       </Box>
     </div>
   );
