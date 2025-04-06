@@ -1,7 +1,7 @@
 /* this css will go into the CSS folder or just in css file for the random styling that is not re-usable */
 .weatherWidget {
     position: fixed;
-    bottom: 20px;
+    bottom: 100px;
     left: 20px;
     background: #6b9080;
     color: white;
