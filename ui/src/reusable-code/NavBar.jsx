@@ -1,5 +1,6 @@
 import React from "react";
 import { AppBar, Toolbar, Typography, Box, Container } from "@mui/material";
+import "@fontsource/atma/600.css"; // from https://fonts.google.com/specimen/Atma?categoryFilters=Feeling:%2FExpressive%2FPlayful
 
 const NavBar = () => {
   return (
@@ -15,8 +16,16 @@ const NavBar = () => {
       }}
     >
       <Toolbar>
-        <Typography variant="h6" color="black">
-          Plant MO Plants
+        <Typography
+          variant="h6"
+          sx={{
+            fontFamily: "Atma, sans-serif",
+            fontSize: "2rem",
+            fontWeight: 600,
+            color: "#3E2723",
+          }}
+        >
+          🌱 Plant MO Plants 🌱
         </Typography>
       </Toolbar>
     </AppBar>
