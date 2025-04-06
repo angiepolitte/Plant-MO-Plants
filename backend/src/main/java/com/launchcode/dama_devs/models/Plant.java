@@ -1,5 +1,7 @@
 package com.launchcode.dama_devs.models;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.Entity;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToMany;
@@ -43,10 +45,12 @@ public class Plant extends AbstractEntity {
     private Boolean toxicToAnimals;
 
     //plant-garden relationship
+    @JsonBackReference
     @ManyToMany(mappedBy = "plants")
     private final List<Garden> gardens = new ArrayList<>();
 
     //plant-comment relationship
+    @JsonManagedReference
     @OneToMany(mappedBy = "plant")
     private final List<Comment> comments = new ArrayList<>();
 
