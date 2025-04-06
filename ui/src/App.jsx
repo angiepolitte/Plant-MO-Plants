@@ -14,9 +14,8 @@ import GardenZone from './pages/GardenZone';
 import GardenSuccess from './pages/GardenSuccess';
 import Comment from './reusable-code/Comment';
 import PhotoUpload from './reusable-code/PhotoUpload';
-
-
-
+import NurseryList from './reusable-code/NurseryList';
+import NurserySearch from './reusable-code/NurserySearch';
 
 function App() {
   return (
@@ -40,8 +39,9 @@ function App() {
           <Route path="/garden-details" element={<GardenDetails />} /> 
           <Route path="/comment" element={<Comment />} />  
           <Route path="/photo-upload" element={<PhotoUpload />} /> 
+          <Route path="/results" element={<NurseryList />} />
+          <Route path="/nursery-search" element={<NurserySearch />} />
 
-              
         </Routes>
       </div>
     </Router>
