@@ -8,7 +8,6 @@ import "./App.css";
 import WeatherWidget from "./reusable-code/WeatherWidget";
 import HomePage from "./pages/HomePage";
 import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
 import CreateAccount from "./pages/CreateAccount";
 import CreateGarden from "./pages/CreateGarden";
 import GardenConditions from "./pages/GardenConditions";
@@ -19,6 +18,7 @@ import GardenZone from "./pages/GardenZone";
 import GardenSuccess from "./pages/GardenSuccess";
 import Comment from "./reusable-code/Comment";
 import PhotoUpload from "./reusable-code/PhotoUpload";
+import Login from "./auth/login";
 
 function App() {
   return (

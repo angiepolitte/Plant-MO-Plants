@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Link, useNavigate } from "react-router-dom";
-import api from "../../services/api";
+import api from "../services/api";
 import { jwtDecode } from "jwt-decode";
 import InputField from "../reusable-code/InputFeild";
 import Buttons from "../reusable-code/Buttons";
@@ -9,7 +9,7 @@ import toast from "react-hot-toast";
 import { useMyContext } from "../store/ContextApi";
 import { useEffect } from "react";
 
-const apiUrl = process.env.REACT_APP_API_URL;
+const apiUrl = import.meta.env.VITE_API_URL;
 
 const Login = () => {
   const [jwtToken, setJwtToken] = useState("");
