@@ -22,7 +22,10 @@ import PhotoUpload from "./reusable-code/PhotoUpload";
 import Footer from "./reusable-code/Footer";
 import { Container, Box } from "@mui/material";
 import NavBar from "./reusable-code/NavBar";
-
+import NurseryList from './reusable-code/NurseryList';
+import NurserySearch from './reusable-code/NurserySearch';
+        
+ 
 function App() {
   return (
     <Router>
@@ -48,6 +51,8 @@ function App() {
             <Route path="/garden-details" element={<GardenDetails />} />
             <Route path="/comment" element={<Comment />} />
             <Route path="/photo-upload" element={<PhotoUpload />} />
+            <Route path="/results" element={<NurseryList />} />
+            <Route path="/nursery-search" element={<NurserySearch />} />
           </Routes>
         </Box>
 
