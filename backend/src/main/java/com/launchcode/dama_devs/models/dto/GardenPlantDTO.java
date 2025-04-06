@@ -15,4 +15,13 @@ public class GardenPlantDTO {
     private Garden garden;
     private Plant plant;
     private Boolean plantInGarden=false;
+
+    @Override
+    public String toString() {
+        return "GardenPlantDTO{" +
+                "garden=" + garden +
+                ", plant=" + plant +
+                ", plantInGarden=" + plantInGarden +
+                '}';
+    }
 }

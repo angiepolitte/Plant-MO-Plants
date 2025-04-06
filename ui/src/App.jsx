@@ -19,32 +19,51 @@ import GardenSuccess from "./pages/GardenSuccess";
 import Comment from "./reusable-code/Comment";
 import PhotoUpload from "./reusable-code/PhotoUpload";
 import Login from "./auth/login";
-
+import Footer from "./reusable-code/Footer";
+import { Container, Box } from "@mui/material";
+import NavBar from "./reusable-code/NavBar";
+import NurseryList from './reusable-code/NurseryList';
+import NurserySearch from './reusable-code/NurserySearch';
+        
+ 
 function App() {
   return (
     <Router>
-      <WeatherWidget />
+      <Container
+        maxWidth={false}
+        disableGutters
+        sx={{ display: "flex", flexDirection: "column", height: "100vh" }}
+      >
+        <NavBar />
+        <Box sx={{ flex: 1, p: 3 }}>
+          <Routes>
+            <Route path="/" element={<HomePage />} />
+            <Route path="/login" element={<Login />} />
+            <Route path="/create-account" element={<CreateAccount />} />
+            <Route path="/dashboard" element={<Dashboard />} />
+            <Route path="/admin-dashboard" element={<DashboardAdmin />} />
+            <Route path="/create-garden" element={<CreateGarden />} />
+            <Route path="/garden-zone" element={<GardenZone />} />
+            <Route path="/garden-conditions" element={<GardenConditions />} />
+            <Route path="/garden-success" element={<GardenSuccess />} />
+            <Route path="/plantsTBD" element={<PlantsTBD />} /> // will be
+            replaced with Allyson's file
+            <Route path="/garden-details" element={<GardenDetails />} />
+            <Route path="/comment" element={<Comment />} />
+            <Route path="/photo-upload" element={<PhotoUpload />} />
+            <Route path="/results" element={<NurseryList />} />
+            <Route path="/nursery-search" element={<NurserySearch />} />
+          </Routes>
+        </Box>
 
-      <div>
-        <Routes>
-          <Route path="/" element={<HomePage />} />
-          <Route path="/login" element={<Login />} />
-          <Route path="/create-account" element={<CreateAccount />} />
-          <Route path="/dashboard" element={<Dashboard />} />
-          <Route path="/admin-dashboard" element={<DashboardAdmin />} />
-          <Route path="/create-garden" element={<CreateGarden />} />
-          <Route path="/garden-zone" element={<GardenZone />} />
-          <Route path="/garden-conditions" element={<GardenConditions />} />
-          <Route path="/garden-success" element={<GardenSuccess />} />
-          <Route path="/plantsTBD" element={<PlantsTBD />} /> // will be
-          replaced with Allyson's file
-          <Route path="/garden-details" element={<GardenDetails />} />
-          <Route path="/comment" element={<Comment />} />
-          <Route path="/photo-upload" element={<PhotoUpload />} />
-        </Routes>
-      </div>
+        <Footer />
+        <WeatherWidget />
+      </Container>
+
     </Router>
   );
 }
 
+
 export default App;
+
