@@ -19,7 +19,7 @@ const Footer = () => {
     >
       <Container maxWidth="xl" disableGutters>
         <Typography variant="body3">
-          &copy; 2025 DamaDevs Garden Dashboard
+          &copy; 2025 DamaDevs Plant MO Plants
         </Typography>
       </Container>
     </Box>
