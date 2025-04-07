@@ -28,7 +28,6 @@ const Login = () => {
     defaultValues: {
       username: "",
       password: "",
-      code: "",
     },
     mode: "onTouched",
   });
