@@ -8,6 +8,7 @@ import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVRecord;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.ArrayList;
@@ -78,10 +79,13 @@ public class CsvToDatabase {
                         isEdible,
                         resistsDeer,
                         toxicToAnimals
-                        );
+                );
                 plantRecords.add(plant);
+
+                if (plantRepository.count()<90) {
+                    plantRepository.saveAll(plantRecords);
+                }
             }
-            plantRepository.saveAll(plantRecords);
         }
     }
 }
