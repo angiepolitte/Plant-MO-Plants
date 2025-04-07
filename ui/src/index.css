@@ -48,6 +48,7 @@ button {
   font-size: 1em;
   font-weight: 500;
   font-family: inherit;
+  color: #000;
   background-color: #1a1a1a;
   cursor: pointer;
   transition: border-color 0.25s;
@@ -128,4 +129,24 @@ button:focus-visible {
 button.plantCard-button:focus-visible {
   outline: 2px;
   color: #ffffff;
+}
+
+body.light {
+  background-color: #fff;
+  color: #000;
+}
+
+body.dark {
+  background-color: #121212;
+  color: #fff;
+}
+.theme-toggle-btn {
+  position: fixed;
+  top: 10px;
+  right: 10px;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  font-size: 24px;
+  z-index: 1000;
 }
