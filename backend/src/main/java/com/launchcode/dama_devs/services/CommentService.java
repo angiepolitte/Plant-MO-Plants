@@ -1,9 +1,12 @@
 package com.launchcode.dama_devs.services;
 
 import com.launchcode.dama_devs.models.Comment;
+import com.launchcode.dama_devs.models.Plant;
 import com.launchcode.dama_devs.models.User;
 import com.launchcode.dama_devs.models.data.CommentRepository;
+import com.launchcode.dama_devs.models.data.PlantRepository;
 import com.launchcode.dama_devs.models.data.UserRepository;
+import com.launchcode.dama_devs.models.dto.CommentDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -19,6 +22,9 @@ public class CommentService {
     @Autowired
     private UserRepository userRepository;
 
+    @Autowired
+    private PlantRepository plantRepository;
+
     // Fetch all comments
     public List<Comment> getAllComments() {
         return (List<Comment>) commentRepository.findAll();
@@ -30,9 +36,26 @@ public class CommentService {
     }
 
     // Create a new comment
-    public Comment createComment(Comment comment) {
+//    public Comment createComment(Comment comment) {
+//        return commentRepository.save(comment);
+//    }
+
+    public Comment createComment(CommentDTO commentDTO) {
+        Optional<User> userOpt = userRepository.findById(commentDTO.getUserId());
+        Optional<Plant> plantOpt = plantRepository.findById(commentDTO.getPlantId());
+
+        if (userOpt.isEmpty() || plantOpt.isEmpty()) {
+            throw new IllegalArgumentException("User or Plant not found.");
+        }
+        Comment comment = new Comment(
+                userOpt.get(),
+                plantOpt.get(),
+                commentDTO.getCommentContent()
+        );
         return commentRepository.save(comment);
     }
+
+
     // Update an existing comment
     public String updateComment(int commentId, String newContent) {
         Optional<Comment> commentOpt = commentRepository.findById(commentId);

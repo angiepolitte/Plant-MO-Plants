@@ -2,6 +2,7 @@ package com.launchcode.dama_devs.controllers;
 
 import com.launchcode.dama_devs.models.Comment;
 import com.launchcode.dama_devs.models.User;
+import com.launchcode.dama_devs.models.dto.CommentDTO;
 import com.launchcode.dama_devs.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -37,9 +38,9 @@ public class CommentController {
     }
 
     // POST: Create a new comment
-    @PostMapping
-    public ResponseEntity<Comment> createComment(@RequestBody Comment comment) {
-        Comment createdComment = commentService.createComment(comment);
+    @PostMapping("/comment")
+    public ResponseEntity<Comment> createComment(@RequestBody CommentDTO commentDTO) {
+        Comment createdComment = commentService.createComment(commentDTO);
         return ResponseEntity.ok(createdComment);
     }
 
