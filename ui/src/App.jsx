@@ -12,7 +12,6 @@ import CreateGarden from "./pages/CreateGarden";
 import GardenConditions from "./pages/GardenConditions";
 import DashboardAdmin from "./pages/DashboardAdmin";
 import GardenDetails from "./pages/GardenDetails";
-import PlantsTBD from "./pages/PlantsTBD";
 import GardenZone from "./pages/GardenZone";
 import GardenSuccess from "./pages/GardenSuccess";
 import Comment from "./reusable-code/Comment";
@@ -23,6 +22,8 @@ import { Container, Box } from "@mui/material";
 import NavBar from "./reusable-code/NavBar";
 import NurseryList from "./reusable-code/NurseryList";
 import NurserySearch from "./reusable-code/NurserySearch";
+import PlantCard from "./reusable-code/PlantCard";
+import PlantSearch from "./pages/PlantSearch";
 import Signup from "./auth/SignUp";
 
 function App() {
@@ -45,13 +46,13 @@ function App() {
             <Route path="/garden-zone" element={<GardenZone />} />
             <Route path="/garden-conditions" element={<GardenConditions />} />
             <Route path="/garden-success" element={<GardenSuccess />} />
-            <Route path="/plantsTBD" element={<PlantsTBD />} /> // will be
-            replaced with Allyson's file
+            <Route path="/plant-search" element={<PlantSearch />} />
             <Route path="/garden-details" element={<GardenDetails />} />
             <Route path="/comment" element={<Comment />} />
             <Route path="/photo-upload" element={<PhotoUpload />} />
             <Route path="/results" element={<NurseryList />} />
             <Route path="/nursery-search" element={<NurserySearch />} />
+            <Route path="/plant-card" element={<PlantCard />} />
           </Routes>
         </Box>
 
