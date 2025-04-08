@@ -9,9 +9,11 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter @Setter
 public class CommentDTO {
+
+    private int id;
     private String commentContent;
+    private int plantId;
     private Integer userId;
-    private Integer plantId;
 
     // Getters and Setters
 }

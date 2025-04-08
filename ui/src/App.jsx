@@ -35,7 +35,7 @@ function App() {
         sx={{ display: "flex", flexDirection: "column", height: "100vh" }}
       >
         <NavBar />
-        <Box sx={{ flex: 1, p: 3 }}>
+        <Box sx={{ flex: 1, p: 3, paddingTop: "80px", paddingBottom: "80px" }}>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
@@ -48,7 +48,8 @@ function App() {
             <Route path="/garden-success" element={<GardenSuccess />} />
             <Route path="/plant-search" element={<PlantSearch />} />
             <Route path="/garden-details" element={<GardenDetails />} />
-            <Route path="/comment" element={<Comment />} />
+            {/* <Route path="/comment" element={<Comment />} /> */}
+            <Route path="/comment/:plantId" element={<Comment />} />
             <Route path="/photo-upload" element={<PhotoUpload />} />
             <Route path="/results" element={<NurseryList />} />
             <Route path="/nursery-search" element={<NurserySearch />} />
