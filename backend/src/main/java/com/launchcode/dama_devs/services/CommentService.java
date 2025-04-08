@@ -47,6 +47,23 @@ public class CommentService {
                 savedComment.getUser().getUserId());
     }
 
+    @Transactional
+    public void deleteComment (int commentId, Integer userId) {
+        Optional<Comment> commentOptional = commentRepository.findById(commentId);
+
+        if (commentOptional.isPresent()) {
+            Comment comment = commentOptional.get();
+            if (comment.getUser().getUserId().equals(userId)) {
+                commentRepository.delete(comment);
+            } else {
+                throw new SecurityException("Not so fast.  You are not authorized to delete this comment");
+            }
+         } else {
+            throw new IllegalArgumentException("Woopsies.  No comment found with id: " + commentId);
+        }
+    }
+
+
     public CommentDTO addCommentFromDTO(CommentDTO commentDTO) {
         Optional<User> userOptional = userRepository.findById(commentDTO.getUserId());
         Optional<Plant> plantOptional = plantRepository.findById(commentDTO.getPlantId());
@@ -68,6 +85,8 @@ public class CommentService {
             throw new IllegalArgumentException("Invalid userId or plantId");
         }
     }
+
+
 }
 
 

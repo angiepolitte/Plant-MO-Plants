@@ -15,5 +15,4 @@ public class CommentDTO {
     private int plantId;
     private Integer userId;
 
-    // Getters and Setters
-}
+  }
