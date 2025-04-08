@@ -1,167 +1,127 @@
-import { useState, useEffect } from 'react';
+import zIndex from "@mui/material/styles/zIndex";
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom"; // To get dynamic params from the route
+const userId = 1;
 
-export default function Comment({ plantId }) {
-    const [angieComment, setAngieComment] = useState("");
-    const [comments, setComments] = useState([]);
-    const [newComment, setNewComment] = useState('');
-    const [updateComment, setUpdateComment] = useState('');
-    const [commentId, setCommentId] = useState(null);
-    const [selectedCommentId, setSelectedCommentId] = useState(null);
-    const [showCreate, setShowCreate] = useState(false);
-    const [showUpdate, setShowUpdate] = useState(false);
-    const [showDelete, setShowDelete] = useState(false);
-    
-    
-
-  // Fetch Angie's comment
-  useEffect(() => {
-    fetch("http://localhost:8080/comment/Angie")
-      .then((response) => response.text())
-      .then((data) => setAngieComment(data))
-      .catch((error) => console.error("Error fetching Angie's comment:", error));
-  }, []);
+const Comment = () => {
+  const { plantId } = useParams(); // Get the plantId from the URL
+  const [comments, setComments] = useState([]);
+  const [newComment, setNewComment] = useState("");
 
   useEffect(() => {
-    const fetchComments = async () => {
-      try {
-        const response = await fetch(plantId ? `http://localhost:8080/comment/plant/${plantId}` : "http://localhost:8080/comment/all");
-        const data = await response.json();
-        setComments(data);
-      } catch (error) {
-        console.error("Error fetching comments:", error);
-      }
-    };
-
-    fetchComments();
+    fetch(`http://localhost:8080/comment/plant/${plantId}`)
+      .then((response) => response.json())
+      .then((data) => setComments(data))
+      .catch((error) => console.error("Error fetching comments:", error));
   }, [plantId]);
 
-  // Create a comment
-  const createComment = async () => {
-    if (newComment.trim()) {
-      const comment = { text: newComment, plantId: plantId }; // Add plantId to the comment
-      try {
-        await fetch('http://localhost:8080/comment', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-          },
-          body: JSON.stringify(comment),
-        });
-        setNewComment('');
-        fetchComments(); // Refresh comments
-      } catch (error) {
-        console.error('Error creating comment:', error);
-      }
-    }
+  // ******* ADD COMMENT *******
+  const handleAddComment = () => {
+    const commentData = {
+      commentContent: newComment,
+      plantId,
+      userId, // Assuming userId is 1 for now, replace as needed
+    };
+
+    fetch("http://localhost:8080/comment/add", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(commentData),
+    })
+      .then((response) => response.json())
+      .then((data) => {
+        setComments((prevComments) => [...prevComments, data]);
+        setNewComment("");
+      })
+      .catch((error) => console.error("Error adding comment:", error));
   };
 
-  // Update a comment
-  const updateCommentById = async () => {
-    if (commentId && updateComment.trim()) {
-      try {
-        await fetch(`http://localhost:8080/comment/${commentId}`, {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ text: updateComment }),
-        });
-        setUpdateComment('');
-        setCommentId(null);
-        setShowUpdate(false);
-        fetchComments(); // Refresh comments
-      } catch (error) {
-        console.error("Error updating comment:", error);
-      }
-    }
-  };
+  // ******* DELETE COMMENT *******
 
-  // Delete a comment
-  const deleteCommentById = async () => {
-    if (selectedCommentId) {
-      const confirmDelete = window.confirm("Are you sure you want to delete this comment?");
-      if (confirmDelete) {
-        try {
-          await fetch(`http://localhost:8080/comment/${selectedCommentId}`, {
-            method: "DELETE",
-          });
-          setShowDelete(false);
-          fetchComments(); // Refresh comments
-        } catch (error) {
-          console.error("Error deleting comment:", error);
-        }
-      }
-    }
+  const handleDeleteComment = (commentId, userId) => {
+    fetch("http://localhost:8080/comment/delete", {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ id: commentId, userId }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to delete");
+        return response.text();
+      })
+      .then(() => {
+        setComments((prev) => prev.filter((c) => c.id !== commentId));
+      })
+      .catch((err) => console.error("Delete error:", err));
   };
 
   return (
-    <div>
-        <div>
-        <h2>Angie's Comment</h2>
-        <p>{angieComment || "No comment available."}</p>
-      </div>
-      <h2>Comments for Plant {plantId ? `#${plantId}` : 'All Plants'}</h2>
+    <div
+      style={{
+        position: "fixed",
+        bottom: 0,
+        left: 0,
+        right: 0,
+        height: "33vh",
+        overflowY: "auto",
+        backgroundColor: "#f9f9f9",
+        borderTop: "2px solid #ccc",
+        padding: "1rem",
+      }}
+    >
+      <h2>Community Tips for Plant {plantId}</h2>
       <ul>
-        {comments.map((comment) => (
-          <li key={comment.id}>
-            {comment.comment_content}
+        {comments.map((comment, index) => (
+          <li key={comment.id || index}>
+            <strong>User {comment.userId}</strong> ~ "{comment.commentContent}"
+            {comment.userId === userId && (
+              <button
+                style={{ marginLeft: "10px", color: "purple" }}
+                onClick={() => handleDeleteComment(comment.id, userId)}
+              >
+                Delete
+              </button>
+            )}
           </li>
         ))}
       </ul>
-
-      <div style={{ display: 'flex', gap: '10px' }}>
-        <button onClick={() => { setShowCreate(true); setShowUpdate(false); setShowDelete(false); }}>Create a Comment</button>
-        <button onClick={() => { setShowCreate(false); setShowUpdate(true); setShowDelete(false); }}>Update a Comment</button>
-        <button onClick={() => { setShowCreate(false); setShowUpdate(false); setShowDelete(true); }}>Delete a Comment</button>
-      </div>
-
-      <div>
-        {showCreate && (
-          <div>
-            <input
-              type="text"
-              placeholder="Enter new comment"
-              value={newComment}
-              onChange={(e) => setNewComment(e.target.value)}
-            />
-            <button onClick={createComment}>Create Comment</button>
-          </div>
-        )}
-
-        {showUpdate && (
-          <div>
-            <select value={commentId} onChange={(e) => setCommentId(e.target.value)}>
-              <option value="">Select a comment to update</option>
-              {comments.map((comment) => (
-                <option key={comment.id} value={comment.id}>{comment.comment_content}</option>
-              ))}
-            </select>
-            {commentId && (
-              <div>
-                <input
-                  type="text"
-                  placeholder="Update comment"
-                  value={updateComment}
-                  onChange={(e) => setUpdateComment(e.target.value)}
-                />
-                <button onClick={updateCommentById}>Update Comment</button>
-              </div>
-            )}
-          </div>
-        )}
-
-        {showDelete && (
-          <div>
-            <select value={selectedCommentId} onChange={(e) => setSelectedCommentId(e.target.value)}>
-              <option value="">Select a comment to delete</option>
-              {comments.map((comment) => (
-                <option key={comment.id} value={comment.id}>{comment.comment_content}</option>
-              ))}
-            </select>
-            <button onClick={deleteCommentById}>Delete Comment</button>
-          </div>
-        )}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "column",
+          gap: "0.5rem",
+          marginTop: "1rem",
+          alignItems: "center",
+          justifyContent: "center",
+          backgroundColor: "#EDE7F6",
+        }}
+      >
+        <textarea
+          style={{
+            marginTop: "1rem",
+            width: "50%",
+            padding: "0.5rem",
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+            backgroundColor: "white",
+          }}
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          placeholder="Add a comment"
+        />
+        <button
+          onClick={handleAddComment}
+          style={{
+            marginBottom: "1rem",
+            backgroundColor: "#E0F2F1",
+            border: "1px solid #ccc",
+            borderRadius: "5px",
+          }}
+        >
+          Add Comment
+        </button>
       </div>
     </div>
   );
-}
+};
+
+export default Comment;
