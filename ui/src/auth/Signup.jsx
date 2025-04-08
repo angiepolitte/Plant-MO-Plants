@@ -1,6 +1,9 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
 import api from "../services/api";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+import Divider from "@mui/material/Divider";
 import Buttons from "../reusable-code/Buttons";
 import InputField from "../reusable-code/InputFeild";
 import { useForm } from "react-hook-form";
@@ -89,6 +92,32 @@ const Signup = () => {
           <p className="text-slate-600 text-center">
             Enter your credentials to create new account
           </p>
+          <div className="flex items-center justify-between gap-1 py-5 ">
+            <a
+              href={`${apiUrl}/oauth2/authorization/google`}
+              className="flex gap-1 items-center justify-center flex-1 border p-2 shadow-sm shadow-slate-200 rounded-md hover:bg-slate-300 transition-all duration-300"
+            >
+              <span>
+                <FcGoogle className="text-2xl" />
+              </span>
+              <span className="font-semibold sm:text-customText text-xs">
+                Login with Google
+              </span>
+            </a>
+            <a
+              href={`${apiUrl}/oauth2/authorization/github`}
+              className="flex gap-1 items-center justify-center flex-1 border p-2 shadow-sm shadow-slate-200 rounded-md hover:bg-slate-300 transition-all duration-300"
+            >
+              <span>
+                <FaGithub className="text-2xl" />
+              </span>
+              <span className="font-semibold sm:text-customText text-xs">
+                Login with Github
+              </span>
+            </a>
+          </div>
+
+          <Divider className="font-semibold">OR</Divider>
         </div>
 
         <div className="flex flex-col gap-2">

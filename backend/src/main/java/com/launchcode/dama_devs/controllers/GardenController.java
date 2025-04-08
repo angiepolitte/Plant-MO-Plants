@@ -68,7 +68,7 @@ public class GardenController {
         return ResponseEntity.status(HttpStatus.CREATED).body(addPlantToGarden);
     }
 
-    @DeleteMapping("/{gardenId}/garden-detail/{plantId}")
+    @DeleteMapping("/{gardenId}/remove-plants/{plantId}")
     public ResponseEntity<GardenPlantDTO> removePlantFromGarden(@PathVariable Integer gardenId, @PathVariable Integer plantId) {
         GardenPlantDTO removePlantFromGarden = gardenPlantService.removePlantFromGarden(gardenId, plantId);
         return ResponseEntity.status(HttpStatus.OK).body(removePlantFromGarden);

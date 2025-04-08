@@ -4,6 +4,9 @@ import { Link, useNavigate } from "react-router-dom";
 import api from "../services/api";
 import { jwtDecode } from "jwt-decode";
 import InputField from "../reusable-code/InputFeild";
+import { FcGoogle } from "react-icons/fc";
+import { FaGithub } from "react-icons/fa";
+import Divider from "@mui/material/Divider";
 import Buttons from "../reusable-code/Buttons";
 import toast from "react-hot-toast";
 import { useMyContext } from "../store/ContextApi";
@@ -43,7 +46,7 @@ const Login = () => {
     //store the token on the context state  so that it can be shared any where in our application by context provider
     setToken(token);
 
-    navigate("/notes");
+    navigate("/dashboard");
   };
 
   //function for handle login with credentials
@@ -96,6 +99,32 @@ const Login = () => {
             <p className="text-slate-600 text-center">
               Please Enter your username and password{" "}
             </p>
+            <div className="flex items-center justify-between gap-1 py-5 ">
+              <Link
+                to={`${apiUrl}/oauth2/authorization/google`}
+                className="flex gap-1 items-center justify-center flex-1 border p-2 shadow-sm shadow-slate-200 rounded-md hover:bg-slate-300 transition-all duration-300"
+              >
+                <span>
+                  <FcGoogle className="text-2xl" />
+                </span>
+                <span className="font-semibold sm:text-customText text-xs">
+                  Login with Google
+                </span>
+              </Link>
+              <Link
+                to={`${apiUrl}/oauth2/authorization/github`}
+                className="flex gap-1 items-center justify-center flex-1 border p-2 shadow-sm shadow-slate-200 rounded-md hover:bg-slate-300 transition-all duration-300"
+              >
+                <span>
+                  <FaGithub className="text-2xl" />
+                </span>
+                <span className="font-semibold sm:text-customText text-xs">
+                  Login with Github
+                </span>
+              </Link>
+            </div>
+
+            <Divider className="font-semibold">OR</Divider>
           </div>
 
           <div className="flex flex-col gap-2">
@@ -128,6 +157,11 @@ const Login = () => {
           >
             {loading ? <span>Loading...</span> : "LogIn"}
           </Buttons>
+          <p className=" text-sm text-slate-700 ">
+            <Link className=" underline hover:text-black" to="/forgot-password">
+              Forgot Password?
+            </Link>
+          </p>
           <p className="text-center text-sm text-slate-700 mt-6">
             Don't have an account?{" "}
             <Link
