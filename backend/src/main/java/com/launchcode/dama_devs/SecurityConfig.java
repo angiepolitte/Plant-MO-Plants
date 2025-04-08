@@ -1,5 +1,6 @@
 package com.launchcode.dama_devs;
 
+import com.launchcode.dama_devs.configs.OAuth2LoginSuccessHandler;
 import com.launchcode.dama_devs.models.AppRole;
 import com.launchcode.dama_devs.models.Role;
 import com.launchcode.dama_devs.models.User;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -34,10 +36,15 @@ public class SecurityConfig {
     @Autowired
     AuthEntryPointJwt unauthorizedHandler;
 
+    @Autowired
+    @Lazy
+    OAuth2LoginSuccessHandler oAuth2LoginSuccessHandler;
+
     @Bean
     public AuthTokenFilter authenticationJwtTokenFilter(){
         return new AuthTokenFilter();
     }
+
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
         http.csrf(csrf ->
@@ -55,8 +62,12 @@ public class SecurityConfig {
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/auth/public/**").permitAll()
                         .requestMatchers("/api/csrf-token").permitAll()
+                        .requestMatchers("/oauth2/**").permitAll()
                         //here other than the above requests to access you need to authenticate
-                        .anyRequest().authenticated());
+                        .anyRequest().authenticated())
+                        .oauth2Login(oauth2->{
+                            oauth2.successHandler(oAuth2LoginSuccessHandler);
+                        });
         http.exceptionHandling(exception
                 -> exception.authenticationEntryPoint(unauthorizedHandler));
         http.addFilterBefore(authenticationJwtTokenFilter(),
