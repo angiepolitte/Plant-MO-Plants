@@ -74,6 +74,8 @@ button:focus-visible {
   }
 }
 
+
+
 .plantCard {
   border: 1px solid rgba(57, 47, 65, 0.065);
   background-color: #ffffff;
@@ -150,3 +152,4 @@ body.dark {
   font-size: 24px;
   z-index: 1000;
 }
+

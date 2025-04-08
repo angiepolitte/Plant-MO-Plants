@@ -1,4 +1,5 @@
 import React from "react";
+import "../custom-css/PlantCard.css";
 
 const PlantCard = () => {
   return (

@@ -25,7 +25,12 @@ import NurserySearch from "./reusable-code/NurserySearch";
 import PlantCard from "./reusable-code/PlantCard";
 import PlantSearch from "./pages/PlantSearch";
 import Signup from "./auth/SignUp";
+
+import PlantDetails from "./pages/PlantDetails";
+import StarRating from "./reusable-code/StarRating";
+
 import OAuth2RedirectHandler from "./auth/Oauth2RedirectHandler";
+
 
 function App() {
   return (
@@ -58,6 +63,8 @@ function App() {
             <Route path="/results" element={<NurseryList />} />
             <Route path="/nursery-search" element={<NurserySearch />} />
             <Route path="/plant-card" element={<PlantCard />} />
+            <Route path="/plant-details" element={<PlantDetails />} />
+            <Route path="star-rating" element={<StarRating />} />
           </Routes>
         </Box>
 
