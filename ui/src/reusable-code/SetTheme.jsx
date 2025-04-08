@@ -31,7 +31,6 @@ const SetTheme = () => {
       >
         {theme === "light" ? <FaMoon /> : <FaSun />}
       </button>
-      {/*<h1>{theme === "light" ? "Light Mode" : "Dark Mode"}</h1>*/}
     </div>
   );
 };
