@@ -24,7 +24,6 @@ public class PlantRatingService {
     @Autowired
     private PlantRatingRepository plantRatingRepository;
 
-
     public PlantRatingDTO createPlantRating(int plantRating, Integer userId, Integer plantId) {
 
         //get the user id
@@ -41,17 +40,31 @@ public class PlantRatingService {
         }
         Plant plant = plantResult.get();
 
-        //use constructor to create a new plant rating and save it to the repository
-        PlantRating rating = new PlantRating(plantRating, user, plant);
-        plantRatingRepository.save(rating);
+        //check for a current rating otherwise it saves any rating changes as "new" ratings in the database
+        Optional<PlantRating> currentRating = plantRatingRepository.findByUser_userIdAndPlantId(userId, plantId);
+        if (currentRating.isPresent()) {
+            PlantRating rating = currentRating.get();
+            rating.setPlantRating(plantRating);
+            plantRatingRepository.save(rating);
 
-        //create a new plantRating DTO
-        PlantRatingDTO plantRatingDTO = new PlantRatingDTO();
-        plantRatingDTO.setPlantRating(rating.getPlantRating());
-        plantRatingDTO.setUserId(userId);
-        plantRatingDTO.setPlantId(plantId);
+            //create a new plantRating DTO with updated rating
+            PlantRatingDTO plantRatingDTO = new PlantRatingDTO();
+            plantRatingDTO.setPlantRating(rating.getPlantRating());
+            plantRatingDTO.setUserId(userId);
+            plantRatingDTO.setPlantId(plantId);
+            return plantRatingDTO;
 
-        return plantRatingDTO;
+        } else {
+            //use constructor to create a new plant rating and save it to the repository
+            PlantRating newRating = new PlantRating(plantRating, user, plant);
+            plantRatingRepository.save(newRating);
+
+            //create a new plantRating DTO
+            PlantRatingDTO plantRatingDTO = new PlantRatingDTO();
+            plantRatingDTO.setPlantRating(newRating.getPlantRating());
+            plantRatingDTO.setUserId(userId);
+            plantRatingDTO.setPlantId(plantId);
+            return plantRatingDTO;
+        }
     }
 }
-

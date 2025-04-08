@@ -15,8 +15,8 @@ public class RatingController {
     @Autowired
     private PlantRatingService plantRatingService;
 
-    @PostMapping("/{userId}/{plantId}/rating")
-    public ResponseEntity<PlantRatingDTO> createPlantRating(@RequestBody Integer plantRating, @PathVariable Integer userId, @PathVariable Integer plantId) {
+    @PostMapping("/{plantRating}/{userId}/{plantId}")
+    public ResponseEntity<PlantRatingDTO> createPlantRating(@PathVariable Integer plantRating, @PathVariable Integer userId, @PathVariable Integer plantId) {
         PlantRatingDTO createPlantRating = plantRatingService.createPlantRating(plantRating, userId, plantId);
         return ResponseEntity.status(HttpStatus.CREATED).body(createPlantRating);
     }

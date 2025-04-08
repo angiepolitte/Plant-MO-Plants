@@ -8,11 +8,13 @@ import lombok.Setter;
 
 @NoArgsConstructor
 @NotNull
-@Getter @Setter
+@Getter
+@Setter
 public class PlantRatingDTO {
-    private int plantId;
-    private Integer userId;
+
     private int plantRating;
+    private Integer userId;
+    private int plantId;
 
     @Override
     public String toString() {
