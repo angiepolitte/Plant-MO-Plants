@@ -31,7 +31,6 @@ import StarRating from "./reusable-code/StarRating";
 
 import OAuth2RedirectHandler from "./auth/Oauth2RedirectHandler";
 
-
 function App() {
   return (
     <Router>
@@ -58,7 +57,6 @@ function App() {
             <Route path="/garden-success" element={<GardenSuccess />} />
             <Route path="/plant-search" element={<PlantSearch />} />
             <Route path="/garden-details" element={<GardenDetails />} />
-            {/* <Route path="/comment" element={<Comment />} /> */}
             <Route path="/comment/:plantId" element={<Comment />} />
             <Route path="/photo-upload" element={<PhotoUpload />} />
             <Route path="/results" element={<NurseryList />} />
