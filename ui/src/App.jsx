@@ -30,6 +30,7 @@ import PlantDetails from "./pages/PlantDetails";
 import StarRating from "./reusable-code/StarRating";
 
 import OAuth2RedirectHandler from "./auth/Oauth2RedirectHandler";
+import AllPhotos from "./reusable-code/AllPhotos";
 
 function App() {
   return (
@@ -64,6 +65,7 @@ function App() {
             <Route path="/plant-card" element={<PlantCard />} />
             <Route path="/plant-details" element={<PlantDetails />} />
             <Route path="star-rating" element={<StarRating />} />
+            <Route path="all-photos" element={<AllPhotos />} />
           </Routes>
         </Box>
 
