@@ -31,7 +31,6 @@ import StarRating from "./reusable-code/StarRating";
 
 import OAuth2RedirectHandler from "./auth/Oauth2RedirectHandler";
 
-
 function App() {
   return (
     <Router>
