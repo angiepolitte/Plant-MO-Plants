@@ -1,7 +1,7 @@
 import React from "react";
 import "../custom-css/PlantCard.css";
 import "../custom-css/PlantDetails.css";
-import "../reusable-code/StarRating";
+import StarRating from "../reusable-code/StarRating";
 
 const PlantDetails = () => {
   return (
@@ -26,6 +26,10 @@ const PlantDetails = () => {
         </div>
       </div>
       <div className="plant-description">
+        <div className="your-star-rating">
+          <h3>What do you think of this plant?</h3>
+          <StarRating />
+        </div>
         <h2 className="plant-quick-info">Description</h2>
         <p>
           Dense mounds of round, mottled foliage, 12 to 24 inches tall, are the
@@ -38,5 +42,4 @@ const PlantDetails = () => {
     </div>
   );
 };
-
 export default PlantDetails;
