@@ -9,6 +9,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
+import java.util.Optional;
 
 
 @CrossOrigin(origins = "http://localhost:5173")
@@ -26,5 +27,11 @@ public class PlantController {
     public ResponseEntity<List<Plant>> getMatchingGardenPlants(@PathVariable Integer gardenId) {
         List<Plant> matchingGardenPlants = plantFilteringService.filterPlantsByGardenFields(gardenId);
         return ResponseEntity.status(HttpStatus.OK).body(matchingGardenPlants);
+    }
+
+    @GetMapping("/{plantId}")
+    public ResponseEntity<Optional<Plant>> getPlant(@PathVariable Integer plantId) {
+        Optional <Plant> plant = plantRepository.findById(plantId);
+        return ResponseEntity.status(HttpStatus.OK).body(plant);
     }
 }
