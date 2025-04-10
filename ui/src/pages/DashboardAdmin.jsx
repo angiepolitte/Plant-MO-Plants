@@ -28,7 +28,7 @@ const DashboardAdmin = () => {
   const iconColors = ["#FF8F00", "#E91E63", "#6A1B9A", "#388E3C"];
 
   // admin zip code default for presenting
-  const zip = "90210";
+  // const zip = "90210";
 
   return (
     <div>
@@ -119,7 +119,8 @@ const DashboardAdmin = () => {
               {/* Weather Forecast */}
               <Card sx={{ minHeight: 300, backgroundColor: "#F3E5F5" }}>
                 <CardContent>
-                  <Forecast zip={zip} />
+                  {/* <Forecast zip={zip} /> */}
+                  <Forecast />
                 </CardContent>
               </Card>
 
