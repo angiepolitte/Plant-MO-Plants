@@ -25,10 +25,8 @@ import NurserySearch from "./reusable-code/NurserySearch";
 import PlantCard from "./reusable-code/PlantCard";
 import PlantSearch from "./pages/PlantSearch";
 import Signup from "./auth/SignUp";
-
 import PlantDetails from "./pages/PlantDetails";
 import StarRating from "./reusable-code/StarRating";
-
 import OAuth2RedirectHandler from "./auth/Oauth2RedirectHandler";
 import AllPhotos from "./reusable-code/AllPhotos";
 

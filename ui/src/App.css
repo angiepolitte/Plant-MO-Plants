@@ -1,5 +1,7 @@
 html,
-body,
+body {
+  overflow-x: hidden;
+}
 #root {
   height: auto;
   min-height: 100%;
