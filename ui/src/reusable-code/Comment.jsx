@@ -1,10 +1,14 @@
 import zIndex from "@mui/material/styles/zIndex";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // To get dynamic params from the route
-const userId = 1;
+import { useMyContext } from "../store/ContextApi";
 
 const Comment = () => {
   const { plantId } = useParams(); // Get the plantId from the URL
+  const { currentUser } = useMyContext();
+  const userId = currentUser?.id;
+  const username = currentUser?.username;
+
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
 
@@ -72,7 +76,8 @@ const Comment = () => {
       <ul style={{ alignItems: "left", padding: "5px", marginBottom: "10px" }}>
         {comments.map((comment, index) => (
           <li key={comment.id || index}>
-            <strong>User {comment.userId}</strong> ~ "{comment.commentContent}"
+            <strong>User {comment.username}</strong> ~ "{comment.commentContent}
+            "
             {comment.userId === userId && (
               <button
                 style={{ marginLeft: "10px", color: "purple" }}
