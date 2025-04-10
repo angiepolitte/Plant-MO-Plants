@@ -4,8 +4,8 @@ import { jwtDecode } from "jwt-decode";
 import { useMyContext } from "../store/ContextApi";
 
 const OAuth2RedirectHandler = () => {
-  const navigate = useNavigate();
-  const location = useLocation();
+  const navigate = useNavigate;
+  const location = useLocation;
   const { setToken, setIsAdmin } = useMyContext();
 
   useEffect(() => {

@@ -45,36 +45,65 @@ public class SecurityConfig {
         return new AuthTokenFilter();
     }
 
+//    @Bean
+//    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
+//        http.csrf(csrf ->
+//                csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
+//                        /*here we are making use of ignoring request matches method
+//                          here all the apis that match the pattern will be ignored for
+//                          csrf protection
+//                        */
+//                        .ignoringRequestMatchers("/api/auth/public/**"));
+//        http.authorizeHttpRequests(requests ->
+//                requests
+//                        //here giving permissions to everyone to access the endpoint of contact
+//                        .requestMatchers("/contact").permitAll()
+//                        //here restricted to admin to access the end point of hello
+//                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
+//                        .requestMatchers("/api/auth/public/**").permitAll()
+//                        .requestMatchers("/api/csrf-token").permitAll()
+//                        .requestMatchers("/oauth2/**").permitAll()
+//                        //here other than the above requests to access you need to authenticate
+//                        .anyRequest().authenticated())
+//                        .oauth2Login(oauth2->{
+//                            oauth2.successHandler(oAuth2LoginSuccessHandler);
+//                        });
+//        http.exceptionHandling(exception
+//                -> exception.authenticationEntryPoint(unauthorizedHandler));
+//        http.addFilterBefore(authenticationJwtTokenFilter(),
+//                UsernamePasswordAuthenticationFilter.class);
+//        http.formLogin(Customizer.withDefaults());
+//        http.httpBasic(Customizer.withDefaults());
+//        return http.build();
+//    }
+
     @Bean
-    SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf ->
-                csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
-                        /*here we are making use of ignoring request matches method
-                          here all the apis that match the pattern will be ignored for
-                          csrf protection
-                        */
-                        .ignoringRequestMatchers("/api/auth/public/**"));
-        http.authorizeHttpRequests(requests ->
-                requests
-                        //here giving permissions to everyone to access the endpoint of contact
-                        .requestMatchers("/contact").permitAll()
-                        //here restricted to admin to access the end point of hello
-                        .requestMatchers("/api/admin/**").hasRole("ADMIN")
-                        .requestMatchers("/api/auth/public/**").permitAll()
-                        .requestMatchers("/api/csrf-token").permitAll()
-                        .requestMatchers("/oauth2/**").permitAll()
-                        //here other than the above requests to access you need to authenticate
-                        .anyRequest().authenticated())
-                        .oauth2Login(oauth2->{
-                            oauth2.successHandler(oAuth2LoginSuccessHandler);
-                        });
-        http.exceptionHandling(exception
-                -> exception.authenticationEntryPoint(unauthorizedHandler));
-        http.addFilterBefore(authenticationJwtTokenFilter(),
-                UsernamePasswordAuthenticationFilter.class);
-        http.formLogin(Customizer.withDefaults());
-        http.httpBasic(Customizer.withDefaults());
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+        http
+                .csrf(csrf -> csrf.disable()) // Disable CSRF for development (not recommended in production)
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/**").permitAll()
+                        .requestMatchers("/weather/**").permitAll()
+                        .requestMatchers("/auth/**").permitAll()//
+                        .requestMatchers("/nurseries/**").permitAll()
+                        .requestMatchers("/plant/**").permitAll()//
+                        .requestMatchers("/garden/**").permitAll()//
+                        .requestMatchers("/user/**").permitAll()//
+                        .requestMatchers("/comment/**").permitAll()//
+                        .requestMatchers("/photo/**").permitAll()//
+
+                        .anyRequest().authenticated()  // Protect all other endpoints
+                )
+                .formLogin(login -> login
+                        .loginPage("/login") // Custom login page (if you have one)
+                        .permitAll()
+                )
+                .logout(logout -> logout.permitAll());
+                 // Allows basic auth (useful for Postman testing)
+
         return http.build();
+
+
     }
 
     @Bean
