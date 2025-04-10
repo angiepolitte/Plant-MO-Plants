@@ -4,6 +4,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import React from "react";
 import "./App.css";
 import WeatherWidget from "./reusable-code/WeatherWidget";
 import HomePage from "./pages/HomePage";
@@ -29,6 +30,7 @@ import PlantDetails from "./pages/PlantDetails";
 import StarRating from "./reusable-code/StarRating";
 import OAuth2RedirectHandler from "./auth/Oauth2RedirectHandler";
 import AllPhotos from "./reusable-code/AllPhotos";
+
 
 function App() {
   return (
