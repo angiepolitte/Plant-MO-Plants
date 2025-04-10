@@ -3,6 +3,7 @@ import "../custom-css/PlantCard.css";
 import "../custom-css/PlantDetails.css";
 import StarRating from "../reusable-code/StarRating";
 import { useParams } from "react-router-dom";
+import Comment from "../reusable-code/Comment";
 
 function PlantDetails() {
   const { plantId } = useParams(); //grabs the plantId from the URL.
@@ -67,6 +68,9 @@ function PlantDetails() {
           <li>Spread: {plant.plantSpread}</li>
         </ol>
         <p>{plant.plantDescription}</p>
+        <div className="community-tips">
+          <Comment />
+        </div>
       </div>
     </div>
   );
