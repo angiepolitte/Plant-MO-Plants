@@ -62,7 +62,7 @@ function PlantDetails() {
           <StarRating />
         </div>
         <h2 className="description-header">Description</h2>
-        <ol className="plant-info-list">
+        <ol className="description-info-list">
           <li>Height: {plant.plantHeight}</li>
           <li>Spread: {plant.plantSpread}</li>
         </ol>
