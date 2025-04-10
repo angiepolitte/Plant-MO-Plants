@@ -16,7 +16,7 @@ function HomePage() {
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
       <h1 style={{ color: "#808000", padding: "10px" }}>
-        Welcome to our Navtive Planter App
+        Welcome to our Native Planter App
       </h1>
       <h2 style={{ color: "#FF7F50", padding: "20px", fontSize: "35px" }}>
         Plan your Missouri native plant garden
