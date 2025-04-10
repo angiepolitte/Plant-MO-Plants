@@ -36,7 +36,7 @@ const Dashboard = () => {
   const iconColors = ["#FF8F00", "#E91E63", "#6A1B9A", "#388E3C"];
 
   // admin zip code default for presenting
-  const zip = "63026";
+  // const zip = "63026";
 
   return (
     <div>
@@ -123,9 +123,19 @@ const Dashboard = () => {
             {/* Right: Weather & Nurseries Section */}
             <Grid item xs={12} md={6}>
               {/* Weather Forecast */}
-              <Card sx={{ minHeight: 300, backgroundColor: "#F3E5F5" }}>
+              <Card
+                sx={{
+                  minHeight: 300,
+                  backgroundColor: "#F3E5F5",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 1,
+                }}
+              >
                 <CardContent>
-                  <Forecast zip={zip} />
+                  {/* <Forecast zip={zip} /> */}
+                  <Forecast />
                 </CardContent>
               </Card>
 
