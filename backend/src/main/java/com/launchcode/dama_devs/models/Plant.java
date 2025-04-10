@@ -31,7 +31,7 @@ public class Plant extends AbstractEntity {
     private String plantWater;
     private String plantSoil;
 
-    @Size(max=275)
+    @Size(max=500)
     private String plantDescription;
     private String plantHeight;
     private String plantSpread;
