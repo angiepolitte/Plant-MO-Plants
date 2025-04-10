@@ -1,11 +1,11 @@
-import { useEffect } from "react";
+import React, { useEffect } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import { jwtDecode } from "jwt-decode";
 import { useMyContext } from "../store/ContextApi";
 
 const OAuth2RedirectHandler = () => {
-  const navigate = useNavigate;
-  const location = useLocation;
+  const navigate = useNavigate();
+  const location = useLocation();
   const { setToken, setIsAdmin } = useMyContext();
 
   useEffect(() => {
@@ -34,7 +34,7 @@ const OAuth2RedirectHandler = () => {
 
         // Delay navigation to ensure local storage operations complete
         setTimeout(() => {
-          console.log("Navigating to /notes");
+          console.log("Navigating to /dashboard");
           navigate("/dashboard");
         }, 100); // 100ms delay
       } catch (error) {

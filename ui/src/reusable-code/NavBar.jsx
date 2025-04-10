@@ -1,9 +1,38 @@
 import React from "react";
-import { AppBar, Toolbar, Typography, Box, Container } from "@mui/material";
+import { useNavigate } from "react-router-dom";
+import {
+  AppBar,
+  Toolbar,
+  Typography,
+  Box,
+  Button,
+  Container,
+} from "@mui/material";
 import "@fontsource/atma/600.css"; // from https://fonts.google.com/specimen/Atma?categoryFilters=Feeling:%2FExpressive%2FPlayful
 import SetTheme from "./SetTheme";
+import { useMyContext } from "../store/ContextApi";
 
 const NavBar = () => {
+  const navigate = useNavigate();
+
+  const { setToken, setCurrentUser, setIsAdmin } = useMyContext();
+  const isLoggedIn = !!localStorage.getItem("JWT_TOKEN");
+
+  const handleLogout = () => {
+    if (isLoggedIn) {
+      localStorage.removeItem("JWT_TOKEN"); // Updated to remove token from localStorage
+      localStorage.removeItem("USER"); // Remove user details as well
+      localStorage.removeItem("CSRF_TOKEN");
+      localStorage.removeItem("IS_ADMIN");
+      setToken(null);
+      setCurrentUser(null);
+      setIsAdmin(false);
+      navigate("/login");
+    } else {
+      navigate("/login");
+    }
+  };
+
   return (
     <AppBar
       position="fixed"
@@ -28,6 +57,11 @@ const NavBar = () => {
         >
           🌱 Plant MO Plants 🌱
         </Typography>
+        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+          <Button className="login-button" onClick={handleLogout}>
+            {isLoggedIn ? "Logout" : "Login"}
+          </Button>
+        </Box>
         <SetTheme />
       </Toolbar>
     </AppBar>

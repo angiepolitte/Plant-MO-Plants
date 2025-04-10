@@ -4,6 +4,7 @@ import {
   Routes,
   Navigate,
 } from "react-router-dom";
+import React from "react";
 import "./App.css";
 import WeatherWidget from "./reusable-code/WeatherWidget";
 import HomePage from "./pages/HomePage";
@@ -25,12 +26,9 @@ import NurserySearch from "./reusable-code/NurserySearch";
 import PlantCard from "./reusable-code/PlantCard";
 import PlantSearch from "./pages/PlantSearch";
 import Signup from "./auth/SignUp";
-
 import PlantDetails from "./pages/PlantDetails";
 import StarRating from "./reusable-code/StarRating";
-
-import OAuth2RedirectHandler from "./auth/Oauth2RedirectHandler";
-
+import OAuth2RedirectHandler from "./auth/OAuth2RedirectHandler";
 
 function App() {
   return (

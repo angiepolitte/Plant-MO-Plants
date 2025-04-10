@@ -23,7 +23,7 @@ const SetTheme = () => {
   }, [theme]);
 
   return (
-    <div className>
+    <div>
       <button
         onClick={toggleTheme}
         style={{ fontSize: "24px", cursor: "pointer" }}
