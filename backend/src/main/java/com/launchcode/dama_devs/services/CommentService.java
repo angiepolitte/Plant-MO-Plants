@@ -34,7 +34,8 @@ public class CommentService {
                         comment.getId(),
                         comment.getCommentContent(),
                         comment.getPlant().getId(),
-                        comment.getUser().getUserId()))
+                        comment.getUser().getUserId(),
+                        comment.getUser().getUsername()))
                 .collect(Collectors.toList());
     }
 
@@ -44,7 +45,8 @@ public class CommentService {
                 savedComment.getId(),
                 savedComment.getCommentContent(),
                 savedComment.getPlant().getId(),
-                savedComment.getUser().getUserId());
+                savedComment.getUser().getUserId(),
+                savedComment.getUser().getUsername());
     }
 
     @Transactional
@@ -68,6 +70,12 @@ public class CommentService {
         Optional<User> userOptional = userRepository.findById(commentDTO.getUserId());
         Optional<Plant> plantOptional = plantRepository.findById(commentDTO.getPlantId());
 
+//         User user = userRepository.findById(commentDTO.getUserId())
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid userId: " + commentDTO.getUserId()));
+//
+//        Plant plant = plantRepository.findById(commentDTO.getPlantId())
+//                .orElseThrow(() -> new IllegalArgumentException("Invalid plantId: " + commentDTO.getPlantId()));
+
         if (userOptional.isPresent() && plantOptional.isPresent()) {
             Comment comment = new Comment();
             comment.setCommentContent(commentDTO.getCommentContent());
@@ -79,7 +87,8 @@ public class CommentService {
                     savedComment.getId(),
                     savedComment.getCommentContent(),
                     savedComment.getPlant().getId(),
-                    savedComment.getUser().getUserId()
+                    savedComment.getUser().getUserId(),
+                    savedComment.getUser().getUsername()
             );
         } else {
             throw new IllegalArgumentException("Invalid userId or plantId");
