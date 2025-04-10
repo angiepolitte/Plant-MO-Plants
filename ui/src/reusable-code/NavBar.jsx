@@ -14,6 +14,9 @@ import { useMyContext } from "../store/ContextApi";
 
 const NavBar = () => {
   const navigate = useNavigate();
+  const navigateHome = () => {
+    navigate("/");
+  };
 
   const { setToken, setCurrentUser, setIsAdmin } = useMyContext();
   const isLoggedIn = !!localStorage.getItem("JWT_TOKEN");
@@ -46,17 +49,39 @@ const NavBar = () => {
       }}
     >
       <Toolbar>
-        <Typography
-          variant="h6"
+        <Button
+          onClick={navigateHome}
           sx={{
-            fontFamily: "Atma, sans-serif",
-            fontSize: "2rem",
-            fontWeight: 600,
-            color: "#3E2723",
+            cursor: "pointer",
+            display: "inline-block",
+            "&:hover": {
+              animation: "pulse 1.5s infinite",
+            },
+            "@keyframes pulse": {
+              "0%": {
+                transform: "scale(1)",
+              },
+              "50%": {
+                transform: "scale(1.05)",
+              },
+              "100%": {
+                transform: "scale(1)",
+              },
+            },
           }}
         >
-          🌱 Plant MO Plants 🌱
-        </Typography>
+          <Typography
+            variant="h6"
+            sx={{
+              fontFamily: "Atma, sans-serif",
+              fontSize: "2rem",
+              fontWeight: 600,
+              color: "#3E2723",
+            }}
+          >
+            🌱 Plant MO Plants 🌱
+          </Typography>
+        </Button>
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Button className="login-button" onClick={handleLogout}>
             {isLoggedIn ? "Logout" : "Login"}
