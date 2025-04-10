@@ -69,7 +69,7 @@ const Comment = () => {
       }}
     >
       <h2>Community Tips for Plant {plantId}</h2>
-      <ul>
+      <ul style={{ alignItems: "left", padding: "5px", marginBottom: "10px" }}>
         {comments.map((comment, index) => (
           <li key={comment.id || index}>
             <strong>User {comment.userId}</strong> ~ "{comment.commentContent}"
@@ -87,9 +87,8 @@ const Comment = () => {
       <div
         style={{
           display: "flex",
-          flexDirection: "column",
-          gap: "0.5rem",
-          marginTop: "1rem",
+          flexDirection: "row",
+          gap: "1rem",
           alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#EDE7F6",
@@ -98,6 +97,7 @@ const Comment = () => {
         <textarea
           style={{
             marginTop: "1rem",
+            marginBottom: "1rem",
             width: "50%",
             padding: "0.5rem",
             border: "1px solid #ccc",
@@ -111,6 +111,7 @@ const Comment = () => {
         <button
           onClick={handleAddComment}
           style={{
+            marginTop: "1rem",
             marginBottom: "1rem",
             backgroundColor: "#E0F2F1",
             border: "1px solid #ccc",
