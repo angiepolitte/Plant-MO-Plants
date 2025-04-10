@@ -1,6 +1,6 @@
 .plant-container {
   display: flex;
-  row-gap: 10px;
+  row-gap: 20px;
   column-gap: 40px;
   padding-top: 50px;
   padding-bottom: 10px;
@@ -9,22 +9,28 @@
   margin: 0;
 }
 
-.plant-quick-info {
+.plant-info {
   display: flex;
   flex-wrap: wrap;
   flex-direction: column;
   justify-content: left;
   padding-bottom: 10px;
-  font-size: 24px;
+  padding-left: 20px;
+  font-size: 18px;
   text-align: left;
-  font-weight: bold;
+  font-weight: medium;
   font-family: Arial, Helvetica, sans-serif;
 }
 
-.plant-quick-info h2 {
-  font-size: 24px;
+.plant-info h2 {
+  font-size: 28px;
   font-weight: bold;
-  margin-bottom: 8px;
+  text-transform: capitalize;
+}
+.plant-info h3 {
+  font-weight: bold;
+  margin-bottom: 12px;
+  font-style: italic;
 }
 
 .plant-info-list {
@@ -33,22 +39,28 @@
   font-size: 16px;
   font-weight: 500;
   font-family: Arial, Helvetica, sans-serif;
+  text-transform: capitalize;
+  margin-bottom: 40px;
 }
+
 .plant-image {
-  max-width: 400px;
+  max-width: 500px;
   height: auto;
   border-radius: 1%;
   margin-bottom: 1px;
+  padding-left: 20px;
 }
 
 .plant-description {
   text-align: left;
-  padding: 20px;
   margin-bottom: 10px;
+  padding-left: 20px;
 }
-.plant-description h2 {
-  font-size: 24px;
+.description-header {
+  text-align: left;
+  font-size: 28px;
   font-weight: bold;
+  padding-bottom: 10px;
 }
 
 .star-rating {
