@@ -68,6 +68,22 @@ const Dashboard = () => {
                   //to be updated with userId and gardenId
                 </CardContent>
               </Card>
+              <Grid
+                item
+                sx={{ display: "flex", justifyContent: "center", mt: 4 }}
+              >
+                <Button
+                  variant="contained"
+                  sx={{
+                    backgroundColor: "#cce3de",
+                    color: "black",
+                    "&:hover": { backgroundColor: "#b0d4c2" },
+                  }}
+                  onClick={() => navigate("/photo-upload")}
+                >
+                  Upload a Photo of your Garden!{" "}
+                </Button>
+              </Grid>
 
               {/* Small Containers with Icons */}
               <Grid container spacing={2} sx={{ mt: 2 }}>

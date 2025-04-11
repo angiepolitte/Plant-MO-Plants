@@ -17,6 +17,9 @@ const NavBar = () => {
   const navigateHome = () => {
     navigate("/");
   };
+  const navigateDashboard = () => {
+    navigate("/dashboard");
+  };
 
   const { setToken, setCurrentUser, setIsAdmin } = useMyContext();
   const isLoggedIn = !!localStorage.getItem("JWT_TOKEN");
@@ -82,11 +85,18 @@ const NavBar = () => {
             🌱 Plant MO Plants 🌱
           </Typography>
         </Button>
+        <Box sx={{ flexGrow: 1 }} />
         <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Button className="login-button" onClick={handleLogout}>
             {isLoggedIn ? "Logout" : "Login"}
           </Button>
         </Box>
+        <Button
+          onClick={navigateDashboard}
+          sx={{ color: "purple", marginRight: "50px" }}
+        >
+          Dashboard
+        </Button>
         <SetTheme />
       </Toolbar>
     </AppBar>

@@ -1,79 +1,89 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { useMyContext } from "../store/ContextApi";
 
 const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
-    const [file, setFile] = useState(null);
-    const [photoName, setPhotoName] = useState("");
-    const [gardenId, setGardenId] = useState(defaultGardenId || "");
-    const [userId, setUserId] = useState(defaultUserId || "");
-    const [photos, setPhotos] = useState([]);
+  const { currentUser } = useMyContext();
+  const [file, setFile] = useState(null);
+  const [photoName, setPhotoName] = useState("");
+  const [gardenId, setGardenId] = useState("");
+  const [gardens, setGardens] = useState([]);
 
-    const handleFileChange = (e) => {
-        setFile(e.target.files[0]);
-    };
+  const userId = currentUser?.id;
+  const username = currentUser?.username;
 
-    const handleUpload = async () => {
-        if (!file || !photoName || !gardenId || !userId) {
-            alert("All fields are required!");
-            return;
-        }
+  console.log("currentUser:", currentUser);
 
-        const formData = new FormData();
-        formData.append("file", file);
-        formData.append("photoName", photoName);
-        formData.append("gardenId", gardenId);
-        formData.append("userId", userId);
+  // ***** FETCHING GARDENS PER USERID *****
+  useEffect(() => {
+    if (currentUser?.id) {
+      fetch(`http://localhost:8080/photo/gardens/user/${userId}`)
+        .then((res) => res.json())
+        .then((data) => {
+          console.log("Fetched gardens:", data);
+          setGardens(data);
+        })
+        .catch((err) => console.error("Failed to fetch gardens", err));
+    }
+  }, [userId]);
 
-        try {
-            const response = await fetch("http://localhost:8080/photo/upload", {
-                method: "POST",
-                body: formData,
-            });
+  const handleFileChange = (e) => {
+    setFile(e.target.files[0]);
+  };
 
-            if (response.ok) {
-                alert("Photo uploaded successfully!");
-            } else {
-                alert("Failed to upload photo.");
-            }
-        } catch (error) {
-            console.error("Error uploading photo:", error);
-        }
-    };
+  const handleUpload = async () => {
+    if (!file || !photoName || !gardenId || !userId) {
+      alert("All fields are required!");
+      return;
+    }
 
+    const formData = new FormData();
+    formData.append("file", file);
+    formData.append("photoName", photoName);
+    formData.append("gardenId", gardenId);
+    formData.append("userId", userId);
 
-    return (
-        <div>
-            <h2>Upload a Photo</h2>
-            <input type="file" onChange={handleFileChange} />
-            <input 
-                type="text" 
-                placeholder="Photo Name" 
-                value={photoName} 
-                onChange={(e) => setPhotoName(e.target.value)} 
-            />
+    try {
+      const response = await fetch("http://localhost:8080/photo/upload", {
+        method: "POST",
+        body: formData,
+      });
 
-            {/* Only show these inputs if props are not passed */}
-            {!defaultGardenId && (
-                <input 
-                    type="number" 
-                    placeholder="Garden ID" 
-                    value={gardenId} 
-                    onChange={(e) => setGardenId(e.target.value)} 
-                />
-            )}
-            {!defaultUserId && (
-                <input 
-                    type="number" 
-                    placeholder="User ID" 
-                    value={userId} 
-                    onChange={(e) => setUserId(e.target.value)} 
-                />
-            )}
+      if (response.ok) {
+        alert("Photo uploaded successfully!");
+        setFile(null);
+        setPhotoName("");
+        setGardenId("");
+      } else {
+        alert("Failed to upload photo.");
+      }
+    } catch (error) {
+      console.error("Error uploading photo:", error);
+    }
+  };
 
-            <button onClick={handleUpload}>Upload</button>
-          
-        </div>
-    );
+  return (
+    <div>
+      <h2>Upload a Photo</h2>
+      <input type="file" onChange={handleFileChange} />
+      <input
+        type="text"
+        placeholder="Photo Name"
+        value={photoName}
+        onChange={(e) => setPhotoName(e.target.value)}
+      />
+      <select value={gardenId} onChange={(e) => setGardenId(e.target.value)}>
+        <option value="">-- Select Your Garden --</option>
+        {Array.isArray(gardens) &&
+          gardens.map((garden) => (
+            <option key={garden.id} value={garden.id}>
+              {garden.gardenName}
+            </option>
+          ))}
+      </select>
+
+      <button onClick={handleUpload}>Upload</button>
+    </div>
+  );
 };
 
 export default PhotoUpload;
-
