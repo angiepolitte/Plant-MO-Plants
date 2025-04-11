@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { useMyContext } from "../store/ContextApi";
+import { useNavigate } from "react-router-dom";
 
 const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
   const { currentUser } = useMyContext();
@@ -12,6 +13,10 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
   const username = currentUser?.username;
 
   console.log("currentUser:", currentUser);
+  const navigate = useNavigate();
+  const handleNavigateToDashboard = () => {
+    navigate("/dashboard");
+  };
 
   // ***** FETCHING GARDENS PER USERID *****
   useEffect(() => {
@@ -81,7 +86,14 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
           ))}
       </select>
 
-      <button onClick={handleUpload}>Upload</button>
+      <button
+        onClick={() => {
+          handleUpload();
+          handleNavigateToDashboard();
+        }}
+      >
+        Upload
+      </button>
     </div>
   );
 };
