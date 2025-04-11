@@ -18,11 +18,20 @@ import FilterVintageIcon from "@mui/icons-material/FilterVintage";
 import GrassIcon from "@mui/icons-material/Grass";
 import { Button } from "@mui/material";
 import PhotoFetching from "../reusable-code/PhotoFetching";
+import { useMyContext } from "../store/ContextApi";
 
 const icons = [EmojiNatureIcon, LocalFloristIcon, FilterVintageIcon, GrassIcon];
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [file, setFile] = useState(null);
+  const [photoName, setPhotoName] = useState("");
+  const [gardenId, setGardenId] = useState("");
+  const [gardens, setGardens] = useState([]);
+
+  const { currentUser } = useMyContext();
+  const userId = currentUser?.id;
+  const username = currentUser?.username;
 
   const handleNavigateToCreateGarden = () => {
     navigate("/create-garden"); // navigates to beginning
@@ -31,12 +40,9 @@ const Dashboard = () => {
   const handleAddPhoto = () => {
     console.log("Open cover photo upload...");
   };
-  const userId = 1; //to be updated with userId
-  const userGardenId = 2; //to be updated with gardenId
+  // const userId = 1; //to be updated with userId
+  // const userGardenId = 2; //to be updated with gardenId
   const iconColors = ["#FF8F00", "#E91E63", "#6A1B9A", "#388E3C"];
-
-  // admin zip code default for presenting
-  // const zip = "63026";
 
   return (
     <div>
@@ -53,8 +59,12 @@ const Dashboard = () => {
         <Container maxWidth="lg" sx={{ flexGrow: 1, padding: 2 }}>
           <Grid container spacing={2}>
             {/* Left: Garden Section */}
+
             <Grid item xs={12} md={6}>
               <Card sx={{ minHeight: 350, backgroundColor: "#F3E5F5" }}>
+                <Typography variant="body1" paddingTop={"1rem"}>
+                  {username}'s Most Recent Garden
+                </Typography>
                 <CardContent
                   sx={{
                     display: "flex",
@@ -64,8 +74,7 @@ const Dashboard = () => {
                     textAlign: "center",
                   }}
                 >
-                  <PhotoFetching gardenId={userGardenId} userId={userId} />
-                  //to be updated with userId and gardenId
+                  <PhotoFetching userId={userId} />
                 </CardContent>
               </Card>
               <Grid
@@ -86,7 +95,7 @@ const Dashboard = () => {
               </Grid>
 
               {/* Small Containers with Icons */}
-              <Grid container spacing={2} sx={{ mt: 2 }}>
+              {/* <Grid container spacing={2} sx={{ mt: 2 }}>
                 {[
                   EmojiNatureIcon,
                   LocalFloristIcon,
@@ -115,7 +124,7 @@ const Dashboard = () => {
                     </Card>
                   </Grid>
                 ))}
-              </Grid>
+              </Grid> */}
 
               {/* Create New Garden Button */}
               <Grid
