@@ -4,6 +4,7 @@ package com.launchcode.dama_devs.controllers;
 import com.launchcode.dama_devs.models.dto.CommentDTO;
 import com.launchcode.dama_devs.services.CommentService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -38,6 +39,18 @@ public class CommentController {
             return ResponseEntity.status(403).body("I don't think so.  Nice try.  This is not yours to delete");
         } catch (IllegalArgumentException e) {
             return ResponseEntity.badRequest().body(e.getMessage());
+        }
+    }
+
+    @PutMapping("/edit/{commentId}")
+    public ResponseEntity<CommentDTO> editComment(
+            @PathVariable("commentId") Integer commentId,
+            @RequestBody CommentDTO commentDTO) {
+        try {
+            CommentDTO updatedComment = commentService.editComment(commentId, commentDTO.getUserId(), commentDTO.getCommentContent());
+            return ResponseEntity.ok(updatedComment);
+        } catch (IllegalArgumentException | SecurityException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(null);
         }
     }
 

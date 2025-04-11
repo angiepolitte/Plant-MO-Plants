@@ -30,7 +30,6 @@ import PlantDetails from "./pages/PlantDetails";
 import StarRating from "./reusable-code/StarRating";
 import OAuth2RedirectHandler from "./auth/Oauth2RedirectHandler";
 
-
 function App() {
   return (
     <Router>
@@ -78,12 +77,11 @@ function App() {
             <Route path="/plant-card" element={<PlantCard />} />
             <Route path="/plant-details/:plantId" element={<PlantDetails />} />
             <Route path="star-rating" element={<StarRating />} />
-
           </Routes>
         </Box>
 
         <Footer />
-        <WeatherWidget />
+        {/* <WeatherWidget /> */}
       </Container>
     </Router>
   );

@@ -95,6 +95,26 @@ public class CommentService {
         }
     }
 
+    public CommentDTO editComment(Integer commentId, Integer userId, String newText) {
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new IllegalArgumentException("Comment not found"));
+
+        if (!comment.getUser().getUserId().equals(userId)) {
+            throw new SecurityException("You can only edit your own comments");
+        }
+
+        comment.setCommentContent(newText);
+        commentRepository.save(comment);
+
+        return new CommentDTO(
+                comment.getId(),
+                comment.getCommentContent(),
+                comment.getPlant().getId(),
+                comment.getUser().getUserId(),
+                comment.getUser().getUsername()
+        );
+    }
+
 
 }
 
