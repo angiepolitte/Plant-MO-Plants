@@ -13,4 +13,6 @@ import java.util.Optional;
 @Repository
 public interface PhotoRepository extends JpaRepository<Photo, Integer> {
     List<Photo> findByGardenIdAndUser_UserId(Integer gardenId, Integer userId);
+    List<Photo> findPhotosByUser_UserId(Integer userId);
+
 }

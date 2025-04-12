@@ -28,7 +28,7 @@ const Comment = () => {
     const commentData = {
       commentContent: newComment,
       plantId,
-      userId, // Assuming userId is 1 for now, replace as needed
+      userId,
     };
 
     fetch("http://localhost:8080/comment/add", {
