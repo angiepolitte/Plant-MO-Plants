@@ -19,6 +19,7 @@ import GrassIcon from "@mui/icons-material/Grass";
 import { Button } from "@mui/material";
 import PhotoFetching from "../reusable-code/PhotoFetching";
 import { useMyContext } from "../store/ContextApi";
+import NurserySearch from "../reusable-code/NurserySearch";
 
 const icons = [EmojiNatureIcon, LocalFloristIcon, FilterVintageIcon, GrassIcon];
 
@@ -165,9 +166,10 @@ const Dashboard = () => {
               </Card>
 
               {/* Nurseries Section */}
-              <Card sx={{ height: 300, backgroundColor: "#F3E5F5", mt: 2 }}>
+              <Card sx={{ minHeight: 300, backgroundColor: "#F3E5F5", mt: 2 }}>
                 <CardContent>
-                  <Typography variant="h6">Nurseries in Your Area</Typography>
+                  <Typography variant="h6" mb={1}>Nurseries in Your Area</Typography>
+                  <NurserySearch />
                 </CardContent>
               </Card>
             </Grid>
