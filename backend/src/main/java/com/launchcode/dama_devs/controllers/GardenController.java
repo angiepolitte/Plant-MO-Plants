@@ -62,7 +62,7 @@ public class GardenController {
         }
     }
 
-    @PostMapping("/{gardenId}/add-plants/{plantId}")
+    @PostMapping("/{gardenId}/add-plant/{plantId}")
     public ResponseEntity<GardenPlantDTO> addPlantToGarden(@PathVariable Integer gardenId, @PathVariable Integer plantId) {
         GardenPlantDTO addPlantToGarden = gardenPlantService.addPlantToGarden(gardenId, plantId);
         return ResponseEntity.status(HttpStatus.CREATED).body(addPlantToGarden);
