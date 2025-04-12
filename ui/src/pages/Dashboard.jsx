@@ -12,16 +12,10 @@ import {
   Box,
 } from "@mui/material";
 import Forecast from "../reusable-code/FiveDayForecast";
-import EmojiNatureIcon from "@mui/icons-material/EmojiNature";
-import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
-import FilterVintageIcon from "@mui/icons-material/FilterVintage";
-import GrassIcon from "@mui/icons-material/Grass";
 import { Button } from "@mui/material";
 import PhotoFetching from "../reusable-code/PhotoFetching";
 import { useMyContext } from "../store/ContextApi";
 import NurserySearch from "../reusable-code/NurserySearch";
-
-const icons = [EmojiNatureIcon, LocalFloristIcon, FilterVintageIcon, GrassIcon];
 
 const Dashboard = () => {
   const navigate = useNavigate();
@@ -33,6 +27,7 @@ const Dashboard = () => {
   const { currentUser } = useMyContext();
   const userId = currentUser?.id;
   const username = currentUser?.username;
+  const { zipCode, updateZipCode } = useMyContext();
 
   const handleNavigateToCreateGarden = () => {
     navigate("/create-garden"); // navigates to beginning
@@ -41,12 +36,61 @@ const Dashboard = () => {
   const handleAddPhoto = () => {
     console.log("Open cover photo upload...");
   };
-  // const userId = 1; //to be updated with userId
-  // const userGardenId = 2; //to be updated with gardenId
-  const iconColors = ["#FF8F00", "#E91E63", "#6A1B9A", "#388E3C"];
+  const [inputZip, setInputZip] = useState("");
+
+  const handleSubmit = () => {
+    const trimmedZip = inputZip.trim();
+    if (/^\d{5}$/.test(trimmedZip)) {
+      updateZipCode(trimmedZip); // only now update context
+    } else {
+      alert("Invalid ZIP code format.");
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
 
   return (
     <div>
+      <div>
+        <label htmlFor="zip">
+          Let's personalize your Dashboard! Enter your ZIP code:{" "}
+        </label>
+        <input
+          type="text"
+          id="zip"
+          value={inputZip}
+          onChange={(e) => setInputZip(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="e.g. 90210"
+          style={{
+            padding: "10px",
+            borderRadius: "5px",
+            backgroundColor: "#F3E5F5",
+            fontSize: "16px",
+            width: "10%",
+            outline: "none",
+          }}
+        />
+
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          sx={{
+            marginLeft: 2,
+            backgroundColor: "#cce3de",
+            color: "black",
+            "&:hover": {
+              backgroundColor: "#b0d4c2",
+            },
+          }}
+        >
+          Personalize!
+        </Button>
+      </div>
       <Box
         sx={{
           display: "flex",
@@ -65,8 +109,8 @@ const Dashboard = () => {
               <Card
                 sx={{
                   minHeight: 400,
-                  maxHeight: 600, // 👈 Set max height
-                  overflowY: "auto", // 👈 Enable scroll if content overflows
+                  maxHeight: 600,
+                  overflowY: "auto", // Enable scroll if content overflows
                   backgroundColor: "#F3E5F5",
                 }}
               >
@@ -141,12 +185,29 @@ const Dashboard = () => {
               </Card>
 
               {/* Nurseries Section */}
-              <Card sx={{ minHeight: 300, backgroundColor: "#F3E5F5", mt: 2 }}>
-                <CardContent>
+              <Card
+                sx={{
+                  minHeight: 300,
+                  maxHeight: 400,
+                  backgroundColor: "#F3E5F5",
+                  mt: 2,
+                }}
+              >
+                <CardContent
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
                   <Typography variant="h6" mb={1}>
                     Nurseries in Your Area
                   </Typography>
-                  <NurserySearch />
+
+                  {/* Scrollable wrapper */}
+                  <Box sx={{ overflowY: "auto", flexGrow: 1, maxHeight: 300 }}>
+                    <NurserySearch />
+                  </Box>
                 </CardContent>
               </Card>
             </Grid>
