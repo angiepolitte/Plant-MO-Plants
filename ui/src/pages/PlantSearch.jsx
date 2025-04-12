@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useParams } from "react-router-dom";
-import { Grid2 } from "@mui/material";
 import PlantCard from "../reusable-code/PlantCard";
 import "../custom-css/PlantSearch.css";
 
@@ -24,6 +23,7 @@ function PlantSearch() {
 
       if (!ignore) {
         setPlants(data);
+        console.log(data);
       }
     }
     fetchPlants();
@@ -32,17 +32,22 @@ function PlantSearch() {
     };
   }, [gardenId]);
 
-  //this maps through the fetched list of plants and
-  //assigns each plantObject to the "plant" prop to pass into the PlantCard function
-  const plantList = plants.map((plantObject) => (
-    <PlantCard key={plantObject.id} plant={plantObject}></PlantCard>
-  ));
-
   if (!plants) {
     return (
       <div className="title">Please wait while your plants are picked...</div>
     );
   }
+
+  //this maps through the fetched list of plants and
+  //assigns each plantObject to the "plant" prop to pass into the PlantCard function
+  //aslo pass gardenId to PlantCard in prop "gardenId"
+  const plantList = plants.map((plantObject) => (
+    <PlantCard
+      key={plantObject.id}
+      plant={plantObject}
+      gardenId={gardenId}
+    ></PlantCard>
+  ));
 
   return (
     <div className="container">
@@ -50,23 +55,7 @@ function PlantSearch() {
       <button className="garden-button" onClick={handleNavigateGardenDetails}>
         VIEW YOUR GARDEN
       </button>
-      <div>
-        {plantList}
-        <Grid2 container rowSpacing={2} columnSpacing={{ xs: 1, sm: 2, md: 3 }}>
-          <Grid2 xs={12} sm={6} md={4}>
-            <PlantCard />
-          </Grid2>
-          <Grid2 xs={12} sm={6} md={4}>
-            <PlantCard />
-          </Grid2>
-          <Grid2 xs={12} sm={6} md={4}>
-            <PlantCard />
-          </Grid2>
-          <Grid2 xs={12} sm={6} md={4}>
-            <PlantCard />
-          </Grid2>
-        </Grid2>
-      </div>
+      <div className="plant-grid">{plantList}</div>
     </div>
   );
 }

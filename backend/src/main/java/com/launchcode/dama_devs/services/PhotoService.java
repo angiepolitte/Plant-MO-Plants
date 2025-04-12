@@ -63,4 +63,18 @@ public class PhotoService {
     public List<Photo> getAllGardenPhotos() {
         return photoRepository.findAll();
     }
+
+    public List<Garden> getGardensWithoutPhotosByUserId(Integer userId) {
+        List<Garden> allUserGardens = gardenRepository.findByUser_UserId(userId);
+        List<Photo> userPhotos = photoRepository.findPhotosByUser_UserId(userId);
+
+        List<Integer> gardenIdsWithPhotos = userPhotos.stream()
+                .map(photo -> photo.getGarden().getId())
+                .distinct()
+                .toList();
+
+        return allUserGardens.stream()
+                .filter(garden -> !gardenIdsWithPhotos.contains(garden.getId()))
+                .toList();
+    }
 }

@@ -68,20 +68,18 @@ function App() {
             <Route path="/garden-zone" element={<GardenZone />} />
             <Route path="/garden-conditions" element={<GardenConditions />} />
             <Route path="/garden-success" element={<GardenSuccess />} />
-            <Route path="/plant-search" element={<PlantSearch />} />
+            <Route path="/plant-search/:gardenId" element={<PlantSearch />} />
             <Route path="/garden-details" element={<GardenDetails />} />
             <Route path="/comment/:plantId" element={<Comment />} />
             <Route path="/photo-upload" element={<PhotoUpload />} />
             <Route path="/results" element={<NurseryList />} />
             <Route path="/nursery-search" element={<NurserySearch />} />
-            <Route path="/plant-card" element={<PlantCard />} />
             <Route path="/plant-details/:plantId" element={<PlantDetails />} />
             <Route path="star-rating" element={<StarRating />} />
           </Routes>
         </Box>
 
         <Footer />
-        {/* <WeatherWidget /> */}
       </Container>
     </Router>
   );

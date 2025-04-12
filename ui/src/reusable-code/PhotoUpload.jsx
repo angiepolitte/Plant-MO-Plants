@@ -34,7 +34,7 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
   // ***** FETCHING GARDENS PER USERID *****
   useEffect(() => {
     if (currentUser?.id) {
-      fetch(`http://localhost:8080/photo/gardens/user/${userId}`)
+      fetch(`http://localhost:8080/photo/gardens-without-photo/user/${userId}`)
         .then((res) => res.json())
         .then((data) => {
           console.log("Fetched gardens:", data);
