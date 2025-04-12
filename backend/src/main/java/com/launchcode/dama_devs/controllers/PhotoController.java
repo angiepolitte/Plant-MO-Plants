@@ -60,4 +60,10 @@ public class PhotoController {
         return ResponseEntity.ok(photoService.findPhotosByUser_UserId(userId));
     }
 
+    @GetMapping("/gardens-without-photo/user/{userId}")
+    public ResponseEntity<List<Garden>> getGardensWithoutPhotoByUser(@PathVariable Integer userId) {
+        List<Garden> gardens = photoService.getGardensWithoutPhotosByUserId(userId);
+        return ResponseEntity.ok(gardens);
+    }
+
 }
