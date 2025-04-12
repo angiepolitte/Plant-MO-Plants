@@ -68,6 +68,9 @@ function PlantDetails() {
           <li>Spread: {plant.plantSpread}</li>
         </ol>
         <p>{plant.plantDescription}</p>
+        <div />
+        <br></br>
+        <br></br>
         <div className="community-tips">
           <Comment />
         </div>
