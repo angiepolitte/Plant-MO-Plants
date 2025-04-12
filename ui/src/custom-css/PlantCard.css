@@ -20,11 +20,12 @@
 .plantCard-title {
   padding: 6px;
   text-align: left;
-  font-size: 24px;
+  font-size: 16px;
   font-weight: bold;
   text-align: left;
   font-family: Arial, Helvetica, sans-serif;
   color: #060306;
+  text-transform: capitalize;
 }
 
 .plantCard-button {
@@ -42,6 +43,7 @@
 }
 .plantCard-button:hover {
   background-color: #630074;
+  border: #630074;
 }
 
 .plantCard-button:disabled {

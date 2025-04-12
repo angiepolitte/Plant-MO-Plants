@@ -40,3 +40,8 @@ button.garden-button:focus-visible {
   outline: 2px;
   color: #ffffff;
 }
+.plant-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* = 16px this will be more responsive if a user changes their default font size in their browser */
+}
