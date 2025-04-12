@@ -168,7 +168,9 @@ const Dashboard = () => {
               {/* Nurseries Section */}
               <Card sx={{ minHeight: 300, backgroundColor: "#F3E5F5", mt: 2 }}>
                 <CardContent>
-                  <Typography variant="h6" mb={1}>Nurseries in Your Area</Typography>
+                  <Typography variant="h6" mb={1}>
+                    Nurseries in Your Area
+                  </Typography>
                   <NurserySearch />
                 </CardContent>
               </Card>

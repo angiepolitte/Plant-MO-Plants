@@ -116,7 +116,7 @@ const Comment = () => {
       <ul style={{ padding: "5px", marginBottom: "10px" }}>
         {comments.map((comment) => (
           <li key={comment.id}>
-            <strong>User {comment.username}</strong> ~{" "}
+            <strong>{comment.username}</strong> ~{" "}
             {editCommentId === comment.id ? (
               <>
                 <textarea
