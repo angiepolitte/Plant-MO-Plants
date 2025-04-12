@@ -22,6 +22,27 @@ export const ContextProvider = ({ children }) => {
   //check the loggedin user is admin or not
   const [isAdmin, setIsAdmin] = useState(isADmin);
 
+  //zip code logic for the dashboard
+  // Angie inserted this **************************
+  const [zipCode, setZipCode] = useState("");
+
+  useEffect(() => {
+    if (currentUser?.id) {
+      const storedZip = localStorage.getItem(`ZIP_CODE-${currentUser.id}`);
+      if (storedZip) {
+        setZipCode(storedZip);
+      }
+    }
+  }, [currentUser]);
+
+  const updateZipCode = (zip) => {
+    if (currentUser?.id) {
+      localStorage.setItem(`ZIP_CODE-${currentUser.id}`, zip);
+      setZipCode(zip);
+    }
+  };
+  //********************************************** */
+
   const fetchUser = async () => {
     const user = JSON.parse(localStorage.getItem("USER"));
 
@@ -62,6 +83,8 @@ export const ContextProvider = ({ children }) => {
         setCurrentUser,
         isAdmin,
         setIsAdmin,
+        zipCode, //angie added
+        updateZipCode, //angie added
       }}
     >
       {children}

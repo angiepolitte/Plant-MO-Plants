@@ -1,20 +1,29 @@
-import React, { useState } from 'react';
-import axios from 'axios';
-import { TextField, Button, Typography, List, ListItem, ListItemText } from '@mui/material';
+import React, { useState, useEffect } from "react";
+import axios from "axios";
+import {
+  TextField,
+  Button,
+  Typography,
+  List,
+  ListItem,
+  ListItemText,
+} from "@mui/material";
+import { useMyContext } from "../store/ContextApi";
 
 function NurserySearch() {
-  const [zipCode, setZipCode] = useState('');
+  // const [zipCode, setZipCode] = useState('');
   const [nurseries, setNurseries] = useState([]);
-  const [error, setError] = useState('');
+  const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const { zipCode } = useMyContext();
 
   const handleSearch = async () => {
-    setError('');
+    setError("");
     setLoading(true);
     setNurseries([]);
 
     if (!zipCode) {
-      setError('Please enter a zip code.');
+      setError("Please enter a zip code.");
       setLoading(false);
       return;
     }
@@ -25,16 +34,24 @@ function NurserySearch() {
       );
       setNurseries(response.data.results || []);
     } catch (err) {
-      console.error('Error fetching nurseries:', err);
-      setError('Failed to fetch nurseries. Please try again.');
+      console.error("Error fetching nurseries:", err);
+      setError("Failed to fetch nurseries. Please try again.");
     } finally {
       setLoading(false);
     }
   };
-
+  //added by angie for dashboard zip code entering
+  //****************** */
+  useEffect(() => {
+    if (zipCode) {
+      handleSearch();
+    }
+  }, [zipCode]);
+  //****************************** */
   return (
     <div>
-      <TextField
+      {/* ******** angie added zipCode input button at top of dashboard page */}
+      {/* <TextField
         label="Enter Zip Code"
         variant="outlined"
         size="small"
@@ -48,15 +65,22 @@ function NurserySearch() {
         sx={{ backgroundColor: '#cce3de', color: 'black', '&:hover': { backgroundColor: '#b0d4c2' } }}
       >
         Search
-      </Button>
+      </Button> */}
 
-      {error && <Typography color="error" mt={1}>{error}</Typography>}
+      {error && (
+        <Typography color="error" mt={1}>
+          {error}
+        </Typography>
+      )}
       {loading && <Typography mt={1}>Loading nurseries...</Typography>}
 
       {!loading && nurseries.length > 0 && (
         <List sx={{ mt: 2 }}>
           {nurseries.map((nursery) => (
-            <ListItem key={nursery.place_id} sx={{ borderBottom: '1px solid #ddd' }}>
+            <ListItem
+              key={nursery.place_id}
+              sx={{ borderBottom: "1px solid #ddd" }}
+            >
               <ListItemText
                 primary={nursery.name}
                 secondary={
