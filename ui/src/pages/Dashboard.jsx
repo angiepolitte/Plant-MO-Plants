@@ -61,12 +61,12 @@ const Dashboard = () => {
           <Grid container spacing={2}>
             {/* Left: Garden Section */}
 
-            <Grid item xs={12} md={6}>
+            <Grid item xs={12} md={6} paddingRight={20}>
               <Card
                 sx={{
-                  minHeight: 400,
-                  maxHeight: 600, // 👈 Set max height
-                  overflowY: "auto", // 👈 Enable scroll if content overflows
+                  height: 600,
+                  width: 500,
+                  overflowY: "auto",
                   backgroundColor: "#F3E5F5",
                 }}
               >
@@ -85,39 +85,40 @@ const Dashboard = () => {
                   <PhotoFetching userId={userId} />
                 </CardContent>
               </Card>
-              <Grid
-                item
-                sx={{ display: "flex", justifyContent: "center", mt: 4 }}
-              >
-                <Button
-                  variant="contained"
-                  sx={{
-                    backgroundColor: "#cce3de",
-                    color: "black",
-                    "&:hover": { backgroundColor: "#b0d4c2" },
-                  }}
-                  onClick={() => navigate("/photo-upload")}
-                >
-                  Upload a Photo of your Garden!{" "}
-                </Button>
-              </Grid>
 
               {/* Create New Garden Button */}
-              <Grid
-                item
-                sx={{ display: "flex", justifyContent: "center", mt: 4 }}
-              >
-                <Button
-                  variant="contained"
+              <Grid item xs={12} paddingLeft={20}>
+                <Box
                   sx={{
-                    backgroundColor: "#cce3de",
-                    color: "black",
-                    "&:hover": { backgroundColor: "#b0d4c2" },
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 2,
+                    mt: 2,
                   }}
-                  onClick={() => navigate("/create-garden")}
                 >
-                  Create New Garden
-                </Button>
+                  <Button
+                    sx={{
+                      backgroundColor: "#cce3de",
+                      color: "black",
+                      "&:hover": { backgroundColor: "#b0d4c2" },
+                    }}
+                    onClick={() => navigate("/photo-upload")}
+                  >
+                    Upload a Photo of your Garden!
+                  </Button>
+
+                  <Button
+                    sx={{
+                      backgroundColor: "#cce3de",
+                      color: "black",
+                      "&:hover": { backgroundColor: "#b0d4c2" },
+                    }}
+                    onClick={() => navigate("/create-garden")}
+                  >
+                    Create New Garden
+                  </Button>
+                </Box>
               </Grid>
             </Grid>
 
