@@ -67,10 +67,11 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
       });
 
       if (response.ok) {
-        alert("Photo uploaded successfully!");
+        // alert("Photo uploaded successfully!");
         setFile(null);
         setPhotoName("");
         setGardenId("");
+        navigate("/dashboard"); //
         return true;
       } else {
         alert("Failed to upload photo.");
@@ -81,6 +82,7 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
       return false;
     }
   };
+
   return (
     <Box
       sx={{
@@ -136,15 +138,14 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
               </FormControl>
 
               <Button
-                variant="contained"
-                sx={{
-                  backgroundColor: "#b0d4c2",
-                  color: "black",
-                  "&:hover": { backgroundColor: "#9bcab6" },
+                onClick={async () => {
+                  const success = await handleUpload();
+                  if (success) {
+                    navigate("/dashboard"); // ✅ only navigate if upload succeeded
+                  }
                 }}
-                onClick={handleUpload}
               >
-                Upload Photo
+                Upload
               </Button>
               <Button
                 variant="outlined"

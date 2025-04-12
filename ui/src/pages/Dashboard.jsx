@@ -62,7 +62,14 @@ const Dashboard = () => {
             {/* Left: Garden Section */}
 
             <Grid item xs={12} md={6}>
-              <Card sx={{ minHeight: 350, backgroundColor: "#F3E5F5" }}>
+              <Card
+                sx={{
+                  minHeight: 400,
+                  maxHeight: 600, // 👈 Set max height
+                  overflowY: "auto", // 👈 Enable scroll if content overflows
+                  backgroundColor: "#F3E5F5",
+                }}
+              >
                 <Typography variant="body1" paddingTop={"1rem"}>
                   {username}'s Most Recent Garden
                 </Typography>
@@ -94,38 +101,6 @@ const Dashboard = () => {
                   Upload a Photo of your Garden!{" "}
                 </Button>
               </Grid>
-
-              {/* Small Containers with Icons */}
-              {/* <Grid container spacing={2} sx={{ mt: 2 }}>
-                {[
-                  EmojiNatureIcon,
-                  LocalFloristIcon,
-                  FilterVintageIcon,
-                  GrassIcon,
-                ].map((IconComponent, index) => (
-                  <Grid item xs={6} sm={3} key={index}>
-                    <Card
-                      sx={{
-                        height: 150,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexDirection: "column",
-                        backgroundColor: "#F3E5F5",
-                      }}
-                    >
-                      <CardContent sx={{ textAlign: "center" }}>
-                        <IconComponent
-                          sx={{ fontSize: 50, color: iconColors[index] }}
-                        />
-                        <Typography variant="body1">
-                          Garden {index + 1}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid> */}
 
               {/* Create New Garden Button */}
               <Grid

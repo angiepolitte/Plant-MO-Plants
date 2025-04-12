@@ -57,7 +57,12 @@ const PhotoFetching = ({ userId }) => {
         <img
           src={`data:image/jpeg;base64,${featuredPhoto.photoImage}`}
           alt={featuredPhoto.photoName}
-          style={{ width: "100%", height: "auto", borderRadius: "8px" }}
+          style={{
+            width: "100%",
+            height: "300px", // 👈 Fixed height
+            objectFit: "cover", // 👈 Ensures the image covers space without distortion
+            borderRadius: "8px",
+          }}
         />
       </div>
 
@@ -72,7 +77,7 @@ const PhotoFetching = ({ userId }) => {
                 alignItems: "center",
                 justifyContent: "center",
                 flexDirection: "column",
-                backgroundColor: "#F3E5F5",
+                backgroundColor: "white",
                 cursor: "pointer",
                 overflow: "hidden",
               }}
