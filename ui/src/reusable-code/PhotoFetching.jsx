@@ -59,9 +59,10 @@ const PhotoFetching = ({ userId }) => {
           alt={featuredPhoto.photoName}
           style={{
             width: "100%",
-            height: "300px", // 👈 Fixed height
-            objectFit: "cover", // 👈 Ensures the image covers space without distortion
+            height: "300px",
+            objectFit: "cover",
             borderRadius: "8px",
+            display: "block",
           }}
         />
       </div>
