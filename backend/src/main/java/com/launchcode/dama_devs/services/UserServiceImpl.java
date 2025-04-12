@@ -81,5 +81,56 @@ public class UserServiceImpl implements UserService {
         return userRepository.save(user);
     }
 
+    @Override
+    public void updateAccountLockStatus(Integer userId, boolean lock) {
+        User user = userRepository.findById(userId).orElseThrow(()
+                -> new RuntimeException("User not found"));
+        user.setAccountNonLocked(!lock);
+        userRepository.save(user);
+    }
+
+
+    @Override
+    public List<Role> getAllRoles() {
+        return (List<Role>) roleRepository.findAll();
+    }
+
+    @Override
+    public void updateAccountExpiryStatus(Integer userId, boolean expire) {
+        User user = userRepository.findById(userId).orElseThrow(()
+                -> new RuntimeException("User not found"));
+        user.setAccountNonExpired(!expire);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateAccountEnabledStatus(Integer userId, boolean enabled) {
+        User user = userRepository.findById(userId).orElseThrow(()
+                -> new RuntimeException("User not found"));
+        user.setEnabled(enabled);
+        userRepository.save(user);
+    }
+
+    @Override
+    public void updateCredentialsExpiryStatus(Integer userId, boolean expire) {
+        User user = userRepository.findById(userId).orElseThrow(()
+                -> new RuntimeException("User not found"));
+        user.setCredentialsNonExpired(!expire);
+        userRepository.save(user);
+    }
+
+
+    @Override
+    public void updatePassword(Integer userId, String password) {
+        try {
+            User user = userRepository.findById(userId)
+                    .orElseThrow(() -> new RuntimeException("User not found"));
+            user.setPassword(passwordEncoder.encode(password));
+            userRepository.save(user);
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to update password");
+        }
+    }
+
 
 }

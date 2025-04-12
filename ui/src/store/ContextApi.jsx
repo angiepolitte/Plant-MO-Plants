@@ -19,6 +19,10 @@ export const ContextProvider = ({ children }) => {
 
   //store the current loggedin user
   const [currentUser, setCurrentUser] = useState(null);
+
+  //handle sidebar opening and closing in the admin panel
+  const [openSidebar, setOpenSidebar] = useState(true);
+
   //check the loggedin user is admin or not
   const [isAdmin, setIsAdmin] = useState(isADmin);
 
@@ -60,6 +64,8 @@ export const ContextProvider = ({ children }) => {
         setToken,
         currentUser,
         setCurrentUser,
+        openSidebar,
+        setOpenSidebar,
         isAdmin,
         setIsAdmin,
       }}

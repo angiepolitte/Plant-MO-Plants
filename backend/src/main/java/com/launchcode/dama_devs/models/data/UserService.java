@@ -1,5 +1,6 @@
 package com.launchcode.dama_devs.models.data;
 
+import com.launchcode.dama_devs.models.Role;
 import com.launchcode.dama_devs.models.User;
 import com.launchcode.dama_devs.models.dto.UserDTO;
 
@@ -18,4 +19,16 @@ public interface UserService {
     Optional<User> findByEmail(String email);
 
     User registerUser(User user);
+
+    void updateAccountLockStatus(Integer userId, boolean lock);
+
+    List<Role> getAllRoles();
+
+    void updateAccountExpiryStatus(Integer userId, boolean expire);
+
+    void updateAccountEnabledStatus(Integer userId, boolean enabled);
+
+    void updateCredentialsExpiryStatus(Integer userId, boolean expire);
+
+    void updatePassword(Integer userId, String password);
 }

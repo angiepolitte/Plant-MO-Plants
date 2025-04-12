@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 module.exports = {
-  content: ["./src/**/*.{html,js}"],
+  content: ["./src/**/*.{js,jsx,ts,tsx}", "./public/index.html"],
   theme: {
     extend: {
       colors: {
@@ -8,6 +8,8 @@ module.exports = {
         textColor: "#ffffff",
         btnColor: "#0172F4",
         noteColor: "#FFCF7C",
+        customRed: "rgba(172, 30, 35, 1)",
+        testimonialCard: "#F9F9F9",
       },
       fontWeight: {
         customWeight: 500,
@@ -33,10 +35,6 @@ module.exports = {
         tableHeader: ["15px", "25px"],
       },
 
-      backgroundColor: {
-        customRed: "rgba(172, 30, 35, 1)",
-        testimonialCard: "#F9F9F9",
-      },
       boxShadow: {
         custom: "0 0 15px rgba(0, 0, 0, 0.3)",
       },

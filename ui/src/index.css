@@ -1,9 +1,20 @@
 @import "tailwindcss";
+
+@import url("https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap");
+
 /* importing the base styles, component styles, and utility classes from Tailwind CSS into this project */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
+.MuiDataGrid-row:nth-of-type(odd) {
+  background-color: #eae6ee;
+}
+
+.MuiDataGrid-row:nth-of-type(even) {
+  background-color: #ffffff;
+}
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;
