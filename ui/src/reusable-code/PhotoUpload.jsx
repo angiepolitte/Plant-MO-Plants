@@ -38,7 +38,7 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
   const handleUpload = async () => {
     if (!file || !photoName || !gardenId || !userId) {
       alert("All fields are required!");
-      return;
+      return false;
     }
 
     const formData = new FormData();
@@ -58,11 +58,14 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
         setFile(null);
         setPhotoName("");
         setGardenId("");
+        return true;
       } else {
         alert("Failed to upload photo.");
+        return false;
       }
     } catch (error) {
       console.error("Error uploading photo:", error);
+      return false;
     }
   };
 
@@ -85,11 +88,13 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
             </option>
           ))}
       </select>
-
+      {/* handles the upload, then waits for the upload to the dashboard before going to the dashboard, so it is there when it switches pages */}
       <button
-        onClick={() => {
-          handleUpload();
-          handleNavigateToDashboard();
+        onClick={async () => {
+          const success = await handleUpload();
+          if (success) {
+            handleNavigateToDashboard();
+          }
         }}
       >
         Upload
