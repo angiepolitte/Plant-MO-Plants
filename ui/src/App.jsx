@@ -81,7 +81,7 @@ function App() {
         </Box>
 
         <Footer />
-        <WeatherWidget />
+        {/* <WeatherWidget /> */}
       </Container>
     </Router>
   );
