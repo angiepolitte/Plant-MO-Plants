@@ -9,6 +9,7 @@ import {
   ListItemText,
 } from "@mui/material";
 import { useMyContext } from "../store/ContextApi";
+import api from "../services/api";
 
 function NurserySearch() {
   // const [zipCode, setZipCode] = useState('');
@@ -29,8 +30,8 @@ function NurserySearch() {
     }
 
     try {
-      const response = await axios.get(
-        `http://localhost:8080/nurseries/local?query=nurseries+${zipCode}&radius=8046.72`
+      const response = await api.get(
+        `http://localhost:8080/api/nurseries/local?query=nurseries+${zipCode}&radius=8046.72`
       );
       setNurseries(response.data.results || []);
     } catch (err) {

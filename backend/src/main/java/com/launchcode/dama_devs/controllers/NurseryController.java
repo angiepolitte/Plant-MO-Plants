@@ -8,7 +8,7 @@ import reactor.core.publisher.Mono;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/nurseries")
+@RequestMapping("/api/nurseries")
 public class NurseryController {
 
     @Value("${google.api.key}")

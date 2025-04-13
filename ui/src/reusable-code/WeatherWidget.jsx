@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import styles from "./WeatherWidget.module.css";
+import api from "../services/api";
 
 const WeatherWidget = () => {
   const [weatherData, setWeatherData] = useState(null);
@@ -9,7 +10,9 @@ const WeatherWidget = () => {
   useEffect(() => {
     const fetchWeather = async () => {
       try {
-        const response = await axios.get(`http://localhost:8080/weather/current?city=${location}`);
+        const response = await api.get(
+          `http://localhost:8080/api/weather/current?city=${location}`
+        );
         setWeatherData(response.data);
       } catch (error) {
         console.error("Error fetching weather data", error);

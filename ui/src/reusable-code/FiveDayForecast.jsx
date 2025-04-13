@@ -31,16 +31,31 @@ const Forecast = () => {
     }
 
     try {
-      let url;
-      console.log("zipCode from context:", zipCode);
-      if (/^\d{5}$/.test(zipCode)) {
-        url = `http://localhost:8080/weather/forecast/zip?zip=${zipCode}`;
-      } else {
-        alert("Invalid ZIP code format.");
-        return;
-      }
+      // let url;
+      // console.log("zipCode from context:", zipCode);
+      // if (/^\d{5}$/.test(zipCode)) {
+      //   url = `http://localhost:8080/api/weather/forecast/zip?zip=${zipCode}`;
+      // } else {
+      //   alert("Invalid ZIP code format.");
+      //   return;
+      // }
 
-      const response = await fetch(url);
+      const token = localStorage.getItem("JWT_TOKEN");
+      const csrfToken = localStorage.getItem("CSRF_TOKEN");
+
+      const response = await fetch(
+        `http://localhost:8080/api/weather/forecast/zip?zip=${zipCode}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-XSRF-TOKEN": csrfToken,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const data = await response.json();
 
       if (data.cod !== "200") {

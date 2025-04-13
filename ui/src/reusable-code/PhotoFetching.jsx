@@ -21,7 +21,7 @@ const PhotoFetching = ({ userId }) => {
 
     try {
       const response = await fetch(
-        `http://localhost:8080/photo/photos/user/${userId}`
+        `http://localhost:8080/api/photo/photos/user/${userId}`
       );
       if (response.ok) {
         const data = await response.json();
