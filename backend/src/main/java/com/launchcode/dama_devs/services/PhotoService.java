@@ -16,7 +16,6 @@ import java.util.List;
 import java.util.Optional;
 
 @Service
-@RequiredArgsConstructor
 public class PhotoService {
 
     @Autowired
@@ -28,6 +27,8 @@ public class PhotoService {
 
     public PhotoService(PhotoRepository photoRepository, GardenRepository gardenRepository, UserRepository userRepository) {
         this.photoRepository = photoRepository;
+        this.gardenRepository = gardenRepository;
+        this.userRepository = userRepository;
     }
 
     public Photo savePhoto(MultipartFile file, String photoName, Integer gardenId, Integer userId) throws IOException {
@@ -50,8 +51,30 @@ public class PhotoService {
         return photoRepository.findByGardenIdAndUser_UserId(gardenId, userId);
     }
 
+    public List<Photo> findPhotosByUser_UserId(Integer userId) {
+        return photoRepository.findPhotosByUser_UserId(userId);
+    }
+
+    public List<Garden> getGardensByUserId(Integer userId) {
+        return gardenRepository.findByUser_UserId(userId);
+    }
+
 
     public List<Photo> getAllGardenPhotos() {
         return photoRepository.findAll();
+    }
+
+    public List<Garden> getGardensWithoutPhotosByUserId(Integer userId) {
+        List<Garden> allUserGardens = gardenRepository.findByUser_UserId(userId);
+        List<Photo> userPhotos = photoRepository.findPhotosByUser_UserId(userId);
+
+        List<Integer> gardenIdsWithPhotos = userPhotos.stream()
+                .map(photo -> photo.getGarden().getId())
+                .distinct()
+                .toList();
+
+        return allUserGardens.stream()
+                .filter(garden -> !gardenIdsWithPhotos.contains(garden.getId()))
+                .toList();
     }
 }

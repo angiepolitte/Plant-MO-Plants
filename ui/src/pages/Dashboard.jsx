@@ -12,17 +12,22 @@ import {
   Box,
 } from "@mui/material";
 import Forecast from "../reusable-code/FiveDayForecast";
-import EmojiNatureIcon from "@mui/icons-material/EmojiNature";
-import LocalFloristIcon from "@mui/icons-material/LocalFlorist";
-import FilterVintageIcon from "@mui/icons-material/FilterVintage";
-import GrassIcon from "@mui/icons-material/Grass";
 import { Button } from "@mui/material";
 import PhotoFetching from "../reusable-code/PhotoFetching";
-
-const icons = [EmojiNatureIcon, LocalFloristIcon, FilterVintageIcon, GrassIcon];
+import { useMyContext } from "../store/ContextApi";
+import NurserySearch from "../reusable-code/NurserySearch";
 
 const Dashboard = () => {
   const navigate = useNavigate();
+  const [file, setFile] = useState(null);
+  const [photoName, setPhotoName] = useState("");
+  const [gardenId, setGardenId] = useState("");
+  const [gardens, setGardens] = useState([]);
+
+  const { currentUser } = useMyContext();
+  const userId = currentUser?.id;
+  const username = currentUser?.username;
+  const { zipCode, updateZipCode } = useMyContext();
 
   const handleNavigateToCreateGarden = () => {
     navigate("/create-garden"); // navigates to beginning
@@ -31,15 +36,61 @@ const Dashboard = () => {
   const handleAddPhoto = () => {
     console.log("Open cover photo upload...");
   };
-  const userId = 1; //to be updated with userId
-  const userGardenId = 2; //to be updated with gardenId
-  const iconColors = ["#FF8F00", "#E91E63", "#6A1B9A", "#388E3C"];
+  const [inputZip, setInputZip] = useState("");
 
-  // admin zip code default for presenting
-  const zip = "63026";
+  const handleSubmit = () => {
+    const trimmedZip = inputZip.trim();
+    if (/^\d{5}$/.test(trimmedZip)) {
+      updateZipCode(trimmedZip); // only now update context
+    } else {
+      alert("Invalid ZIP code format.");
+    }
+  };
+
+  const handleKeyDown = (e) => {
+    if (e.key === "Enter") {
+      handleSubmit();
+    }
+  };
 
   return (
     <div>
+      <div>
+        <label htmlFor="zip">
+          Let's personalize your Dashboard! Enter your ZIP code:{" "}
+        </label>
+        <input
+          type="text"
+          id="zip"
+          value={inputZip}
+          onChange={(e) => setInputZip(e.target.value)}
+          onKeyDown={handleKeyDown}
+          placeholder="e.g. 90210"
+          style={{
+            padding: "10px",
+            borderRadius: "5px",
+            backgroundColor: "#F3E5F5",
+            fontSize: "16px",
+            width: "10%",
+            outline: "none",
+          }}
+        />
+
+        <Button
+          variant="contained"
+          onClick={handleSubmit}
+          sx={{
+            marginLeft: 2,
+            backgroundColor: "#cce3de",
+            color: "black",
+            "&:hover": {
+              backgroundColor: "#b0d4c2",
+            },
+          }}
+        >
+          Personalize!
+        </Button>
+      </div>
       <Box
         sx={{
           display: "flex",
@@ -53,8 +104,21 @@ const Dashboard = () => {
         <Container maxWidth="lg" sx={{ flexGrow: 1, padding: 2 }}>
           <Grid container spacing={2}>
             {/* Left: Garden Section */}
-            <Grid item xs={12} md={6}>
-              <Card sx={{ minHeight: 350, backgroundColor: "#F3E5F5" }}>
+
+            <Grid item xs={12} md={6} paddingRight={20}>
+              <Card
+                sx={{
+
+                  height: 600,
+                  width: 500,
+                  overflowY: "auto",
+
+                  backgroundColor: "#F3E5F5",
+                }}
+              >
+                <Typography variant="body1" paddingTop={"1rem"}>
+                  {username}'s Most Recent Garden
+                </Typography>
                 <CardContent
                   sx={{
                     display: "flex",
@@ -64,75 +128,89 @@ const Dashboard = () => {
                     textAlign: "center",
                   }}
                 >
-                  <PhotoFetching gardenId={userGardenId} userId={userId} />
-                  //to be updated with userId and gardenId
+                  <PhotoFetching userId={userId} />
                 </CardContent>
               </Card>
 
-              {/* Small Containers with Icons */}
-              <Grid container spacing={2} sx={{ mt: 2 }}>
-                {[
-                  EmojiNatureIcon,
-                  LocalFloristIcon,
-                  FilterVintageIcon,
-                  GrassIcon,
-                ].map((IconComponent, index) => (
-                  <Grid item xs={6} sm={3} key={index}>
-                    <Card
-                      sx={{
-                        height: 150,
-                        display: "flex",
-                        alignItems: "center",
-                        justifyContent: "center",
-                        flexDirection: "column",
-                        backgroundColor: "#F3E5F5",
-                      }}
-                    >
-                      <CardContent sx={{ textAlign: "center" }}>
-                        <IconComponent
-                          sx={{ fontSize: 50, color: iconColors[index] }}
-                        />
-                        <Typography variant="body1">
-                          Garden {index + 1}
-                        </Typography>
-                      </CardContent>
-                    </Card>
-                  </Grid>
-                ))}
-              </Grid>
-
               {/* Create New Garden Button */}
-              <Grid
-                item
-                sx={{ display: "flex", justifyContent: "center", mt: 4 }}
-              >
-                <Button
-                  variant="contained"
+              <Grid item xs={12} paddingLeft={20}>
+                <Box
                   sx={{
-                    backgroundColor: "#cce3de",
-                    color: "black",
-                    "&:hover": { backgroundColor: "#b0d4c2" },
+                    display: "flex",
+                    flexDirection: "column",
+                    alignItems: "center",
+                    gap: 2,
+                    mt: 2,
                   }}
-                  onClick={() => navigate("/create-garden")}
                 >
-                  Create New Garden
-                </Button>
+                  <Button
+                    sx={{
+                      backgroundColor: "#cce3de",
+                      color: "black",
+                      "&:hover": { backgroundColor: "#b0d4c2" },
+                    }}
+                    onClick={() => navigate("/photo-upload")}
+                  >
+                    Upload a Photo of your Garden!
+                  </Button>
+
+                  <Button
+                    sx={{
+                      backgroundColor: "#cce3de",
+                      color: "black",
+                      "&:hover": { backgroundColor: "#b0d4c2" },
+                    }}
+                    onClick={() => navigate("/create-garden")}
+                  >
+                    Create New Garden
+                  </Button>
+                </Box>
               </Grid>
             </Grid>
 
             {/* Right: Weather & Nurseries Section */}
             <Grid item xs={12} md={6}>
               {/* Weather Forecast */}
-              <Card sx={{ minHeight: 300, backgroundColor: "#F3E5F5" }}>
+              <Card
+                sx={{
+                  minHeight: 300,
+                  backgroundColor: "#F3E5F5",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  padding: 1,
+                }}
+              >
                 <CardContent>
-                  <Forecast zip={zip} />
+                  {/* <Forecast zip={zip} /> */}
+                  <Forecast />
                 </CardContent>
               </Card>
 
               {/* Nurseries Section */}
-              <Card sx={{ height: 300, backgroundColor: "#F3E5F5", mt: 2 }}>
-                <CardContent>
-                  <Typography variant="h6">Nurseries in Your Area</Typography>
+              <Card
+                sx={{
+                  minHeight: 300,
+                  maxHeight: 400,
+                  backgroundColor: "#F3E5F5",
+                  mt: 2,
+                }}
+              >
+                <CardContent
+                  sx={{
+                    height: "100%",
+                    display: "flex",
+                    flexDirection: "column",
+                  }}
+                >
+                  <Typography variant="h6" mb={1}>
+                    Nurseries in Your Area
+                  </Typography>
+
+                  {/* Scrollable wrapper */}
+                  <Box sx={{ overflowY: "auto", flexGrow: 1, maxHeight: 300 }}>
+                    <NurserySearch />
+                  </Box>
                 </CardContent>
               </Card>
             </Grid>

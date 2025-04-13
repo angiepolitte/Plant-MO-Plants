@@ -14,5 +14,6 @@ public class CommentDTO {
     private String commentContent;
     private int plantId;
     private Integer userId;
+    private String username;
 
   }

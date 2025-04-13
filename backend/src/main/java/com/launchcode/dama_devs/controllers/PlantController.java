@@ -23,12 +23,13 @@ public class PlantController {
     @Autowired
     private PlantFilteringService plantFilteringService;
 
-    @GetMapping("/{gardenId}/add-plants")
+    @CrossOrigin(origins = "http://localhost:5173")
+    @GetMapping("/{gardenId}/search-plants")
     public ResponseEntity<List<Plant>> getMatchingGardenPlants(@PathVariable Integer gardenId) {
         List<Plant> matchingGardenPlants = plantFilteringService.filterPlantsByGardenFields(gardenId);
         return ResponseEntity.status(HttpStatus.OK).body(matchingGardenPlants);
     }
-
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/{plantId}")
     public ResponseEntity<Optional<Plant>> getPlant(@PathVariable Integer plantId) {
         Optional <Plant> plant = plantRepository.findById(plantId);

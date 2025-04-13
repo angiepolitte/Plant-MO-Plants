@@ -1,12 +1,20 @@
 import zIndex from "@mui/material/styles/zIndex";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // To get dynamic params from the route
-const userId = 1;
+import { useMyContext } from "../store/ContextApi";
+import "../custom-css/PlantDetails.css";
 
 const Comment = () => {
   const { plantId } = useParams(); // Get the plantId from the URL
+  const { currentUser } = useMyContext();
+  const userId = currentUser?.id;
+  const username = currentUser?.username;
+
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+
+  const [editCommentId, setEditCommentId] = useState(null);
+  const [editCommentText, setEditCommentText] = useState("");
 
   useEffect(() => {
     fetch(`http://localhost:8080/comment/plant/${plantId}`)
@@ -20,7 +28,7 @@ const Comment = () => {
     const commentData = {
       commentContent: newComment,
       plantId,
-      userId, // Assuming userId is 1 for now, replace as needed
+      userId,
     };
 
     fetch("http://localhost:8080/comment/add", {
@@ -54,32 +62,98 @@ const Comment = () => {
       .catch((err) => console.error("Delete error:", err));
   };
 
+  // ******* UPDATE COMMENT *******
+  // ****** EDIT MODE ******
+  const handleEditClick = (comment) => {
+    setEditCommentId(comment.id);
+    setEditCommentText(comment.commentContent);
+  };
+
+  // ****** CANCEL EDIT ******
+  const handleCancelEdit = () => {
+    setEditCommentId(null);
+    setEditCommentText("");
+  };
+
+  // ****** SAVE EDITED COMMENT ******
+  const handleSaveEdit = () => {
+    fetch(`http://localhost:8080/comment/edit/${editCommentId}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        userId: userId,
+        commentContent: editCommentText, // Make sure to pass commentContent, not text
+      }),
+    })
+      .then((response) => {
+        if (!response.ok) throw new Error("Failed to update comment");
+        return response.json();
+      })
+      .then((updatedComment) => {
+        // Update the state with the edited comment
+        setComments((prevComments) =>
+          prevComments.map((comment) =>
+            comment.id === updatedComment.id ? updatedComment : comment
+          )
+        );
+        setEditCommentId(null); // Reset the edit state
+        setEditCommentText(""); // Clear the text area
+      })
+      .catch((err) => console.error("Edit error:", err));
+  };
+
   return (
     <div
       style={{
-        position: "fixed",
-        bottom: 0,
-        left: 0,
-        right: 0,
-        height: "33vh",
+        height: "30vh",
         overflowY: "auto",
         backgroundColor: "#f9f9f9",
         borderTop: "2px solid #ccc",
-        padding: "1rem",
+        padding: "2rem",
       }}
     >
-      <h2>Community Tips for Plant {plantId}</h2>
-      <ul style={{ alignItems: "left", padding: "5px", marginBottom: "10px" }}>
-        {comments.map((comment, index) => (
-          <li key={comment.id || index}>
-            <strong>User {comment.userId}</strong> ~ "{comment.commentContent}"
-            {comment.userId === userId && (
-              <button
-                style={{ marginLeft: "10px", color: "purple" }}
-                onClick={() => handleDeleteComment(comment.id, userId)}
-              >
-                Delete
-              </button>
+      <h2 className="description-header">Community Tips </h2>
+      <ul style={{ padding: "5px", marginBottom: "10px" }}>
+        {comments.map((comment) => (
+          <li key={comment.id}>
+            <strong>{comment.username}</strong> ~{" "}
+            {editCommentId === comment.id ? (
+              <>
+                <textarea
+                  value={editCommentText}
+                  onChange={(e) => setEditCommentText(e.target.value)}
+                  style={{ width: "60%" }}
+                />
+                <button onClick={handleSaveEdit} style={{ marginLeft: "5px" }}>
+                  Save
+                </button>
+                <button
+                  onClick={handleCancelEdit}
+                  style={{ marginLeft: "5px" }}
+                >
+                  Cancel
+                </button>
+              </>
+            ) : (
+              <>
+                "{comment.commentContent}"
+                {comment.userId === userId && (
+                  <>
+                    <button
+                      style={{ marginLeft: "10px", color: "purple" }}
+                      onClick={() => handleEditClick(comment)}
+                    >
+                      Edit
+                    </button>
+                    <button
+                      style={{ marginLeft: "5px", color: "purple" }}
+                      onClick={() => handleDeleteComment(comment.id, userId)}
+                    >
+                      Delete
+                    </button>
+                  </>
+                )}
+              </>
             )}
           </li>
         ))}
@@ -87,14 +161,15 @@ const Comment = () => {
       <div
         style={{
           display: "flex",
-          flexDirection: "row",
           gap: "1rem",
-          alignItems: "center",
           justifyContent: "center",
           backgroundColor: "#EDE7F6",
         }}
       >
         <textarea
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          placeholder="Add a comment"
           style={{
             marginTop: "1rem",
             marginBottom: "1rem",
@@ -104,9 +179,6 @@ const Comment = () => {
             borderRadius: "5px",
             backgroundColor: "white",
           }}
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          placeholder="Add a comment"
         />
         <button
           onClick={handleAddComment}

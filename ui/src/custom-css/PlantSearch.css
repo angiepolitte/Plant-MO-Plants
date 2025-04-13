@@ -1,0 +1,47 @@
+.container {
+  display: flex;
+  row-gap: 20px;
+  column-gap: 40px;
+  padding-bottom: 10px;
+  max-width: 1500px;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: bold;
+  text-align: left;
+  padding-left: 20px;
+}
+
+.garden-button {
+  text-align: center;
+  border-radius: 8px;
+  border-color: #630074;
+  border-width: 2px;
+  padding: 12px;
+  color: #630074;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: inherit;
+  background-color: #e0f2f1;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+.garden-button:hover {
+  background-color: #630074;
+  color: #ffffff;
+  border-color: #630074;
+}
+
+.garden-button:focus,
+button.garden-button:focus-visible {
+  outline: 2px;
+  color: #ffffff;
+}
+.plant-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem; /* = 16px this will be more responsive if a user changes their default font size in their browser */
+}

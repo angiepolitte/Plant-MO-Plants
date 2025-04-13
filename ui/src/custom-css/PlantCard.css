@@ -2,34 +2,33 @@
   border: 1px solid rgba(57, 47, 65, 0.065);
   background-color: #ffffff;
   border-radius: 10px;
-  padding: 10px;
+  padding: 12px;
+  padding-bottom: 10px;
   margin: 10px;
   max-width: 250px;
-  display: inline-block;
   box-shadow: 0 4px 8px 0 #06030629, 0 6px 20px 0 #0603062b;
 }
 
 .plantCard-image {
-  max-width: 98%;
+  max-width: 100%;
   height: auto;
   border-radius: 4%;
+  padding: 2px;
   margin-bottom: 5px;
-  text-align: center;
 }
 
 .plantCard-title {
   padding: 6px;
   text-align: left;
   font-size: 16px;
-  font-weight: 500;
+  font-weight: bold;
   text-align: left;
   font-family: Arial, Helvetica, sans-serif;
-  margin: 0;
   color: #060306;
+  text-transform: capitalize;
 }
 
 .plantCard-button {
-  text-align: left;
   border-radius: 8px;
   border: 1px solid transparent;
   padding: 12px;
@@ -40,9 +39,11 @@
   background-color: #9c27b0;
   cursor: pointer;
   transition: border-color 0.25s;
+  margin-bottom: 6px;
 }
 .plantCard-button:hover {
   background-color: #630074;
+  border: #630074;
 }
 
 .plantCard-button:disabled {

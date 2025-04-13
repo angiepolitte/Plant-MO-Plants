@@ -33,16 +33,31 @@ import AccessDenied from "./reusable-code/AccessDenied";
 import Admin from "./AdminAccess/Admin";
 import ProtectedRoute from "./AdminAccess/ProtectedRoute";
 
+
 function App() {
   return (
     <Router>
       <Container
-        maxWidth={false}
+        maxWidth="lg"
         disableGutters
-        sx={{ display: "flex", flexDirection: "column", height: "100vh" }}
+        sx={{
+          display: "flex",
+          flexDirection: "column",
+          minHeight: "100vh",
+          alignItems: "center",
+        }}
       >
         <NavBar />
-        <Box sx={{ flex: 1, p: 3, paddingTop: "80px", paddingBottom: "80px" }}>
+        <Box
+          sx={{
+            width: "100%",
+            paddingBottom: "80px",
+            display: "flex",
+            maxWidth: "1200px",
+            margin: "0 auto",
+            paddingTop: "5rem",
+          }}
+        >
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
@@ -57,14 +72,13 @@ function App() {
             <Route path="/garden-zone" element={<GardenZone />} />
             <Route path="/garden-conditions" element={<GardenConditions />} />
             <Route path="/garden-success" element={<GardenSuccess />} />
-            <Route path="/plant-search" element={<PlantSearch />} />
+            <Route path="/plant-search/:gardenId" element={<PlantSearch />} />
             <Route path="/garden-details" element={<GardenDetails />} />
             <Route path="/comment/:plantId" element={<Comment />} />
             <Route path="/photo-upload" element={<PhotoUpload />} />
             <Route path="/results" element={<NurseryList />} />
             <Route path="/nursery-search" element={<NurserySearch />} />
-            <Route path="/plant-card" element={<PlantCard />} />
-            <Route path="/plant-details" element={<PlantDetails />} />
+            <Route path="/plant-details/:plantId" element={<PlantDetails />} />
             <Route path="star-rating" element={<StarRating />} />
             <Route path="/access-denied" element={<AccessDenied />} />
             <Route
@@ -75,11 +89,11 @@ function App() {
                 </ProtectedRoute>
               }
             />
+
           </Routes>
         </Box>
 
         <Footer />
-        <WeatherWidget />
       </Container>
     </Router>
   );

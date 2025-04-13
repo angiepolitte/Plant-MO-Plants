@@ -3,6 +3,7 @@ import "../custom-css/PlantCard.css";
 import "../custom-css/PlantDetails.css";
 import StarRating from "../reusable-code/StarRating";
 import { useParams } from "react-router-dom";
+import Comment from "../reusable-code/Comment";
 
 function PlantDetails() {
   const { plantId } = useParams(); //grabs the plantId from the URL.
@@ -24,14 +25,18 @@ function PlantDetails() {
     };
   }, [plantId]);
 
+  if (!plant) {
+    return <div>("Please wait while your plant grows...")</div>;
+  }
+
   return (
     <div className="plant-container">
       <img
         className="plant-image"
-        src={plant.plantImagePath}
+        src={`http://localhost:8080/${plant.plantImagePath}`}
         alt={`Picture of ${plant.commonName}`}
       />
-      <div className="plant-quick-info">
+      <div className="plant-info">
         <h2>{plant.commonName}</h2>
         <h3>{plant.scientificName}</h3>
         <ol className="plant-info-list">
@@ -49,7 +54,6 @@ function PlantDetails() {
           <li>Soil: {plant.plantSoil}</li>
         </ol>
         <div>
-          <br></br>
           <button className="plantCard-button">ADD TO GARDEN</button>
         </div>
       </div>
@@ -58,12 +62,18 @@ function PlantDetails() {
           <h3>What do you think of this plant?</h3>
           <StarRating />
         </div>
-        <h2 className="plant-quick-info">Description</h2>
-        <ol>
+        <h2 className="description-header">Description</h2>
+        <ol className="description-info-list">
           <li>Height: {plant.plantHeight}</li>
           <li>Spread: {plant.plantSpread}</li>
         </ol>
         <p>{plant.plantDescription}</p>
+        <div />
+        <br></br>
+        <br></br>
+        <div className="community-tips">
+          <Comment />
+        </div>
       </div>
     </div>
   );

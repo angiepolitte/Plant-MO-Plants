@@ -1,19 +1,61 @@
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { useParams } from "react-router-dom";
+import PlantCard from "../reusable-code/PlantCard";
+import "../custom-css/PlantSearch.css";
 
 function PlantSearch() {
+  const { gardenId } = useParams(); //grabs the gardenId from the URL.
+  const [plants, setPlants] = useState(null);
   const navigate = useNavigate();
 
   const handleNavigateGardenDetails = () => {
-    navigate("/garden-details"); // Make sure this path matches your route for ExampleOne
+    navigate("/garden-details");
   };
 
+  useEffect(() => {
+    let ignore = false;
+    async function fetchPlants() {
+      const response = await fetch(
+        `http://localhost:8080/plant/${gardenId}/search-plants`
+      );
+      const data = await response.json();
+
+      if (!ignore) {
+        setPlants(data);
+        console.log(data);
+      }
+    }
+    fetchPlants();
+    return () => {
+      ignore = true;
+    };
+  }, [gardenId]);
+
+  if (!plants) {
+    return (
+      <div className="title">Please wait while your plants are picked...</div>
+    );
+  }
+
+  //this maps through the fetched list of plants and
+  //assigns each plantObject to the "plant" prop to pass into the PlantCard function
+  //aslo pass gardenId to PlantCard in prop "gardenId"
+  const plantList = plants.map((plantObject) => (
+    <PlantCard
+      key={plantObject.id}
+      plant={plantObject}
+      gardenId={gardenId}
+    ></PlantCard>
+  ));
+
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Plant Results</h1>
-      <h2>and move on to garden details</h2>
-      <button onClick={handleNavigateGardenDetails}>
-        Go to Garden Details
+    <div className="container">
+      <h2 className="title">Find plants for your garden!</h2>
+      <button className="garden-button" onClick={handleNavigateGardenDetails}>
+        VIEW YOUR GARDEN
       </button>
+      <div className="plant-grid">{plantList}</div>
     </div>
   );
 }
