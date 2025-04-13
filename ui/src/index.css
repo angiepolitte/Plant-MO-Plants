@@ -4,6 +4,13 @@
 @tailwind components;
 @tailwind utilities;
 
+.MuiDataGrid-row:nth-of-type(odd) {
+  background-color: #eae6ee;
+}
+
+.MuiDataGrid-row:nth-of-type(even) {
+  background-color: #ffffff;
+}
 :root {
   font-family: system-ui, Avenir, Helvetica, Arial, sans-serif;
   line-height: 1.5;

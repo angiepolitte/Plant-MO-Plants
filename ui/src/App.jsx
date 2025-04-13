@@ -29,6 +29,10 @@ import Signup from "./auth/SignUp";
 import PlantDetails from "./pages/PlantDetails";
 import StarRating from "./reusable-code/StarRating";
 import OAuth2RedirectHandler from "./auth/Oauth2RedirectHandler";
+import AccessDenied from "./reusable-code/AccessDenied";
+import Admin from "./AdminAccess/Admin";
+import ProtectedRoute from "./AdminAccess/ProtectedRoute";
+
 
 function App() {
   return (
@@ -76,6 +80,16 @@ function App() {
             <Route path="/nursery-search" element={<NurserySearch />} />
             <Route path="/plant-details/:plantId" element={<PlantDetails />} />
             <Route path="star-rating" element={<StarRating />} />
+            <Route path="/access-denied" element={<AccessDenied />} />
+            <Route
+              path="/admin/*"
+              element={
+                <ProtectedRoute adminPage={true}>
+                  <Admin />
+                </ProtectedRoute>
+              }
+            />
+
           </Routes>
         </Box>
 
