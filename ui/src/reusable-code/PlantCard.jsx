@@ -12,7 +12,7 @@ function PlantCard({ plant, gardenId }) {
     const dto = { plant: plant, gardenId: gardenId };
     try {
       const response = await fetch(
-        `http://localhost:8080/plant/${gardenId}/add-plant/${plantId}`,
+        `http://localhost:8080/api/plant/${gardenId}/add-plant/${plantId}`,
         {
           method: "POST",
           headers: { "Content-Type": "application/json" },

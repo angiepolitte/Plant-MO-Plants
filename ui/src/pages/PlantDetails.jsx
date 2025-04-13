@@ -12,7 +12,19 @@ function PlantDetails() {
   useEffect(() => {
     let ignore = false;
     async function fetchPlant() {
-      const response = await fetch(`http://localhost:8080/plant/${plantId}`);
+      const response = await fetch(
+        `http://localhost:8080/api/plant/${plantId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-XSRF-TOKEN": csrfToken,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          credentials: "include",
+        }
+      );
       const data = await response.json();
 
       if (!ignore) {

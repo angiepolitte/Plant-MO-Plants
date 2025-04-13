@@ -6,13 +6,10 @@ const ContextApi = createContext();
 
 export const ContextProvider = ({ children }) => {
   //find the token in the localstorage
-  const getToken = localStorage.getItem("JWT_TOKEN")
-    ? JSON.stringify(localStorage.getItem("JWT_TOKEN"))
-    : null;
+  const getToken = localStorage.getItem("JWT_TOKEN") || null;
+
   //find is the user status from the localstorage
-  const isADmin = localStorage.getItem("IS_ADMIN")
-    ? JSON.stringify(localStorage.getItem("IS_ADMIN"))
-    : false;
+  const isADmin = localStorage.getItem("IS_ADMIN") === "true";
 
   //store the token
   const [token, setToken] = useState(getToken);
