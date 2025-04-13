@@ -34,7 +34,9 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
   // ***** FETCHING GARDENS PER USERID *****
   useEffect(() => {
     if (currentUser?.id) {
-      fetch(`http://localhost:8080/photo/gardens-without-photo/user/${userId}`)
+      fetch(
+        `http://localhost:8080/api/photo/gardens-without-photo/user/${userId}`
+      )
         .then((res) => res.json())
         .then((data) => {
           console.log("Fetched gardens:", data);
@@ -61,8 +63,17 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
     formData.append("userId", userId);
 
     try {
-      const response = await fetch("http://localhost:8080/photo/upload", {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const csrfToken = localStorage.getItem("CSRF_TOKEN");
+      const response = await fetch("http://localhost:8080/api/photo/upload", {
         method: "POST",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "X-XSRF-TOKEN": csrfToken,
+
+          Accept: "application/json",
+        },
+        credentials: "include",
         body: formData,
       });
 

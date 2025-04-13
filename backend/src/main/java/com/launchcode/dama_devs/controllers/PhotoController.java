@@ -17,7 +17,7 @@ import java.io.IOException;
 import java.util.List;
 
 @RestController
-@RequestMapping("/photo")
+@RequestMapping("/api/photo")
 @RequiredArgsConstructor
 @CrossOrigin(origins = "http://localhost:5173") // Adjust for React
 public class PhotoController {
