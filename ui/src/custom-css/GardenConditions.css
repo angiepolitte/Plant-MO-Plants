@@ -86,4 +86,62 @@ img.selected {
     outline: 2px;
     color: #ffffff;
   }
+
+
+  .create-garden-container {
+    text-align: center;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;    /* Center items horizontally */
+  }
+  
+  .garden-heading {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #3E2723;
+    font-weight: 600;
+  }
+  
+  .garden-input {
+    width: 80%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 2px solid #828282;
+    margin-bottom: 20px;  /* Space between input and button */
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+  }
+  
+  .garden-input:focus {
+    border-color: #9c27b0;
+    outline: none;
+  }
+
+  .zone-map {
+    max-width: 800px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  
+  .zone-select {
+    width: 80%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 2px solid #828282;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+  
+  .zone-select:focus {
+    border-color: #9c27b0;
+    outline: none;
+  }
+
   

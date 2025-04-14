@@ -4,28 +4,50 @@ import { useMyContext } from "../store/ContextApi";
 import api from '../services/api';
 import { GardenContext } from '../store/GardenContext';
 import axios from 'axios';
+import '../custom-css/GardenConditions.css';
 
 function CreateGarden() {
   const navigate = useNavigate();
   const { gardenData, setGardenData } = useContext(GardenContext);
+  const [showError, setShowError] = useState(false);
 
   const handleChange = (e) => {
     setGardenData({ ...gardenData, gardenName: e.target.value });
+   if (e.target.value.trim() !== "") {
+      setShowError(false); // clear error if user starts typing
+    }
   };
 
-  const handleNext = async () => {;
-    navigate("/garden-zone");
+  const handleNext = () => {
+    if (gardenData.gardenName.trim() === "") {
+      setShowError(true);
+    } else {
+      navigate("/garden-zone");
     }
-    // move to next page
+  };
+
+    // const isNameEmpty = gardenData.gardenName.trim() === "";
   
-  return (
-    <div style={{ textAlign: 'center', marginTop: '50px' }}>
-      <h1>Enter Name of Garden</h1>
-      <input value={gardenData.gardenName} onChange={handleChange} />
-      <button onClick={handleNext}>Next</button>
-  </div>
-);
+    return (
+      <div className="create-garden-container">
+        <h1 className="garden-heading">Let's give your garden a name.</h1>
+        <input
+          className="garden-input"
+          value={gardenData.gardenName}
+          onChange={handleChange}
+          placeholder="e.g. My Native Garden"
+        />
+        {showError && (
+        <div className="error-message">Please enter a Garden Name before continuing.</div>
+      )}
+      <button className="garden-button" onClick={handleNext}>
+        Next
+      </button>
+    </div>
+  );
 }
+  
+export default CreateGarden;
 
   // const { currentUser } = useMyContext();
   // const userId = currentUser?.id;
@@ -88,8 +110,6 @@ function CreateGarden() {
   //   </div>
   // );
 // }
-
-export default CreateGarden;
 
 //   return (
 //     <div style={{ textAlign: "center", marginTop: "50px" }}>
