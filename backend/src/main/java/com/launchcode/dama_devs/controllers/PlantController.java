@@ -14,7 +14,7 @@ import java.util.Optional;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/plant")
+@RequestMapping("/api/plant")
 public class PlantController {
 
     @Autowired

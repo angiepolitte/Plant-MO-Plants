@@ -1,14 +1,14 @@
 import zIndex from "@mui/material/styles/zIndex";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // To get dynamic params from the route
-import { useMyContext } from "../store/ContextApi";
+
 import "../custom-css/PlantDetails.css";
 
 const Comment = () => {
   const { plantId } = useParams(); // Get the plantId from the URL
-  const { currentUser } = useMyContext();
-  const userId = currentUser?.id;
-  const username = currentUser?.username;
+
+  const token = localStorage.getItem("JWT_TOKEN");
+  const csrfToken = localStorage.getItem("CSRF_TOKEN");
 
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -17,7 +17,7 @@ const Comment = () => {
   const [editCommentText, setEditCommentText] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:8080/comment/plant/${plantId}`)
+    fetch(`http://localhost:8080/api/comment/plant?plantId=${plantId}`)
       .then((response) => response.json())
       .then((data) => setComments(data))
       .catch((error) => console.error("Error fetching comments:", error));
@@ -28,12 +28,17 @@ const Comment = () => {
     const commentData = {
       commentContent: newComment,
       plantId,
-      userId,
     };
 
-    fetch("http://localhost:8080/comment/add", {
+    fetch("http://localhost:8080/api/comment/add", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "X-XSRF-TOKEN": csrfToken,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
       body: JSON.stringify(commentData),
     })
       .then((response) => response.json())
@@ -47,10 +52,16 @@ const Comment = () => {
   // ******* DELETE COMMENT *******
 
   const handleDeleteComment = (commentId, userId) => {
-    fetch("http://localhost:8080/comment/delete", {
+    fetch("http://localhost:8080/api/comment/delete", {
       method: "DELETE",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ id: commentId, userId }),
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "X-XSRF-TOKEN": csrfToken,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
+      body: JSON.stringify({ id: commentId }),
     })
       .then((response) => {
         if (!response.ok) throw new Error("Failed to delete");
@@ -77,9 +88,15 @@ const Comment = () => {
 
   // ****** SAVE EDITED COMMENT ******
   const handleSaveEdit = () => {
-    fetch(`http://localhost:8080/comment/edit/${editCommentId}`, {
+    fetch(`http://localhost:8080/api/comment/edit/${editCommentId}`, {
       method: "PUT",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "X-XSRF-TOKEN": csrfToken,
+        "Content-Type": "application/json",
+        Accept: "application/json",
+      },
+      credentials: "include",
       body: JSON.stringify({
         userId: userId,
         commentContent: editCommentText, // Make sure to pass commentContent, not text

@@ -6,19 +6,20 @@ const ContextApi = createContext();
 
 export const ContextProvider = ({ children }) => {
   //find the token in the localstorage
-  const getToken = localStorage.getItem("JWT_TOKEN")
-    ? JSON.stringify(localStorage.getItem("JWT_TOKEN"))
-    : null;
+  const getToken = localStorage.getItem("JWT_TOKEN") || null;
+
   //find is the user status from the localstorage
-  const isADmin = localStorage.getItem("IS_ADMIN")
-    ? JSON.stringify(localStorage.getItem("IS_ADMIN"))
-    : false;
+  const isADmin = localStorage.getItem("IS_ADMIN") === "true";
 
   //store the token
   const [token, setToken] = useState(getToken);
 
   //store the current loggedin user
   const [currentUser, setCurrentUser] = useState(null);
+
+  //handle sidebar opening and closing in the admin panel
+  const [openSidebar, setOpenSidebar] = useState(true);
+
   //check the loggedin user is admin or not
   const [isAdmin, setIsAdmin] = useState(isADmin);
 
@@ -52,7 +53,7 @@ export const ContextProvider = ({ children }) => {
         const roles = data.roles;
 
         if (roles.includes("ROLE_ADMIN")) {
-          localStorage.setItem("IS_ADMIN", JSON.stringify(true));
+          localStorage.setItem("IS_ADMIN", true);
           setIsAdmin(true);
         } else {
           localStorage.removeItem("IS_ADMIN");
@@ -81,6 +82,8 @@ export const ContextProvider = ({ children }) => {
         setToken,
         currentUser,
         setCurrentUser,
+        openSidebar,
+        setOpenSidebar,
         isAdmin,
         setIsAdmin,
         zipCode, //angie added

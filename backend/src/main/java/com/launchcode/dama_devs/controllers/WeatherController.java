@@ -9,7 +9,7 @@ import reactor.core.publisher.Mono;
 
 @CrossOrigin(origins = "http://localhost:5173")
 @RestController
-@RequestMapping("/weather")
+@RequestMapping("/api/weather")
 public class WeatherController {
 
     @Value("${weather.api.key}")

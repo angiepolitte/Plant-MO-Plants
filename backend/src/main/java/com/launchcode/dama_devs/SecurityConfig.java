@@ -47,7 +47,10 @@ public class SecurityConfig {
 
     @Bean
     SecurityFilterChain defaultSecurityFilterChain(HttpSecurity http) throws Exception {
-        http.csrf(csrf ->
+
+        http.cors(Customizer.withDefaults())
+                .csrf(csrf ->
+
                 csrf.csrfTokenRepository(CookieCsrfTokenRepository.withHttpOnlyFalse())
                         /*here we are making use of ignoring request matches method
                           here all the apis that match the pattern will be ignored for
@@ -58,11 +61,16 @@ public class SecurityConfig {
                 requests
                         //here giving permissions to everyone to access the endpoint of contact
                         .requestMatchers("/contact").permitAll()
+                        .requestMatchers("/plant_images/**").permitAll()
+                        .requestMatchers("/api/photo/user/**").authenticated()
+                        .requestMatchers("/api/weather/**").permitAll()
+                        .requestMatchers("/api/nurseries/**").permitAll()
                         //here restricted to admin to access the end point of hello
                         .requestMatchers("/api/admin/**").hasRole("ADMIN")
                         .requestMatchers("/api/auth/public/**").permitAll()
                         .requestMatchers("/api/csrf-token").permitAll()
                         .requestMatchers("/oauth2/**").permitAll()
+
                         //here other than the above requests to access you need to authenticate
                         .anyRequest().authenticated())
                         .oauth2Login(oauth2->{

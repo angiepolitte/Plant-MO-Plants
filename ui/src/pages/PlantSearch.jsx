@@ -16,8 +16,21 @@ function PlantSearch() {
   useEffect(() => {
     let ignore = false;
     async function fetchPlants() {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const csrfToken = localStorage.getItem("CSRF_TOKEN");
+
       const response = await fetch(
-        `http://localhost:8080/plant/${gardenId}/search-plants`
+        `http://localhost:8080/api/plant/${gardenId}/search-plants`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-XSRF-TOKEN": csrfToken,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          credentials: "include",
+        }
       );
       const data = await response.json();
 
