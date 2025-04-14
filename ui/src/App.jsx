@@ -36,8 +36,6 @@ import AccessDenied from "./reusable-code/AccessDenied";
 import Admin from "./AdminAccess/Admin";
 import ProtectedRoute from "./AdminAccess/ProtectedRoute";
 
-
-
 function App() {
   return (
     <Router>
@@ -63,39 +61,47 @@ function App() {
           }}
         >
           <GardenProvider>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route
-              path="/oauth2/redirect"
-              element={<OAuth2RedirectHandler />}
-            />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/admin-dashboard" element={<DashboardAdmin />} />
-            <Route path="/create-garden" element={<CreateGarden />} />
-            <Route path="/garden-zone" element={<GardenZone />} />
-            <Route path="/garden-conditions" element={<GardenConditions />} />
-            <Route path="/garden-success" element={<GardenSuccess />} />
-            <Route path="/plant-search/:gardenId" element={<PlantSearch />} />
-            <Route path="/garden-details" element={<GardenDetails />} />
-            <Route path="/comment/:plantId" element={<Comment />} />
-            <Route path="/photo-upload" element={<PhotoUpload />} />
-            <Route path="/results" element={<NurseryList />} />
-            <Route path="/nursery-search" element={<NurserySearch />} />
-            <Route path="/plant-details/:plantId" element={<PlantDetails />} />
-            <Route path="star-rating" element={<StarRating />} />
-            <Route path="/access-denied" element={<AccessDenied />} />
-            <Route
-              path="/admin/*"
-              element={
-                <ProtectedRoute adminPage={true}>
-                  <Admin />
-                </ProtectedRoute>
-              }
-            />
-
-          </Routes>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route
+                path="/oauth2/redirect"
+                element={<OAuth2RedirectHandler />}
+              />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/admin-dashboard" element={<DashboardAdmin />} />
+              <Route path="/create-garden" element={<CreateGarden />} />
+              <Route path="/garden-zone" element={<GardenZone />} />
+              <Route path="/garden-conditions" element={<GardenConditions />} />
+              <Route
+                path="/garden-success/:gardenId"
+                element={<GardenSuccess />}
+              />
+              <Route path="/plant-search/:gardenId" element={<PlantSearch />} />
+              <Route
+                path="/garden-details/:gardenId"
+                element={<GardenDetails />}
+              />
+              <Route path="/comment/:plantId" element={<Comment />} />
+              <Route path="/photo-upload" element={<PhotoUpload />} />
+              <Route path="/results" element={<NurseryList />} />
+              <Route path="/nursery-search" element={<NurserySearch />} />
+              <Route
+                path="/plant-details/:plantId"
+                element={<PlantDetails />}
+              />
+              <Route path="star-rating" element={<StarRating />} />
+              <Route path="/access-denied" element={<AccessDenied />} />
+              <Route
+                path="/admin/*"
+                element={
+                  <ProtectedRoute adminPage={true}>
+                    <Admin />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
           </GardenProvider>
         </Box>
 
