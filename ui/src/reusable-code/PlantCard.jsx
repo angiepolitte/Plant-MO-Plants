@@ -10,13 +10,22 @@ function PlantCard({ plant, gardenId }) {
   async function handleAddPlantToGardenClick() {
     const plantId = plant.id;
     const dto = { plant: plant, gardenId: gardenId };
+    const token = localStorage.getItem("JWT_TOKEN");
+    const csrfToken = localStorage.getItem("CSRF_TOKEN");
+
     try {
       const response = await fetch(
-        `http://localhost:8080/api/plant/${gardenId}/add-plant/${plantId}`,
+        `http://localhost:8080/api/garden/${gardenId}/add-plant/${plantId}`,
         {
           method: "POST",
-          headers: { "Content-Type": "application/json" },
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-XSRF-TOKEN": csrfToken,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
           body: JSON.stringify(dto),
+          credentials: "include",
         }
       );
 
@@ -48,6 +57,7 @@ function PlantCard({ plant, gardenId }) {
           onClick={handleAddPlantToGardenClick}
         >
           {inGarden ? "PLANT ADDED!" : "ADD TO GARDEN"}
+          {/*  handle submit (in angie's photos) */}
         </button>
       </div>
     </div>
