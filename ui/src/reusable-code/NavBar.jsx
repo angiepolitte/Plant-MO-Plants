@@ -1,5 +1,7 @@
-import React from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useState } from "react";
+import { IoMenu } from "react-icons/io5";
+import { RxCross2 } from "react-icons/rx";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import {
   AppBar,
   Toolbar,
@@ -13,6 +15,8 @@ import SetTheme from "./SetTheme";
 import { useMyContext } from "../store/ContextApi";
 
 const NavBar = () => {
+  const pathName = useLocation().pathname;
+  const [headerToggle, setHeaderToggle] = useState(false);
   const navigate = useNavigate();
   const navigateHome = () => {
     navigate("/");
@@ -21,7 +25,8 @@ const NavBar = () => {
     navigate("/dashboard");
   };
 
-  const { setToken, setCurrentUser, setIsAdmin } = useMyContext();
+  const { token, setToken, setCurrentUser, isAdmin, setIsAdmin } =
+    useMyContext();
   const isLoggedIn = !!localStorage.getItem("JWT_TOKEN");
 
   const handleLogout = () => {
@@ -86,18 +91,98 @@ const NavBar = () => {
           </Typography>
         </Button>
         <Box sx={{ flexGrow: 1 }} />
-        <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
+        {/* <Box sx={{ display: "flex", alignItems: "center", gap: 2 }}>
           <Button className="login-button" onClick={handleLogout}>
             {isLoggedIn ? "Logout" : "Login"}
           </Button>
-        </Box>
-        <Button
+        </Box> */}
+        {/* <Button
           onClick={navigateDashboard}
           sx={{ color: "purple", marginRight: "50px" }}
         >
           Dashboard
-        </Button>
-        <SetTheme />
+        </Button> */}
+        <ul
+          className={`lg:static  absolute left-0  top-16 w-full lg:w-fit lg:px-0 sm:px-10 px-4  lg:bg-transparent bg-headerColor   ${
+            headerToggle
+              ? "min-h-fit max-h-navbarHeight lg:py-0 py-4 shadow-md shadow-slate-700 lg:shadow-none"
+              : "h-0 overflow-hidden "
+          }  lg:h-auto transition-all duration-100 font-montserrat text-textColor flex lg:flex-row flex-col lg:gap-8 gap-2`}
+        >
+          {token && (
+            <>
+              <Link to="/dashboard">
+                <li
+                  className={` py-2 cursor-pointer  hover:text-slate-300 ${
+                    pathName === "/dashboard" ? "font-semibold " : ""
+                  } `}
+                >
+                  Dash Board
+                </li>
+              </Link>
+              <Link to="/create-garden">
+                <li
+                  className={` py-2 cursor-pointer  hover:text-slate-300 ${
+                    pathName === "/create-garden" ? "font-semibold " : ""
+                  } `}
+                >
+                  Create Garden
+                </li>
+              </Link>
+            </>
+          )}
+          {token ? (
+            <>
+              <Link to="/profile">
+                <li
+                  className={` py-2 cursor-pointer  hover:text-slate-300 ${
+                    pathName === "/profile" ? "font-semibold " : ""
+                  }`}
+                >
+                  Profile
+                </li>
+              </Link>{" "}
+              {isAdmin && (
+                <Link to="/admin/users">
+                  <li
+                    className={` py-2 cursor-pointer uppercase   hover:text-slate-300 ${
+                      pathName.startsWith("/admin") ? "font-semibold " : ""
+                    }`}
+                  >
+                    Admin
+                  </li>
+                </Link>
+              )}
+              <button
+                onClick={handleLogout}
+                className="w-24 text-center bg-btnColor font-semibold px-4 py-2 rounded-sm cursor-pointer hover:text-slate-300"
+              >
+                LogOut
+              </button>
+            </>
+          ) : (
+            <Link to="/signup">
+              <li className="w-24 text-center bg-btnColor font-semibold px-4 py-2 rounded-sm cursor-pointer hover:text-slate-300">
+                SignUp
+              </li>
+            </Link>
+          )}
+          <span></span>
+
+          <li>
+            <SetTheme />
+          </li>
+        </ul>
+        <span
+          onClick={() => setHeaderToggle(!headerToggle)}
+          className="lg:hidden block cursor-pointer text-textColor  shadow-md hover:text-slate-400"
+        >
+          {headerToggle ? (
+            <RxCross2 className=" text-2xl" />
+          ) : (
+            <IoMenu className=" text-2xl" />
+          )}
+        </span>
       </Toolbar>
     </AppBar>
   );
