@@ -1,14 +1,11 @@
 import zIndex from "@mui/material/styles/zIndex";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // To get dynamic params from the route
-import { useMyContext } from "../store/ContextApi";
+
 import "../custom-css/PlantDetails.css";
 
 const Comment = () => {
   const { plantId } = useParams(); // Get the plantId from the URL
-  const { currentUser } = useMyContext();
-  const userId = currentUser?.id;
-  const username = currentUser?.username;
 
   const token = localStorage.getItem("JWT_TOKEN");
   const csrfToken = localStorage.getItem("CSRF_TOKEN");
@@ -20,7 +17,7 @@ const Comment = () => {
   const [editCommentText, setEditCommentText] = useState("");
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/comment/plant/${plantId}`)
+    fetch(`http://localhost:8080/api/comment/plant?plantId=${plantId}`)
       .then((response) => response.json())
       .then((data) => setComments(data))
       .catch((error) => console.error("Error fetching comments:", error));
@@ -31,7 +28,6 @@ const Comment = () => {
     const commentData = {
       commentContent: newComment,
       plantId,
-      userId,
     };
 
     fetch("http://localhost:8080/api/comment/add", {
@@ -65,7 +61,7 @@ const Comment = () => {
         Accept: "application/json",
       },
       credentials: "include",
-      body: JSON.stringify({ id: commentId, userId }),
+      body: JSON.stringify({ id: commentId }),
     })
       .then((response) => {
         if (!response.ok) throw new Error("Failed to delete");

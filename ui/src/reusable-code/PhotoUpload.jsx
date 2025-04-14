@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import { useMyContext } from "../store/ContextApi";
 import { useNavigate } from "react-router-dom";
 import {
   Box,
@@ -16,16 +15,11 @@ import {
 } from "@mui/material";
 
 const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
-  const { currentUser } = useMyContext();
   const [file, setFile] = useState(null);
   const [photoName, setPhotoName] = useState("");
   const [gardenId, setGardenId] = useState("");
   const [gardens, setGardens] = useState([]);
 
-  const userId = currentUser?.id;
-  const username = currentUser?.username;
-
-  console.log("currentUser:", currentUser);
   const navigate = useNavigate();
   const handleNavigateToDashboard = () => {
     navigate("/dashboard");
@@ -33,25 +27,30 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
 
   // ***** FETCHING GARDENS PER USERID *****
   useEffect(() => {
-    if (currentUser?.id) {
-      fetch(
-        `http://localhost:8080/api/photo/gardens-without-photo/user/${userId}`
-      )
-        .then((res) => res.json())
-        .then((data) => {
-          console.log("Fetched gardens:", data);
-          setGardens(data);
-        })
-        .catch((err) => console.error("Failed to fetch gardens", err));
-    }
-  }, [userId]);
+    const token = localStorage.getItem("JWT_TOKEN");
+    const csrfToken = localStorage.getItem("CSRF_TOKEN");
 
+    fetch("http://localhost:8080/api/photo/gardens-without-photo/user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "X-XSRF-TOKEN": csrfToken,
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log("Fetched gardens:", data);
+        setGardens(data);
+      })
+      .catch((err) => console.error("Failed to fetch gardens", err));
+  }, []);
   const handleFileChange = (e) => {
     setFile(e.target.files[0]);
   };
 
   const handleUpload = async () => {
-    if (!file || !photoName || !gardenId || !userId) {
+    if (!file || !photoName || !gardenId) {
       alert("All fields are required!");
       return false;
     }
@@ -60,7 +59,6 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
     formData.append("file", file);
     formData.append("photoName", photoName);
     formData.append("gardenId", gardenId);
-    formData.append("userId", userId);
 
     try {
       const token = localStorage.getItem("JWT_TOKEN");
@@ -70,7 +68,6 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
         headers: {
           Authorization: `Bearer ${token}`,
           "X-XSRF-TOKEN": csrfToken,
-
           Accept: "application/json",
         },
         credentials: "include",
@@ -78,11 +75,10 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
       });
 
       if (response.ok) {
-        // alert("Photo uploaded successfully!");
         setFile(null);
         setPhotoName("");
         setGardenId("");
-        navigate("/dashboard"); //
+        navigate("/dashboard");
         return true;
       } else {
         alert("Failed to upload photo.");
@@ -112,7 +108,7 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
               Upload a Garden Photo
             </Typography>
             <Typography variant="body1" align="center" gutterBottom>
-              Hi {username}! Add a photo to your garden.
+              Add a photo to your garden.
             </Typography>
 
             <Box
@@ -174,38 +170,3 @@ const PhotoUpload = ({ userId: defaultUserId, gardenId: defaultGardenId }) => {
 };
 
 export default PhotoUpload;
-//   return (
-//     <div>
-//       <h2>Upload a Photo</h2>
-//       <input type="file" onChange={handleFileChange} />
-//       <input
-//         type="text"
-//         placeholder="Photo Name"
-//         value={photoName}
-//         onChange={(e) => setPhotoName(e.target.value)}
-//       />
-//       <select value={gardenId} onChange={(e) => setGardenId(e.target.value)}>
-//         <option value="">-- Select Your Garden --</option>
-//         {Array.isArray(gardens) &&
-//           gardens.map((garden) => (
-//             <option key={garden.id} value={garden.id}>
-//               {garden.gardenName}
-//             </option>
-//           ))}
-//       </select>
-//       {/* handles the upload, then waits for the upload to the dashboard before going to the dashboard, so it is there when it switches pages */}
-//       <button
-//         onClick={async () => {
-//           const success = await handleUpload();
-//           if (success) {
-//             handleNavigateToDashboard();
-//           }
-//         }}
-//       >
-//         Upload
-//       </button>
-//     </div>
-//   );
-// };
-
-// export default PhotoUpload;
