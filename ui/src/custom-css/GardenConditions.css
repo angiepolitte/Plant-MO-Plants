@@ -1,0 +1,145 @@
+.option-section {
+    margin: 20px 0;
+  }
+  
+.option-title {
+    font-size: 1.5rem;
+    margin-bottom: 10px;
+    color: #3E2723;
+    font-weight: 600;
+  }
+  
+.option-grid {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+  
+
+.option-card {
+    width: 140px;
+    height: 180px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px;
+    background: #fff;
+    box-sizing: border-box;
+  }
+  
+  
+.option-card img {
+    width: 120px;
+    height: 120px;
+    border-radius: 8px;
+    object-fit: cover;
+    border: 2px solid #828282;
+    opacity: 0.85; /* <- lower by default */
+    transition: transform 0.2s ease, border 0.2s ease, box-shadow 0.2s ease, opacity 0.2s ease;
+  }
+  
+.option-card:hover {
+    transform: scale(1.05);
+    transform: opacity(100);
+  }
+  
+.option-card img:hover {
+    opacity: 1;
+    border: 2px solid #630074;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  }
+
+img.selected {
+    border: 3px solid #630074 !important;
+    opacity: 1 !important;
+    /* scale: 1.05 !important; */
+  }
+
+  .garden-button {
+    border-radius: 8px;
+    border: 1px solid transparent;
+    padding: 12px;
+    color: white;
+    font-size: 14px;
+    font-weight: bold;
+    font-family: inherit;
+    background-color: #9c27b0;
+    cursor: pointer;
+    transition: border-color 0.25s;
+    margin-bottom: 6px;
+    width: 200px; 
+  }
+  .garden-button:hover {
+    background-color: #630074;
+    border: #630074;
+  }
+  
+  .garden-button:disabled {
+    background-color: #828282;
+    color: #3a3a3a;
+  }
+  
+  .garden-button:focus,
+  button.gardeb-button:focus-visible {
+    outline: 2px;
+    color: #ffffff;
+  }
+
+  .create-garden-container {
+    text-align: center;
+    margin-top: 50px;
+    display: flex;
+    flex-direction: column; /* Stack elements vertically */
+    align-items: center;    /* Center items horizontally */
+  }
+  
+  .garden-heading {
+    font-size: 1.8rem;
+    margin-bottom: 20px;
+    color: #3E2723;
+    font-weight: 600;
+  }
+  
+  .garden-input {
+    width: 80%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 2px solid #828282;
+    margin-bottom: 20px;  /* Space between input and button */
+    background-color: #f9f9f9;
+    box-sizing: border-box;
+  }
+  
+  .garden-input:focus {
+    border-color: #9c27b0;
+    outline: none;
+  }
+
+  .zone-map {
+    max-width: 800px;
+    height: auto;
+    margin-bottom: 20px;
+    border-radius: 8px;
+  }
+  
+  .zone-select {
+    width: 80%;
+    max-width: 400px;
+    padding: 12px;
+    font-size: 1rem;
+    border-radius: 8px;
+    border: 2px solid #828282;
+    background-color: #f9f9f9;
+    margin-bottom: 20px;
+    box-sizing: border-box;
+  }
+  
+  .zone-select:focus {
+    border-color: #9c27b0;
+    outline: none;
+  }
+  
