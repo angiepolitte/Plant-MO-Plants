@@ -29,9 +29,13 @@ import Signup from "./auth/SignUp";
 import PlantDetails from "./pages/PlantDetails";
 import StarRating from "./reusable-code/StarRating";
 import OAuth2RedirectHandler from "./auth/Oauth2RedirectHandler";
+
+import { GardenProvider } from "./store/GardenContext";
+
 import AccessDenied from "./reusable-code/AccessDenied";
 import Admin from "./AdminAccess/Admin";
 import ProtectedRoute from "./AdminAccess/ProtectedRoute";
+
 
 
 function App() {
@@ -58,6 +62,7 @@ function App() {
             paddingTop: "5rem",
           }}
         >
+          <GardenProvider>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
@@ -91,6 +96,7 @@ function App() {
             />
 
           </Routes>
+          </GardenProvider>
         </Box>
 
         <Footer />

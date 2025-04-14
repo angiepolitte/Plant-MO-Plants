@@ -1,19 +1,31 @@
 import { useNavigate } from 'react-router-dom';
+import { useContext, useState } from 'react';
+import { useMyContext } from "../store/ContextApi";
+import api from '../services/api';
+import { GardenContext } from '../store/GardenContext';
+import axios from 'axios';
 
 function GardenZone() {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const { gardenData, setGardenData } = useContext(GardenContext);
 
-  const handleNavigateGardenConditions= () => {
-    navigate('/garden-conditions'); // Make sure this path matches your route for ExampleOne
+  const handleChange = (e) => {
+    setGardenData({ ...gardenData, gardenZone: e.target.value });
   };
 
+  const handleNext = async () => {
+    navigate("/garden-conditions");
+    }
+    // move to next page
+
   return (
-    <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>Enter Garden Zone</h1>
-      <h2>and move on to conditions</h2>
-      <button onClick={handleNavigateGardenConditions}>Garden Conditions</button>
-    </div>
-  );
+    <div style={{ textAlign: 'center', marginTop: '50px' }}>
+      <h1>Enter Your Hardiness Zone</h1>
+      <input value={gardenData.gardenZone} onChange={handleChange} />
+      <button onClick={handleNext}>Next</button>
+  </div>
+);
 }
+
 
 export default GardenZone;

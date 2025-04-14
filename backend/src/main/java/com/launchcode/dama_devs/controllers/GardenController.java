@@ -1,7 +1,11 @@
 package com.launchcode.dama_devs.controllers;
 
+import com.launchcode.dama_devs.models.User;
+import com.launchcode.dama_devs.models.dto.GardenDTO;
 import com.launchcode.dama_devs.models.dto.GardenPlantDTO;
 import com.launchcode.dama_devs.services.GardenPlantService;
+import com.launchcode.dama_devs.services.UserDetailsImpl;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import com.launchcode.dama_devs.models.Garden;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -18,7 +22,7 @@ public class GardenController {
 
     @Autowired
     private GardenPlantService gardenPlantService;
-  
+
     @Autowired
     private GardenService gardenService;
 
@@ -37,18 +41,47 @@ public class GardenController {
     }
 
     //Create a new garden
-    @PostMapping
-    public ResponseEntity<Garden> createGarden(@PathVariable Integer userId, @PathVariable Integer gardenId, @RequestBody Garden garden) {
-        Garden savedGarden = gardenService.saveGarden(userId, gardenId, garden);
-        return ResponseEntity.status(HttpStatus.CREATED).body(savedGarden);
-    }
+//    @PostMapping("/{userId}")
+//    public ResponseEntity<Garden> createGarden(@PathVariable Integer userId, @PathVariable Integer gardenId, @RequestBody Garden garden) {
+//        Garden savedGarden = gardenService.saveGarden(userId, gardenId, garden);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(savedGarden);
+//    }
+
+    //Create a new garden USING DTO
+//    @PostMapping("/create/{userId}")
+//    public ResponseEntity<Garden> createGarden(@PathVariable Integer userId, @RequestBody GardenDTO dto) {
+//        Garden newGarden = gardenService.newGardenStepOne(userId, dto);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(newGarden);
+//    }
+
+
+    @PostMapping("/create")
+    public ResponseEntity<Garden> createGarden(@AuthenticationPrincipal UserDetailsImpl userDetails, @RequestBody GardenDTO dto) {
+        Integer userId = userDetails.getId();
+        Garden newGarden = gardenService.newGarden(userId, dto);
+        System.out.println("User from authentication: " + userDetails);
+        return ResponseEntity.status(HttpStatus.CREATED).body(newGarden);
+        }
+
+//    @PostMapping("/create/{userId}")
+//    public ResponseEntity<?> createGarden(@PathVariable Integer userId, @RequestBody GardenDTO dto) {
+//        Garden newGarden = gardenService.newGardenStepOne(userId, dto);
+//        return ResponseEntity.status(HttpStatus.CREATED).body(newGarden);
+//    }
+
+    //Step-by-step garden creation walkthrough
+//    @PutMapping("/update/{gardenId}")
+//    public ResponseEntity<Garden> updateGarden(@PathVariable Integer gardenId, @RequestBody GardenDTO dto) {
+//        Garden updatedGarden = gardenService.newGardenStepsTwoAndThree(gardenId, dto);
+//        return ResponseEntity.ok(updatedGarden);
+//    }
 
     //Update an existing garden's fields with user edits
-    @PutMapping("/{userId}/{gardenId}")
-    public ResponseEntity<Garden> updateGarden(@PathVariable Integer userId, @PathVariable Integer gardenId, @RequestBody Garden gardenDetail) {
-        Garden updatedGarden = gardenService.saveGarden(userId, gardenId, gardenDetail);
-        return ResponseEntity.ok(updatedGarden);
-    }
+//    @PutMapping("/{userId}/{gardenId}")
+//    public ResponseEntity<Garden> updateGarden(@PathVariable Integer userId, @PathVariable Integer gardenId, @RequestBody Garden gardenDetail) {
+//        Garden updatedGarden = gardenService.saveGarden(userId, gardenId, gardenDetail);
+//        return ResponseEntity.ok(updatedGarden);
+//    }
 
     //Delete an existing garden
     @DeleteMapping("/{userId}/{gardenId}")
