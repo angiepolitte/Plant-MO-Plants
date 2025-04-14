@@ -40,7 +40,7 @@
 }
 
 .nursery-card {
-  max-height: 600px;
+  max-height: 400px;
 }
 
 .nursery-scroll {
@@ -110,4 +110,44 @@
 button.dashboard-button:focus-visible {
   outline: 2px;
   color: #ffffff;
+}
+.photo-upload-card {
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+  background-color: #f3e5f5;
+  border-radius: 12px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+  color: #4f6f52;
+}
+
+.photo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.form-label {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #4f6f52;
+  margin-bottom: 0.2rem;
+}
+
+.form-input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+  background-color: white;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
 }
