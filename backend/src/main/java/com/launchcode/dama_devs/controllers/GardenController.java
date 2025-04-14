@@ -61,7 +61,7 @@ public class GardenController {
         Garden newGarden = gardenService.newGarden(userId, dto);
         System.out.println("User from authentication: " + userDetails);
         return ResponseEntity.status(HttpStatus.CREATED).body(newGarden);
-        }
+    }
 
 //    @PostMapping("/create/{userId}")
 //    public ResponseEntity<?> createGarden(@PathVariable Integer userId, @RequestBody GardenDTO dto) {
@@ -101,7 +101,7 @@ public class GardenController {
         return ResponseEntity.status(HttpStatus.CREATED).body(addPlantToGarden);
     }
 
-    @DeleteMapping("/{gardenId}/remove-plants/{plantId}")
+    @DeleteMapping("/{gardenId}/remove-plant/{plantId}")
     public ResponseEntity<GardenPlantDTO> removePlantFromGarden(@PathVariable Integer gardenId, @PathVariable Integer plantId) {
         GardenPlantDTO removePlantFromGarden = gardenPlantService.removePlantFromGarden(gardenId, plantId);
         return ResponseEntity.status(HttpStatus.OK).body(removePlantFromGarden);
