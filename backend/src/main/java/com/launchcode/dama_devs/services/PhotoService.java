@@ -77,4 +77,31 @@ public class PhotoService {
                 .filter(garden -> !gardenIdsWithPhotos.contains(garden.getId()))
                 .toList();
     }
+    public void setFeaturedPhoto(Integer photoId, Integer userId) {
+        Optional<Photo> optionalPhoto = photoRepository.findById(photoId);
+
+        if (optionalPhoto.isEmpty()) {
+            throw new IllegalArgumentException("Photo not found.");
+        }
+
+        Photo photo = optionalPhoto.get();
+
+        // Check if the photo belongs to the current user
+        if (!photo.getUser().getUserId().equals(userId)) {
+            throw new IllegalArgumentException("Unauthorized to modify this photo.");
+        }
+
+        // First, remove any existing featured photos for this user
+        List<Photo> userPhotos = photoRepository.findPhotosByUser_UserId(userId);
+        for (Photo p : userPhotos) {
+            if (p.isFeatured()) {
+                p.setFeatured(false);
+                photoRepository.save(p);
+            }
+        }
+
+        // Set new featured photo
+        photo.setFeatured(true);
+        photoRepository.save(photo);
+    }
 }

@@ -72,5 +72,18 @@ public ResponseEntity<List<Photo>> getPhotosForCurrentUser(@AuthenticationPrinci
     List<Photo> photos = photoService.findPhotosByUser_UserId(userId);
     return ResponseEntity.ok(photos);
 }
+    @PutMapping("/featured/{photoId}")
+    public ResponseEntity<?> setFeaturedPhoto(
+            @PathVariable Integer photoId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        Integer userId = userDetails.getId();
+        try {
+            photoService.setFeaturedPhoto(photoId, userId);
+            return ResponseEntity.ok("Photo set as featured.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+    }
 
 }
