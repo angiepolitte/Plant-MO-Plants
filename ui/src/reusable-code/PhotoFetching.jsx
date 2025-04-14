@@ -15,26 +15,26 @@ const PhotoFetching = ({ userId }) => {
   const [featuredPhoto, setFeaturedPhoto] = useState(null);
   const [hoveredPhoto, setHoveredPhoto] = useState(null);
 
-  // const updateFeaturedPhoto = async (photoId) => {
-  //   try {
-  //     const token = localStorage.getItem("JWT_TOKEN");
-  //     const csrfToken = localStorage.getItem("CSRF_TOKEN");
+  const updateFeaturedPhoto = async (photoId) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const csrfToken = localStorage.getItem("CSRF_TOKEN");
 
-  //     await fetch(`http://localhost:8080/api/photo/featured/${photoId}`, {
-  //       method: "PUT",
-  //       headers: {
-  //         Authorization: `Bearer ${token}`,
-  //         "X-XSRF-TOKEN": csrfToken,
-  //         "Content-Type": "application/json",
-  //       },
-  //       credentials: "include",
-  //     });
+      await fetch(`http://localhost:8080/api/photo/featured/${photoId}`, {
+        method: "PUT",
+        headers: {
+          Authorization: `Bearer ${token}`,
+          "X-XSRF-TOKEN": csrfToken,
+          "Content-Type": "application/json",
+        },
+        credentials: "include",
+      });
 
-  //     setFeaturedPhoto(photos.find((p) => p.id === photoId));
-  //   } catch (err) {
-  //     console.error("Failed to update featured photo", err);
-  //   }
-  // };
+      setFeaturedPhoto(photos.find((p) => p.id === photoId));
+    } catch (err) {
+      console.error("Failed to update featured photo", err);
+    }
+  };
   const fetchPhotos = async () => {
     setLoading(true);
     setError(null);

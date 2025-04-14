@@ -1,0 +1,153 @@
+.dashboard-wrapper {
+  padding: 2rem;
+}
+
+.dashboard-main {
+  display: flex;
+  padding-top: 2rem;
+  flex-direction: row;
+  gap: 2rem;
+  justify-content: center;
+  align-items: flex-start;
+  flex-wrap: wrap;
+  min-height: 100vh;
+}
+
+.dashboard-left,
+.dashboard-right {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  flex: 1 1 500px;
+  max-width: 600px;
+}
+
+.card {
+  background-color: #f3e5f5;
+  border-radius: 8px;
+  box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  width: 500px;
+  max-height: 600px;
+  overflow-y: auto;
+}
+
+.card-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+}
+
+.nursery-card {
+  max-height: 400px;
+}
+
+.nursery-scroll {
+  overflow-y: auto;
+  max-height: 300px;
+}
+
+.center {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dashboard-form {
+  border: 1px solid rgba(57, 47, 65, 0.065);
+  background-color: #ffffff;
+  border-radius: 10px;
+  padding: 10px;
+  margin: 10px;
+  max-width: 250px;
+  display: inline-block;
+  box-shadow: 0 4px 8px 0 #06030629, 0 6px 20px 0 #0603062b;
+}
+
+.personalize-container {
+  white-space: nowrap;
+  gap: 1.5rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  /* padding: 50px 20px; */
+  margin: 0 auto;
+  max-width: 500px;
+}
+
+.personalize-label {
+  white-space: nowrap;
+  font-size: 20px;
+  font-weight: bold;
+  margin-bottom: 12px;
+  text-align: center;
+  color: #630074; /* or your brand color */
+}
+
+.dashboard-button {
+  width: fit-content;
+  text-align: center;
+  border-radius: 8px;
+  border-color: #630074;
+  border-width: 2px;
+  padding: 12px;
+  color: #630074;
+  font-size: 14px;
+  font-weight: bold;
+  font-family: inherit;
+  background-color: #e0f2f1;
+  cursor: pointer;
+  transition: border-color 0.25s;
+}
+.dashboard-button:hover {
+  background-color: #630074;
+  color: #ffffff;
+  border-color: #630074;
+}
+
+.dashboard-button:focus,
+button.dashboard-button:focus-visible {
+  outline: 2px;
+  color: #ffffff;
+}
+.photo-upload-card {
+  width: 100%;
+  max-width: 600px;
+  padding: 2rem;
+  background-color: #f3e5f5;
+  border-radius: 12px;
+  box-shadow: 0px 4px 16px rgba(0, 0, 0, 0.1);
+  color: #4f6f52;
+}
+
+.photo-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1.2rem;
+  margin-top: 1rem;
+  width: 100%;
+}
+
+.form-label {
+  font-weight: bold;
+  font-size: 1rem;
+  color: #4f6f52;
+  margin-bottom: 0.2rem;
+}
+
+.form-input {
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 8px;
+  font-size: 1rem;
+  width: 100%;
+  background-color: white;
+}
+
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
