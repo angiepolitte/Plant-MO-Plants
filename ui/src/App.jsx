@@ -29,6 +29,7 @@ import Signup from "./auth/SignUp";
 import PlantDetails from "./pages/PlantDetails";
 import StarRating from "./reusable-code/StarRating";
 import OAuth2RedirectHandler from "./auth/Oauth2RedirectHandler";
+import { GardenProvider } from "./store/GardenContext";
 
 function App() {
   return (
@@ -54,6 +55,7 @@ function App() {
             paddingTop: "5rem",
           }}
         >
+          <GardenProvider>
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
@@ -77,6 +79,7 @@ function App() {
             <Route path="/plant-details/:plantId" element={<PlantDetails />} />
             <Route path="star-rating" element={<StarRating />} />
           </Routes>
+          </GardenProvider>
         </Box>
 
         <Footer />

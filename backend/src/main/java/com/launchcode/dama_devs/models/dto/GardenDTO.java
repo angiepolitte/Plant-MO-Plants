@@ -9,11 +9,10 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter @Setter
 public class GardenDTO {
-
-    private int id;
-    private String gardenName;
-    private String gardenZone;
+//    private int id;
     private String gardenLight;
-    private String gardenWater;
+    private String gardenName;
     private String gardenSoil;
+    private String gardenWater;
+    private String gardenZone;
 }

@@ -58,7 +58,7 @@ public class GardenService {
 //        }
 
     //STEP ONE WALKTHROUGH USING DTO... checks to see if a garden exists. If it does not, creates a new garden.
-    public Garden newGardenStepOne(Integer userId, GardenDTO dto) {
+    public Garden newGarden(Integer userId, GardenDTO dto) {
 
         Optional<User> userOptional = userRepository.findById(userId); //Look for user in User Repository.
 
@@ -69,40 +69,44 @@ public class GardenService {
         Garden garden = new Garden(); //If the user exists, create a new Garden object.
         garden.setUser(userOptional.get()); //Set the current user to the new garden.
         garden.setGardenName(dto.getGardenName()); //Set the garden name to the new garden.
+        garden.setGardenZone(dto.getGardenZone());
+        garden.setGardenLight(dto.getGardenLight());
+        garden.setGardenWater(dto.getGardenWater());
+        garden.setGardenSoil(dto.getGardenSoil());
 
         return gardenRepository.save(garden); //Save the newly-created garden to the repository.
     }
 
     //STEP TWO/THREE WALKTHROUGH USING DTO... adds Garden Zone to the repository record for the garden created in Step One.
-    public Garden newGardenStepsTwoAndThree(Integer gardenId, GardenDTO dto) {
-
-        Optional<Garden> gardenOptional = gardenRepository.findById(gardenId); //Look for garden in Garden Repository.
-
-        if (!gardenOptional.isPresent()) { //If the user is not present, throw this error.
-            throw new EntityNotFoundException("Garden with ID" + gardenId + "not found.");
-        }
-
-        Garden garden = gardenOptional.get(); //If the garden exists, gets the Garden object.
-
-        //Step Two: Update garden zone.
-        if (dto.getGardenZone() != null) {
-            garden.setGardenZone(dto.getGardenZone());
-        }
-
-        //Step Three: Update garden water, soil, and light.
-        if (dto.getGardenLight() != null) {
-            garden.setGardenLight(dto.getGardenLight());
-        }
-
-        if (dto.getGardenSoil() != null) {
-            garden.setGardenSoil(dto.getGardenSoil());
-        }
-
-        if (dto.getGardenWater() != null) {
-            garden.setGardenWater(dto.getGardenWater());
-        }
-        return gardenRepository.save(garden); //Save the newly-created garden to the repository.
-    }
+//    public Garden newGardenStepsTwoAndThree(Integer gardenId, GardenDTO dto) {
+//
+//        Optional<Garden> gardenOptional = gardenRepository.findById(gardenId); //Look for garden in Garden Repository.
+//
+//        if (!gardenOptional.isPresent()) { //If the user is not present, throw this error.
+//            throw new EntityNotFoundException("Garden with ID" + gardenId + "not found.");
+//        }
+//
+//        Garden garden = gardenOptional.get(); //If the garden exists, gets the Garden object.
+//
+//        //Step Two: Update garden zone.
+//        if (dto.getGardenZone() != null) {
+//            garden.setGardenZone(dto.getGardenZone());
+//        }
+//
+//        //Step Three: Update garden water, soil, and light.
+//        if (dto.getGardenLight() != null) {
+//            garden.setGardenLight(dto.getGardenLight());
+//        }
+//
+//        if (dto.getGardenSoil() != null) {
+//            garden.setGardenSoil(dto.getGardenSoil());
+//        }
+//
+//        if (dto.getGardenWater() != null) {
+//            garden.setGardenWater(dto.getGardenWater());
+//        }
+//        return gardenRepository.save(garden); //Save the newly-created garden to the repository.
+//    }
 
     //Checks to see if a garden exists.  If it does, updates the existing garden.
 //    public Garden updateGarden(Integer userId, Integer gardenId, Garden newGarden) {
