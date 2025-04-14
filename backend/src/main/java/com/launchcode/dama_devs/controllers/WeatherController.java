@@ -12,16 +12,18 @@ import reactor.core.publisher.Mono;
 @RequestMapping("/api/weather")
 public class WeatherController {
 
-    @Value("${weather.api.key}")
+    // key is stored in environment variables for security
+        @Value("${weather.api.key}")
     private String apiKey;
 
+//HTTP client
     private final WebClient webClient;
 
     // WebClient is need to make the HTTP requests with the URL
     public WeatherController(WebClient.Builder webClientBuilder) {
         this.webClient = webClientBuilder.baseUrl("https://api.openweathermap.org/data/2.5/").build();
     }
-    // makes the API calls to get the data with all the correct headers necessary for open weather
+    // makes the actual API calls to get the data with all the correct headers necessary for open weather
     private Mono<String> fetchWeatherData(String endpoint, String queryParam, String value) {
         try {
             return webClient.get()
@@ -37,23 +39,29 @@ public class WeatherController {
         } catch (Exception e) {
             e.printStackTrace();  // Log the error
             return Mono.error(new RuntimeException("Error calling weather API", e));
+            //catches and logs any error during th API call and returns a failed MONO
         }
     }
 
-    // current weather for widget, in React, its default is set to Saint Louis until we have the user enter zip code
-    @GetMapping("/current")
-    public Mono<String> getCurrentWeather(@RequestParam String city) {
-        return fetchWeatherData("/weather", "q", city);
-    }
-    // gets forecast by city name, again, this will be changed to automatically default to user's zip code/city once entered
-    @GetMapping("/forecast")
-    public Mono<String> getForecast(@RequestParam String city) {
-        return fetchWeatherData("forecast", "q", city);
-    }
     // gets the forecast by zip code
     @GetMapping("/forecast/zip")
     public Mono<String> getForecastByZip(@RequestParam String zip) {
         return fetchWeatherData("forecast", "zip", zip + ",US");
     }
+
+    // current weather for widget, in React, its default is set to Saint Louis until we have the user enter zip code
+    //weather widget not being used at this time, not necessary and blocks certain images/descriptions
+    @GetMapping("/current")
+    public Mono<String> getCurrentWeather(@RequestParam String city) {
+        return fetchWeatherData("/weather", "q", city);
+    }
+    // gets forecast by city name, again, this will be changed to automatically default to user's zip code/city once entered
+
+    @GetMapping("/forecast")
+    public Mono<String> getForecast(@RequestParam String city) {
+        return fetchWeatherData("forecast", "q", city);
+    }
+
+
 
 }
