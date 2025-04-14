@@ -32,7 +32,9 @@ import OAuth2RedirectHandler from "./auth/Oauth2RedirectHandler";
 import AccessDenied from "./reusable-code/AccessDenied";
 import Admin from "./AdminAccess/Admin";
 import ProtectedRoute from "./AdminAccess/ProtectedRoute";
-
+import ForgotPassword from "./auth/ForgotPassword";
+import ResetPassword from "./auth/ResetPassword";
+import UserProfile from "./auth/UserProfile";
 
 function App() {
   return (
@@ -62,6 +64,8 @@ function App() {
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/forgot-password" element={<ForgotPassword />} />
+            <Route path="/reset-password" element={<ResetPassword />} />
             <Route
               path="/oauth2/redirect"
               element={<OAuth2RedirectHandler />}
@@ -89,7 +93,30 @@ function App() {
                 </ProtectedRoute>
               }
             />
-
+            <Route
+              path="/create-garden"
+              element={
+                <ProtectedRoute>
+                  <CreateGarden />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/dashboard"
+              element={
+                <ProtectedRoute>
+                  <Dashboard />
+                </ProtectedRoute>
+              }
+            />
+            <Route
+              path="/profile"
+              element={
+                <ProtectedRoute>
+                  <UserProfile />
+                </ProtectedRoute>
+              }
+            />
           </Routes>
         </Box>
 
