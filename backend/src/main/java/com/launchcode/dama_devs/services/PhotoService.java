@@ -104,26 +104,47 @@ public class PhotoService {
     }
 
 
+//****Keeping logic in case we change how or where we are updating/deleting photos in garden details page
 
-//****Keeping logic in case we change how or where we are displaying the photos in garden details page
+    //********** UPDATE PHOTO
+    public Photo updatePhoto(Integer photoId, MultipartFile file, String photoName, Integer userId) throws IOException {
+        Photo photo = photoRepository.findById(photoId)
+                .orElseThrow(() -> new IllegalArgumentException("Photo not found"));
+
+        if (!photo.getUser().getUserId().equals(userId)) {
+            throw new IllegalArgumentException("Unauthorized to update this photo.");
+        }
+
+        if (photoName != null && !photoName.trim().isEmpty()) {
+            photo.setPhotoName(photoName);
+        }
+
+        if (file != null && !file.isEmpty()) {
+            photo.setPhotoImage(file.getBytes());
+        }
+
+        return photoRepository.save(photo);
+    }
+
+    //****************** DELETE PHOTO
+    public void deletePhoto(Integer photoId, Integer userId) {
+        Photo photo = photoRepository.findById(photoId)
+                .orElseThrow(() -> new IllegalArgumentException("Photo not found"));
+
+        if (!photo.getUser().getUserId().equals(userId)) {
+            throw new IllegalArgumentException("Unauthorized to delete this photo.");
+        }
+
+        photoRepository.delete(photo);
+    }
 
     public List<Photo> findByGardenIdAndUser_UserId(Integer gardenId, Integer userId) {
         return photoRepository.findByGardenIdAndUser_UserId(gardenId, userId);
     }
 
-
     public List<Garden> getGardensByUserId(Integer userId) {
         return gardenRepository.findByUser_UserId(userId);
     }
-
-
-
-
-
-
-
-
-
 
     //******  this for future if we decide to share all garden photos by users to all users
 

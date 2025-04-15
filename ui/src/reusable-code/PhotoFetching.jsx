@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Grid,
   Card,
@@ -14,6 +15,7 @@ const PhotoFetching = ({ userId }) => {
   const [error, setError] = useState(null);
   const [featuredPhoto, setFeaturedPhoto] = useState(null);
   const [hoveredPhoto, setHoveredPhoto] = useState(null);
+  const navigate = useNavigate();
 
   const updateFeaturedPhoto = async (photoId) => {
     try {
@@ -80,10 +82,74 @@ const PhotoFetching = ({ userId }) => {
 
   const otherPhotos = photos.filter((photo) => photo.id !== featuredPhoto?.id);
 
+  // *****************  DELETE PHOTO  done in the fetch so you can view the photos you are wanting to edit/delete
+
+  const deletePhoto = async (photoId) => {
+    const token = localStorage.getItem("JWT_TOKEN");
+    const csrfToken = localStorage.getItem("CSRF_TOKEN");
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/photo/delete/${photoId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-XSRF-TOKEN": csrfToken,
+          },
+          credentials: "include",
+        }
+      );
+
+      if (response.ok) {
+        setPhotos((prevPhotos) =>
+          prevPhotos.filter((photo) => photo.id !== photoId)
+        );
+      } else {
+        console.error("Failed to delete photo.");
+      }
+    } catch (err) {
+      console.error("Error deleting photo", err);
+    }
+  };
+
+  //**************** UPDATE PHOTO Will APPLY TO GARDEN DETAILS */
+  const updatePhoto = async (photoId, newName) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const csrfToken = localStorage.getItem("CSRF_TOKEN");
+
+      const response = await fetch(
+        `http://localhost:8080/api/photo/${photoId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-XSRF-TOKEN": csrfToken,
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ photoName: newName }),
+        }
+      );
+
+      if (response.ok) {
+        fetchPhotos(); // refresh photo list
+      } else {
+        console.error("Failed to update photo");
+      }
+    } catch (err) {
+      console.error("Error updating photo", err);
+    }
+  };
+
   return (
     <>
-      <div>
-        <h3>{featuredPhoto.photoName}</h3>
+      <div
+        style={{ cursor: "pointer" }}
+        onClick={() => navigate(`/garden-details/${featuredPhoto.garden.id}`)}
+      >
+        {/* <h3>{featuredPhoto.photoName}</h3> */}
         <img
           src={`data:image/jpeg;base64,${featuredPhoto.photoImage}`}
           alt={featuredPhoto.photoName}
@@ -95,10 +161,13 @@ const PhotoFetching = ({ userId }) => {
             display: "block",
           }}
         />
+        <Typography variant="h6" align="center" sx={{ mt: 1 }}>
+          {featuredPhoto.photoName}
+        </Typography>
       </div>
 
       <Grid container spacing={2} sx={{ mt: 2 }}>
-        {otherPhotos.slice(0, 4).map((photo) => (
+        {otherPhotos.map((photo) => (
           <Grid item xs={6} sm={3} key={photo.id}>
             <Card
               sx={{
@@ -115,7 +184,11 @@ const PhotoFetching = ({ userId }) => {
               onMouseEnter={() => setHoveredPhoto(photo)}
               onMouseLeave={() => setHoveredPhoto(null)}
             >
-              <CardContent sx={{ textAlign: "center" }}>
+              <CardContent
+                sx={{
+                  textAlign: "center",
+                }}
+              >
                 <img
                   src={`data:image/jpeg;base64,${photo.photoImage}`}
                   alt={photo.photoName}
