@@ -4,6 +4,7 @@ import "../custom-css/PlantDetails.css";
 import StarRating from "../reusable-code/StarRating";
 import { useParams } from "react-router-dom";
 import Comment from "../reusable-code/Comment";
+import PlantRatingAverage from "../reusable-code/PlantRatingAverage";
 
 function PlantDetails() {
   const { plantId } = useParams(); //grabs the plantId from the URL.
@@ -67,15 +68,14 @@ function PlantDetails() {
           <li>Water: {plant.plantWater}</li>
           <li>Soil: {plant.plantSoil}</li>
         </ol>
-        <div>
-          <button className="plantCard-button">ADD TO GARDEN</button>
-        </div>
-      </div>
-      <div className="plant-description">
         <div className="your-star-rating">
+          <h3>Community Rating</h3>
+          <PlantRatingAverage />
           <h3>Rate your success with this plant!</h3>
           <StarRating />
         </div>
+      </div>
+      <div className="plant-description">
         <h2 className="description-header">Description</h2>
         <ol className="description-info-list">
           <li>Height: {plant.plantHeight}</li>
