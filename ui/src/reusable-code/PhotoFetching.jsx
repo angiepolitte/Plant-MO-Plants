@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 import {
   Grid,
   Card,
@@ -14,6 +15,7 @@ const PhotoFetching = ({ userId }) => {
   const [error, setError] = useState(null);
   const [featuredPhoto, setFeaturedPhoto] = useState(null);
   const [hoveredPhoto, setHoveredPhoto] = useState(null);
+  const navigate = useNavigate();
 
   const updateFeaturedPhoto = async (photoId) => {
     try {
@@ -82,8 +84,11 @@ const PhotoFetching = ({ userId }) => {
 
   return (
     <>
-      <div>
-        <h3>{featuredPhoto.photoName}</h3>
+      <div
+        style={{ cursor: "pointer" }}
+        onClick={() => navigate(`/garden-details/${featuredPhoto.garden.id}`)}
+      >
+        {/* <h3>{featuredPhoto.photoName}</h3> */}
         <img
           src={`data:image/jpeg;base64,${featuredPhoto.photoImage}`}
           alt={featuredPhoto.photoName}
@@ -95,6 +100,9 @@ const PhotoFetching = ({ userId }) => {
             display: "block",
           }}
         />
+        <Typography variant="h6" align="center" sx={{ mt: 1 }}>
+          {featuredPhoto.photoName}
+        </Typography>
       </div>
 
       <Grid container spacing={2} sx={{ mt: 2 }}>

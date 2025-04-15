@@ -59,7 +59,7 @@ const Dashboard = () => {
         {/* Left Section */}
         <div className="dashboard-left">
           <div className="card garden-card">
-            <h2>{username}'s Gardens</h2>
+            {/* <h2>{username}'s Gardens</h2> */}
             <div className="card-content">
               {/* this validates the user on the backend */}
               <PhotoFetching userId={userId} />
