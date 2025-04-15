@@ -6,10 +6,12 @@ import com.launchcode.dama_devs.models.User;
 import com.launchcode.dama_devs.models.data.PlantRatingRepository;
 import com.launchcode.dama_devs.models.data.PlantRepository;
 import com.launchcode.dama_devs.models.data.UserRepository;
+import com.launchcode.dama_devs.models.dto.AverageRatingDTO;
 import com.launchcode.dama_devs.models.dto.PlantRatingDTO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -81,4 +83,27 @@ public class PlantRatingService {
             return plantRatingDTO;
         }
     }
-}
+
+    public AverageRatingDTO calculateAverageRating(Integer plantId) {
+        List<PlantRating> plantRatingList = plantRatingRepository.findAllByPlantId(plantId);
+
+        //if there are no ratings for the plant yet, the average rating is set to zero
+        if (plantRatingList.isEmpty()) {
+            AverageRatingDTO averageRating = new AverageRatingDTO();
+            averageRating.setAverageRating(0);
+            averageRating.setPlantId(plantId);
+            return averageRating;
+        } else {
+            int ratingTotal = 0;
+            for (PlantRating rating : plantRatingList) {
+                ratingTotal += rating.getPlantRating();
+            }
+                int result = Math.round(ratingTotal / plantRatingList.size());
+
+                AverageRatingDTO averageRating = new AverageRatingDTO();
+                averageRating.setAverageRating(result);
+                averageRating.setPlantId(plantId);
+                return averageRating;
+            }
+        }
+    }

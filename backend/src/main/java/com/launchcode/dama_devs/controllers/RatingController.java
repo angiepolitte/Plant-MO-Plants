@@ -1,5 +1,6 @@
 package com.launchcode.dama_devs.controllers;
 
+import com.launchcode.dama_devs.models.dto.AverageRatingDTO;
 import com.launchcode.dama_devs.models.dto.PlantRatingDTO;
 import com.launchcode.dama_devs.services.PlantRatingService;
 import com.launchcode.dama_devs.services.UserDetailsImpl;
@@ -21,6 +22,12 @@ public class RatingController {
     public ResponseEntity<PlantRatingDTO> plantRatingDto(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Integer plantId) {
         PlantRatingDTO getRating = plantRatingService.getRating(userDetails.getId(), plantId);
         return ResponseEntity.status(HttpStatus.OK).body(getRating);
+    }
+
+    @GetMapping("/{plantId}/average-rating")
+    public ResponseEntity<AverageRatingDTO> averageRating(@PathVariable Integer plantId){
+        AverageRatingDTO averageRating = plantRatingService.calculateAverageRating(plantId);
+    return ResponseEntity.status(HttpStatus.OK).body(averageRating);
     }
 
     @PostMapping("/create")
