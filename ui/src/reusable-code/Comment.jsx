@@ -76,6 +76,11 @@ const Comment = () => {
   // ******* DELETE COMMENT *******
 
   const handleDeleteComment = (commentId) => {
+    const confirmDelete = window.confirm(
+      "Are you sure you want to delete this comment?"
+    );
+    if (!confirmDelete) return;
+
     fetch("http://localhost:8080/api/comment/delete", {
       method: "DELETE",
       headers: {
