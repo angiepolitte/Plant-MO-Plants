@@ -106,7 +106,7 @@ const PhotoFetching = ({ userId }) => {
       </div>
 
       <Grid container spacing={2} sx={{ mt: 2 }}>
-        {otherPhotos.slice(0, 4).map((photo) => (
+        {otherPhotos.map((photo) => (
           <Grid item xs={6} sm={3} key={photo.id}>
             <Card
               sx={{
