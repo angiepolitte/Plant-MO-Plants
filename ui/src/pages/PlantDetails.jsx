@@ -73,7 +73,7 @@ function PlantDetails() {
       </div>
       <div className="plant-description">
         <div className="your-star-rating">
-          <h3>What do you think of this plant?</h3>
+          <h3>Rate your success with this plant!</h3>
           <StarRating />
         </div>
         <h2 className="description-header">Description</h2>

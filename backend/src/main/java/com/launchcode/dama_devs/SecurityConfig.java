@@ -13,6 +13,7 @@ import org.springframework.boot.CommandLineRunner;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Lazy;
+import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
@@ -66,6 +67,7 @@ public class SecurityConfig {
                         .requestMatchers("/api/garden/user/**").authenticated()
                         .requestMatchers("/api/comment/user/**").authenticated()
                         .requestMatchers("/api/plant-details/user/**").authenticated()
+                        .requestMatchers(HttpMethod.POST, "/api/plant-rating/create").fullyAuthenticated()
                         .requestMatchers("/api/weather/**").permitAll()
                         .requestMatchers("/api/nurseries/**").permitAll()
                         //here restricted to admin to access the end point of hello
