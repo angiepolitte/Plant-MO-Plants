@@ -18,6 +18,7 @@ const Forecast = () => {
   const [city, setCity] = useState("");
   // const [forecastData, setForecastData] = useState([]);
 
+  //gets new forecast data when zipcode is changed
   useEffect(() => {
     if (zipCode) {
       getForecast();
@@ -25,21 +26,12 @@ const Forecast = () => {
   }, [zipCode]);
 
   const getForecast = async () => {
+    //validates that zip code even exists
     if (!zipCode) {
       alert("No ZIP code available.");
       return;
     }
-
     try {
-      // let url;
-      // console.log("zipCode from context:", zipCode);
-      // if (/^\d{5}$/.test(zipCode)) {
-      //   url = `http://localhost:8080/api/weather/forecast/zip?zip=${zipCode}`;
-      // } else {
-      //   alert("Invalid ZIP code format.");
-      //   return;
-      // }
-
       const token = localStorage.getItem("JWT_TOKEN");
       const csrfToken = localStorage.getItem("CSRF_TOKEN");
 
@@ -63,25 +55,29 @@ const Forecast = () => {
         return;
       }
       const cityName = data.city.name;
-      setCity(data.city.name); //  gets the city name
+      setCity(data.city.name); //  gets the city name from the json returned from the backend openweather
 
       // Process forecast data...
       const dailyForecast = [];
       const seenDates = new Set();
 
+      //item represents each individual weather data object inthe array
       data.list.forEach((item) => {
+        //item.dt represents date and time stamp in weatehr data in seconds so x 1000 to be converted into milliseconds, how it is called in openweatehr
         const dateObj = new Date(item.dt * 1000);
         const formattedDate = dateObj.toLocaleDateString("en-US", {
+          //english, abbriviations for days/months/dates
           weekday: "short",
           month: "short",
           day: "numeric",
         });
 
         // Only process the data once per day (e.g., 12:00 PM)
+        //This is used to track which dates have already been processed.
         if (!seenDates.has(formattedDate)) {
           seenDates.add(formattedDate);
 
-          // Get the temperatures and find the max and min
+          //this gets all the max and min temps for each day and maps them into forecast.main.temp
           const tempsForTheDay = data.list
             .filter((forecast) => {
               const forecastDate = new Date(
@@ -95,8 +91,8 @@ const Forecast = () => {
             })
             .map((forecast) => forecast.main.temp);
 
-          const tempHigh = Math.max(...tempsForTheDay);
-          const tempLow = Math.min(...tempsForTheDay);
+          const tempHigh = Math.max(...tempsForTheDay); //all the temps leading up tothis point choosing the max
+          const tempLow = Math.min(...tempsForTheDay); //all the temps leading up tothis point choosing the min
 
           dailyForecast.push({
             date: formattedDate,
@@ -155,9 +151,10 @@ const Forecast = () => {
   return (
     <div className={styles.forecastContainer}>
       <h3>Extended Forecast for {city}</h3>
-      {forecastData.length > 0}
+      {/* only renders the forecast list if we hve data */}
       {forecastData.length > 0 && (
         <div className={styles.forecastList}>
+          {/* loops overs each days' weather in the array item meaning each day */}
           {forecastData.map((item, index) => (
             <div key={index} className={styles.forecastItem}>
               <span className={styles.date}>{item.date}</span>

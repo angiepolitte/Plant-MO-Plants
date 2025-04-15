@@ -31,6 +31,25 @@ public class PhotoService {
         this.userRepository = userRepository;
     }
 
+
+//******************  this will only allow the gardens that do not have a photo in the drop down menu
+//**** fetched on photo-upload
+
+    public List<Garden> getGardensWithoutPhotosByUserId(Integer userId) {
+        List<Garden> allUserGardens = gardenRepository.findByUser_UserId(userId);
+        List<Photo> userPhotos = photoRepository.findPhotosByUser_UserId(userId);
+
+        List<Integer> gardenIdsWithPhotos = userPhotos.stream()
+                .map(photo -> photo.getGarden().getId())
+                .distinct()
+                .toList();
+
+        return allUserGardens.stream()
+                .filter(garden -> !gardenIdsWithPhotos.contains(garden.getId()))
+                .toList();
+    }
+//*********  saves the photo to garden by the authenticated user, updates the photoRepository with all the id's
+
     public Photo savePhoto(MultipartFile file, String photoName, Integer gardenId, Integer userId) throws IOException {
         Garden garden = gardenRepository.findById(gardenId)
                 .orElseThrow(() -> new RuntimeException("Garden not found"));
@@ -47,36 +66,15 @@ public class PhotoService {
         return photoRepository.save(photo);
     }
 
-    public List<Photo> findByGardenIdAndUser_UserId(Integer gardenId, Integer userId) {
-        return photoRepository.findByGardenIdAndUser_UserId(gardenId, userId);
-    }
+
+    //**** fetched in Photo-Fetching
+    //******* Gets the photos by user to display in the dashboard
 
     public List<Photo> findPhotosByUser_UserId(Integer userId) {
         return photoRepository.findPhotosByUser_UserId(userId);
     }
+    //*******************  to set a featured photo in the dashboard
 
-    public List<Garden> getGardensByUserId(Integer userId) {
-        return gardenRepository.findByUser_UserId(userId);
-    }
-
-
-    public List<Photo> getAllGardenPhotos() {
-        return photoRepository.findAll();
-    }
-
-    public List<Garden> getGardensWithoutPhotosByUserId(Integer userId) {
-        List<Garden> allUserGardens = gardenRepository.findByUser_UserId(userId);
-        List<Photo> userPhotos = photoRepository.findPhotosByUser_UserId(userId);
-
-        List<Integer> gardenIdsWithPhotos = userPhotos.stream()
-                .map(photo -> photo.getGarden().getId())
-                .distinct()
-                .toList();
-
-        return allUserGardens.stream()
-                .filter(garden -> !gardenIdsWithPhotos.contains(garden.getId()))
-                .toList();
-    }
     public void setFeaturedPhoto(Integer photoId, Integer userId) {
         Optional<Photo> optionalPhoto = photoRepository.findById(photoId);
 
@@ -103,5 +101,33 @@ public class PhotoService {
         // Set new featured photo
         photo.setFeatured(true);
         photoRepository.save(photo);
+    }
+
+
+
+//****Keeping logic in case we change how or where we are displaying the photos in garden details page
+
+    public List<Photo> findByGardenIdAndUser_UserId(Integer gardenId, Integer userId) {
+        return photoRepository.findByGardenIdAndUser_UserId(gardenId, userId);
+    }
+
+
+    public List<Garden> getGardensByUserId(Integer userId) {
+        return gardenRepository.findByUser_UserId(userId);
+    }
+
+
+
+
+
+
+
+
+
+
+    //******  this for future if we decide to share all garden photos by users to all users
+
+    public List<Photo> getAllGardenPhotos() {
+        return photoRepository.findAll();
     }
 }

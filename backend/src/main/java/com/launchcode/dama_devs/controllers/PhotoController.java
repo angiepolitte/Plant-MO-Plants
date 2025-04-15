@@ -26,12 +26,20 @@ public class PhotoController {
 
     private final PhotoService photoService;
 
-    private final GardenRepository gardenRepository;
-
     @ExceptionHandler(MaxUploadSizeExceededException.class)
     public ResponseEntity<String> handleMaxSizeException(MaxUploadSizeExceededException exc) {
         return ResponseEntity.status(HttpStatus.PAYLOAD_TOO_LARGE)
                 .body("File is too large! Please upload a smaller file.");
+    }
+
+//******************  this will only allow the gardens that do not have a photo in the drop down menu
+//**** fetched on photo-upload
+
+    @GetMapping("/gardens-without-photo/user")
+    public ResponseEntity<List<Garden>> getGardensWithoutPhotoByUser( @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Integer userId = userDetails.getId();
+        List<Garden> gardens = photoService.getGardensWithoutPhotosByUserId(userId);
+        return ResponseEntity.ok(gardens);
     }
     @PostMapping("/upload")
     public ResponseEntity<Photo> uploadPhoto(
@@ -43,35 +51,17 @@ public class PhotoController {
         return ResponseEntity.ok(photoService.savePhoto(file, photoName, gardenId, userId));
     }
 
-@GetMapping("/gardens/user")
-public ResponseEntity<List<Garden>> getGardensByUser( @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    Integer userId = userDetails.getId();
-    List<Garden> gardens = photoService.getGardensByUserId(userId);
-    return ResponseEntity.ok(gardens);
-}
+//******* Gets the photos by user to display in the dashboard
 
-@GetMapping("/garden/{gardenId}/user")
-public ResponseEntity<List<Photo>> getPhotosByGardenAndUser(
-        @PathVariable Integer gardenId,
-        @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    Integer userId = userDetails.getId();
-    return ResponseEntity.ok(photoService.findByGardenIdAndUser_UserId(gardenId, userId));
-}
+    @GetMapping("/user")
+    public ResponseEntity<List<Photo>> getPhotosForCurrentUser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Integer userId = userDetails.getId(); // pulled from your UserDetailsImpl
+        List<Photo> photos = photoService.findPhotosByUser_UserId(userId);
+        return ResponseEntity.ok(photos);
+    }
 
+//******* Allows the user to display their favorite garden photo in the dashboard as the featured photo
 
-@GetMapping("/gardens-without-photo/user")
-public ResponseEntity<List<Garden>> getGardensWithoutPhotoByUser( @AuthenticationPrincipal UserDetailsImpl userDetails) {
-    Integer userId = userDetails.getId();
-    List<Garden> gardens = photoService.getGardensWithoutPhotosByUserId(userId);
-    return ResponseEntity.ok(gardens);
-}
-
-@GetMapping("/user")
-public ResponseEntity<List<Photo>> getPhotosForCurrentUser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-    Integer userId = userDetails.getId(); // pulled from your UserDetailsImpl
-    List<Photo> photos = photoService.findPhotosByUser_UserId(userId);
-    return ResponseEntity.ok(photos);
-}
     @PutMapping("/featured/{photoId}")
     public ResponseEntity<?> setFeaturedPhoto(
             @PathVariable Integer photoId,
@@ -84,6 +74,23 @@ public ResponseEntity<List<Photo>> getPhotosForCurrentUser(@AuthenticationPrinci
         } catch (IllegalArgumentException e) {
             return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
         }
+    }
+
+    //****Keeping logic in case we change how or where we are displaying the photos in garden details page
+
+    @GetMapping("/gardens/user")
+    public ResponseEntity<List<Garden>> getGardensByUser( @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Integer userId = userDetails.getId();
+        List<Garden> gardens = photoService.getGardensByUserId(userId);
+        return ResponseEntity.ok(gardens);
+    }
+
+    @GetMapping("/garden/{gardenId}/user")
+    public ResponseEntity<List<Photo>> getPhotosByGardenAndUser(
+            @PathVariable Integer gardenId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Integer userId = userDetails.getId();
+        return ResponseEntity.ok(photoService.findByGardenIdAndUser_UserId(gardenId, userId));
     }
 
 }
