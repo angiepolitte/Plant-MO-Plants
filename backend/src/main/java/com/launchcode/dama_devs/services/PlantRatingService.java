@@ -24,7 +24,21 @@ public class PlantRatingService {
     @Autowired
     private PlantRatingRepository plantRatingRepository;
 
-    public PlantRatingDTO createPlantRating(int plantRating, Integer userId, Integer plantId) {
+    public PlantRatingDTO getRating(Integer userId, Integer plantId) {
+        Optional<PlantRating> currentRating = plantRatingRepository.findByUser_userIdAndPlantId(userId, plantId);
+        if (currentRating.isEmpty()) {
+            throw new IllegalArgumentException("Rating not found with user ID: " + userId + " and plant ID: " + plantId);
+        } else {
+            PlantRating rating = currentRating.get();
+            PlantRatingDTO plantRatingDto = new PlantRatingDTO();
+            plantRatingDto.setPlantRating(rating.getPlantRating());
+            plantRatingDto.setUserId(userId);
+            plantRatingDto.setPlantId(plantId);
+            return plantRatingDto;
+        }
+    }
+
+    public PlantRatingDTO createPlantRating(Integer userId, int plantRating, Integer plantId) {
 
         //get the user id
         Optional<User> userResult = userRepository.findById(userId);

@@ -1,13 +1,14 @@
-import { useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 function GardenSuccess() {
+  const { gardenId } = useParams();
   const navigate = useNavigate();
 
   const handleNavigateDashboard = () => {
     navigate("/dashboard"); // Make sure this path matches your route for ExampleOne
   };
   const handleNavigatePlantSearch = () => {
-    navigate("/plant-search"); // Make sure this path matches your route for ExampleOne
+    navigate(`/plant-search/${gardenId}`); // Make sure this path matches your route for ExampleOne
   };
   const handleNavigateGardenDetails = () => {
     navigate("/garden-details"); // Make sure this path matches your route for ExampleOne

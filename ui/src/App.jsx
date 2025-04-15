@@ -35,9 +35,12 @@ import { GardenProvider } from "./store/GardenContext";
 import AccessDenied from "./reusable-code/AccessDenied";
 import Admin from "./AdminAccess/Admin";
 import ProtectedRoute from "./AdminAccess/ProtectedRoute";
+
+
 import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 import UserProfile from "./auth/UserProfile";
+
 
 
 function App() {
@@ -65,6 +68,8 @@ function App() {
           }}
         >
           <GardenProvider>
+
+
           <Routes>
             <Route path="/" element={<HomePage />} />
             <Route path="/login" element={<Login />} />
@@ -80,9 +85,15 @@ function App() {
             <Route path="/create-garden" element={<CreateGarden />} />
             <Route path="/garden-zone" element={<GardenZone />} />
             <Route path="/garden-conditions" element={<GardenConditions />} />
-            <Route path="/garden-success" element={<GardenSuccess />} />
-            <Route path="/plant-search/:gardenId" element={<PlantSearch />} />
-            <Route path="/garden-details" element={<GardenDetails />} />
+            <Route
+                path="/garden-success/:gardenId"
+                element={<GardenSuccess />}
+              />
+              <Route path="/plant-search/:gardenId" element={<PlantSearch />} />
+              <Route
+                path="/garden-details/:gardenId"
+                element={<GardenDetails />}
+              />
             <Route path="/comment/:plantId" element={<Comment />} />
             <Route path="/photo-upload" element={<PhotoUpload />} />
             <Route path="/results" element={<NurseryList />} />
@@ -123,6 +134,7 @@ function App() {
               }
             />
           </Routes>
+
           </GardenProvider>
         </Box>
 

@@ -12,6 +12,8 @@ function PlantDetails() {
   useEffect(() => {
     let ignore = false;
     async function fetchPlant() {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const csrfToken = localStorage.getItem("CSRF_TOKEN");
       const response = await fetch(
         `http://localhost:8080/api/plant/${plantId}`,
         {
