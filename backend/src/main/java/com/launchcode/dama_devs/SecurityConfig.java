@@ -64,6 +64,8 @@ public class SecurityConfig {
                         .requestMatchers("/plant_images/**").permitAll()
                         .requestMatchers("/api/photo/user/**").authenticated()
                         .requestMatchers("/api/garden/user/**").authenticated()
+                        .requestMatchers("/api/comment/**").authenticated()
+                        .requestMatchers("/api/plant-details/user/**").authenticated()
                         .requestMatchers("/api/weather/**").permitAll()
                         .requestMatchers("/api/nurseries/**").permitAll()
                         //here restricted to admin to access the end point of hello
