@@ -1,4 +1,3 @@
-import zIndex from "@mui/material/styles/zIndex";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom"; // To get dynamic params from the route
 
@@ -15,9 +14,34 @@ const Comment = () => {
 
   const [editCommentId, setEditCommentId] = useState(null);
   const [editCommentText, setEditCommentText] = useState("");
+  //this is only to authenticate an associated user with the comments
+  //***************************** */
+  const [currentUser, setCurrentUser] = useState(null);
 
   useEffect(() => {
-    fetch(`http://localhost:8080/api/comment/plant?plantId=${plantId}`)
+    fetch("http://localhost:8080/api/comment/api/user", {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "X-XSRF-TOKEN": csrfToken,
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
+      .then((res) => res.json())
+      .then((data) => setCurrentUser(data))
+      .catch((err) => console.error("Error fetching user:", err));
+  }, []);
+  //******************************************* */
+
+  useEffect(() => {
+    fetch(`http://localhost:8080/api/comment/plant?plantId=${plantId}`, {
+      headers: {
+        Authorization: `Bearer ${token}`,
+        "X-XSRF-TOKEN": csrfToken,
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
       .then((response) => response.json())
       .then((data) => setComments(data))
       .catch((error) => console.error("Error fetching comments:", error));
@@ -51,7 +75,7 @@ const Comment = () => {
 
   // ******* DELETE COMMENT *******
 
-  const handleDeleteComment = (commentId, userId) => {
+  const handleDeleteComment = (commentId) => {
     fetch("http://localhost:8080/api/comment/delete", {
       method: "DELETE",
       headers: {
@@ -88,7 +112,7 @@ const Comment = () => {
 
   // ****** SAVE EDITED COMMENT ******
   const handleSaveEdit = () => {
-    fetch(`http://localhost:8080/api/comment/edit/${editCommentId}`, {
+    fetch(`http://localhost:8080/api/comment/edit`, {
       method: "PUT",
       headers: {
         Authorization: `Bearer ${token}`,
@@ -98,8 +122,8 @@ const Comment = () => {
       },
       credentials: "include",
       body: JSON.stringify({
-        userId: userId,
-        commentContent: editCommentText, // Make sure to pass commentContent, not text
+        id: editCommentId, // ✅ include the ID in the body
+        commentContent: editCommentText,
       }),
     })
       .then((response) => {
@@ -154,7 +178,7 @@ const Comment = () => {
             ) : (
               <>
                 "{comment.commentContent}"
-                {comment.userId === userId && (
+                {currentUser && comment.userId === currentUser.id && (
                   <>
                     <button
                       style={{ marginLeft: "10px", color: "purple" }}
@@ -164,7 +188,7 @@ const Comment = () => {
                     </button>
                     <button
                       style={{ marginLeft: "5px", color: "purple" }}
-                      onClick={() => handleDeleteComment(comment.id, userId)}
+                      onClick={() => handleDeleteComment(comment.id)}
                     >
                       Delete
                     </button>
