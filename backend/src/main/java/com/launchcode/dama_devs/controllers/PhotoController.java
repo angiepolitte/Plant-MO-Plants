@@ -76,7 +76,36 @@ public class PhotoController {
         }
     }
 
-    //****Keeping logic in case we change how or where we are displaying the photos in garden details page
+    //****Keeping logic in case we change how or where we are updating/deleting photos in garden details page
+//******** UPDATE
+    @PutMapping("/update/{photoId}")
+    public ResponseEntity<?> updatePhoto(
+            @PathVariable Integer photoId,
+            @RequestParam(value = "file", required = false) MultipartFile file,
+            @RequestParam(value = "photoName", required = false) String photoName,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        try {
+            Integer userId = userDetails.getId();
+            Photo updatedPhoto = photoService.updatePhoto(photoId, file, photoName, userId);
+            return ResponseEntity.ok(updatedPhoto);
+        } catch (IllegalArgumentException | IOException e) {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(e.getMessage());
+        }
+    }
+
+    //********** DELETE
+    @DeleteMapping("/delete/{photoId}")
+    public ResponseEntity<?> deletePhoto(
+            @PathVariable Integer photoId,
+            @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        try {
+            Integer userId = userDetails.getId();
+            photoService.deletePhoto(photoId, userId);
+            return ResponseEntity.ok("Photo deleted successfully.");
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.FORBIDDEN).body(e.getMessage());
+        }
+    }
 
     @GetMapping("/gardens/user")
     public ResponseEntity<List<Garden>> getGardensByUser( @AuthenticationPrincipal UserDetailsImpl userDetails) {

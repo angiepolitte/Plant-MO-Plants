@@ -82,6 +82,67 @@ const PhotoFetching = ({ userId }) => {
 
   const otherPhotos = photos.filter((photo) => photo.id !== featuredPhoto?.id);
 
+  // *****************  DELETE PHOTO  done in the fetch so you can view the photos you are wanting to edit/delete
+
+  const deletePhoto = async (photoId) => {
+    const token = localStorage.getItem("JWT_TOKEN");
+    const csrfToken = localStorage.getItem("CSRF_TOKEN");
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/photo/delete/${photoId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-XSRF-TOKEN": csrfToken,
+          },
+          credentials: "include",
+        }
+      );
+
+      if (response.ok) {
+        setPhotos((prevPhotos) =>
+          prevPhotos.filter((photo) => photo.id !== photoId)
+        );
+      } else {
+        console.error("Failed to delete photo.");
+      }
+    } catch (err) {
+      console.error("Error deleting photo", err);
+    }
+  };
+
+  //**************** UPDATE PHOTO Will APPLY TO GARDEN DETAILS */
+  const updatePhoto = async (photoId, newName) => {
+    try {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const csrfToken = localStorage.getItem("CSRF_TOKEN");
+
+      const response = await fetch(
+        `http://localhost:8080/api/photo/${photoId}`,
+        {
+          method: "PUT",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-XSRF-TOKEN": csrfToken,
+            "Content-Type": "application/json",
+          },
+          credentials: "include",
+          body: JSON.stringify({ photoName: newName }),
+        }
+      );
+
+      if (response.ok) {
+        fetchPhotos(); // refresh photo list
+      } else {
+        console.error("Failed to update photo");
+      }
+    } catch (err) {
+      console.error("Error updating photo", err);
+    }
+  };
+
   return (
     <>
       <div
@@ -123,7 +184,11 @@ const PhotoFetching = ({ userId }) => {
               onMouseEnter={() => setHoveredPhoto(photo)}
               onMouseLeave={() => setHoveredPhoto(null)}
             >
-              <CardContent sx={{ textAlign: "center" }}>
+              <CardContent
+                sx={{
+                  textAlign: "center",
+                }}
+              >
                 <img
                   src={`data:image/jpeg;base64,${photo.photoImage}`}
                   alt={photo.photoName}
