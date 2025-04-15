@@ -64,7 +64,7 @@ public class SecurityConfig {
                         .requestMatchers("/plant_images/**").permitAll()
                         .requestMatchers("/api/photo/user/**").authenticated()
                         .requestMatchers("/api/garden/user/**").authenticated()
-                        .requestMatchers("/api/comment/**").authenticated()
+                        .requestMatchers("/api/comment/user/**").authenticated()
                         .requestMatchers("/api/plant-details/user/**").authenticated()
                         .requestMatchers("/api/weather/**").permitAll()
                         .requestMatchers("/api/nurseries/**").permitAll()
