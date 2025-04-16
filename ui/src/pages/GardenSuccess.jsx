@@ -11,7 +11,7 @@ function GardenSuccess() {
     navigate(`/plant-search/${gardenId}`); // Make sure this path matches your route for ExampleOne
   };
   const handleNavigateGardenDetails = () => {
-    navigate("/garden-details"); // Make sure this path matches your route for ExampleOne
+    navigate(`/garden-details/${gardenId}`); // Make sure this path matches your route for ExampleOne
   };
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>

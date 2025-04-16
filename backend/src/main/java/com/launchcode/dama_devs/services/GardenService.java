@@ -58,7 +58,7 @@ public class GardenService {
 //        }
 
     //STEP ONE WALKTHROUGH USING DTO... checks to see if a garden exists. If it does not, creates a new garden.
-    public Garden newGarden(Integer userId, GardenDTO dto) {
+    public Garden saveGarden(Integer userId, GardenDTO dto) {
 
         Optional<User> userOptional = userRepository.findById(userId); //Look for user in User Repository.
 
@@ -76,6 +76,47 @@ public class GardenService {
 
         return gardenRepository.save(garden); //Save the newly-created garden to the repository.
     }
+
+    public Garden updateGarden(Integer userId, Integer gardenId, GardenDTO dto) {
+
+        Optional<Garden> optionalGarden = gardenRepository.findById(gardenId);
+
+        if (!optionalGarden.isPresent()) {
+            throw new EntityNotFoundException("Garden with ID " + gardenId + " not found.");
+        }
+
+        Garden garden = optionalGarden.get();
+
+        if (!garden.getUser().getUserId().equals(userId)) {
+            throw new SecurityException("User does not have permission to update this garden.");
+        }
+
+        garden.setGardenName(dto.getGardenName()); //Set the garden name to the new garden.
+//        garden.setGardenZone(dto.getGardenZone());
+//        garden.setGardenLight(dto.getGardenLight());
+//        garden.setGardenWater(dto.getGardenWater());
+//        garden.setGardenSoil(dto.getGardenSoil());
+
+        return gardenRepository.save(garden); //Save the newly-created garden to the repository.
+    }
+
+    //Delete a user garden
+    public void deleteGarden(Integer userId, Integer gardenId) {
+
+        Optional<User> userOptional = userRepository.findById(userId);
+
+        if (!userOptional.isPresent()) {
+            throw new EntityNotFoundException("User with ID" + userId + "not found.");
+        }
+
+        Optional<Garden> gardenOptional = gardenRepository.findById(gardenId);
+
+        if (!gardenOptional.isPresent() || !gardenOptional.get().getUser().getUserId().equals(userId)) {
+            throw new EntityNotFoundException("Garden with ID " + gardenId + " not found for User with ID " + userId);
+        }
+        gardenRepository.deleteById(gardenId);
+    }
+}
 
     //STEP TWO/THREE WALKTHROUGH USING DTO... adds Garden Zone to the repository record for the garden created in Step One.
 //    public Garden newGardenStepsTwoAndThree(Integer gardenId, GardenDTO dto) {
@@ -135,20 +176,4 @@ public class GardenService {
 //        }
 //    }
 
-    //Delete a user garden
-    public void deleteGarden(Integer userId, Integer gardenId) {
 
-        Optional<User> userOptional = userRepository.findById(userId);
-
-        if (!userOptional.isPresent()) {
-            throw new EntityNotFoundException("User with ID" + userId + "not found.");
-        }
-
-        Optional<Garden> gardenOptional = gardenRepository.findById(gardenId);
-
-        if (!gardenOptional.isPresent() || !gardenOptional.get().getUser().getUserId().equals(userId)) {
-            throw new EntityNotFoundException("Garden with ID " + gardenId + " not found for User with ID " + userId);
-        }
-        gardenRepository.deleteById(gardenId);
-    }
-}

@@ -7,13 +7,13 @@ import axios from "axios";
 import "../custom-css/GardenConditions.css";
 
 const lightOptions = [
-  { label: "Full Sun", value: "full_sun", img: "/images/full-sun.jpg" },
+  { label: "Full Sun", value: "full sun", img: "/images/full-sun.jpg" },
   {
     label: "Part Sun/Shade",
-    value: "part_sun_part_shade",
+    value: "part sun-part shade",
     img: "/images/part-sun-part-shade.jpg",
   },
-  { label: "Full Shade", value: "full_shade", img: "/images/full-shade.jpg" },
+  { label: "Full Shade", value: "full shade", img: "/images/full-shade.jpg" },
 ];
 
 const waterOptions = [
