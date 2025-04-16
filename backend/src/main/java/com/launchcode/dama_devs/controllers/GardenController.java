@@ -3,8 +3,10 @@ package com.launchcode.dama_devs.controllers;
 import com.launchcode.dama_devs.models.User;
 import com.launchcode.dama_devs.models.dto.GardenDTO;
 import com.launchcode.dama_devs.models.dto.GardenPlantDTO;
+import com.launchcode.dama_devs.models.dto.PlantRatingDTO;
 import com.launchcode.dama_devs.services.GardenPlantService;
 import com.launchcode.dama_devs.services.UserDetailsImpl;
+import jakarta.persistence.criteria.CriteriaBuilder;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import com.launchcode.dama_devs.models.Garden;
@@ -93,6 +95,11 @@ public class GardenController {
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
+    }
+    @GetMapping("/{gardenId}/get-status/{plantId}")
+    public ResponseEntity<GardenPlantDTO> getPlantInGardenStatus(@PathVariable Integer plantId, @PathVariable Integer gardenId) {
+        GardenPlantDTO getStatus = gardenPlantService.getPlantInGardenStatus(plantId, gardenId);
+                return ResponseEntity.status(HttpStatus.OK).body(getStatus);
     }
 
     @PostMapping("/{gardenId}/add-plant/{plantId}")
