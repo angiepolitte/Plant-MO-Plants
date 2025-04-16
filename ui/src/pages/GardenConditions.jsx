@@ -5,32 +5,33 @@ import api from "../services/api";
 import { GardenContext } from "../store/GardenContext";
 import axios from "axios";
 import "../custom-css/GardenConditions.css";
+import { lightOptions, waterOptions, soilOptions } from "../reusable-code/gardenConditionsSelect";
 
-const lightOptions = [
-  { label: "Full Sun", value: "full_sun", img: "/images/full-sun.jpg" },
-  {
-    label: "Part Sun/Shade",
-    value: "part_sun_part_shade",
-    img: "/images/part-sun-part-shade.jpg",
-  },
-  { label: "Full Shade", value: "full_shade", img: "/images/full-shade.jpg" },
-];
+// const lightOptions = [
+//   { label: "Full Sun", value: "full sun", img: "/images/full-sun.jpg" },
+//   {
+//     label: "Part Sun/Shade",
+//     value: "part sun-part shade",
+//     img: "/images/part-sun-part-shade.jpg",
+//   },
+//   { label: "Full Shade", value: "full shade", img: "/images/full-shade.jpg" },
+// ];
 
-const waterOptions = [
-  { label: "Dry", value: "dry", img: "/images/single-raindrop.jpg" },
-  {
-    label: "Moderate",
-    value: "moderate",
-    img: "/images/moderate-raindrops.jpg",
-  },
-  { label: "Wet", value: "wet", img: "/images/heavy-raindrops.jpg" },
-];
+// const waterOptions = [
+//   { label: "Dry", value: "dry", img: "/images/single-raindrop.jpg" },
+//   {
+//     label: "Moderate",
+//     value: "moderate",
+//     img: "/images/moderate-raindrops.jpg",
+//   },
+//   { label: "Wet", value: "wet", img: "/images/heavy-raindrops.jpg" },
+// ];
 
-const soilOptions = [
-  { label: "Light (sandy)", value: "light", img: "/images/light-soil.jpg" },
-  { label: "Medium (loamy)", value: "medium", img: "/images/medium-soil.jpg" },
-  { label: "Heavy (clay)", value: "heavy", img: "/images/heavy-soil.jpg" },
-];
+// const soilOptions = [
+//   { label: "Light (sandy)", value: "light", img: "/images/light-soil.jpg" },
+//   { label: "Medium (loamy)", value: "medium", img: "/images/medium-soil.jpg" },
+//   { label: "Heavy (clay)", value: "heavy", img: "/images/heavy-soil.jpg" },
+// ];
 
 function GardenConditions() {
   const navigate = useNavigate();
