@@ -181,7 +181,7 @@ public class AuthController {
         }
     }
 
-    @PostMapping(value = "/update-credentials")
+    @PostMapping("/update-credentials")
     public ResponseEntity<String> updateCredentials(UpdateCredentialsRequestDTO request) {
         boolean updated = userService.updateCredentials(
                 request.getToken(),
