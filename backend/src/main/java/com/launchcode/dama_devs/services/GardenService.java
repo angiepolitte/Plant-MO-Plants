@@ -92,10 +92,10 @@ public class GardenService {
         }
 
         garden.setGardenName(dto.getGardenName()); //Set the garden name to the new garden.
-//        garden.setGardenZone(dto.getGardenZone());
-//        garden.setGardenLight(dto.getGardenLight());
-//        garden.setGardenWater(dto.getGardenWater());
-//        garden.setGardenSoil(dto.getGardenSoil());
+        garden.setGardenZone(dto.getGardenZone());
+        garden.setGardenLight(dto.getGardenLight());
+        garden.setGardenWater(dto.getGardenWater());
+        garden.setGardenSoil(dto.getGardenSoil());
 
         return gardenRepository.save(garden); //Save the newly-created garden to the repository.
     }
