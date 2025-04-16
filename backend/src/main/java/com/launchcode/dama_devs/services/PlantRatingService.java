@@ -29,7 +29,11 @@ public class PlantRatingService {
     public PlantRatingDTO getRating(Integer userId, Integer plantId) {
         Optional<PlantRating> currentRating = plantRatingRepository.findByUser_userIdAndPlantId(userId, plantId);
         if (currentRating.isEmpty()) {
-            throw new IllegalArgumentException("Rating not found with user ID: " + userId + " and plant ID: " + plantId);
+            PlantRatingDTO plantRatingDto = new PlantRatingDTO();
+            plantRatingDto.setPlantRating(0);
+            plantRatingDto.setUserId(userId);
+            plantRatingDto.setPlantId(plantId);
+            return plantRatingDto;
         } else {
             PlantRating rating = currentRating.get();
             PlantRatingDTO plantRatingDto = new PlantRatingDTO();
