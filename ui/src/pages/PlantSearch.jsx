@@ -9,10 +9,6 @@ function PlantSearch() {
   const [plants, setPlants] = useState(null);
   const navigate = useNavigate();
 
-  const handleNavigateGardenDetails = () => {
-    navigate("/garden-details");
-  };
-
   useEffect(() => {
     let ignore = false;
     async function fetchPlants() {
@@ -61,6 +57,10 @@ function PlantSearch() {
       gardenId={gardenId}
     ></PlantCard>
   ));
+
+  const handleNavigateGardenDetails = () => {
+    navigate(`/garden-details/${gardenId}`);
+  };
 
   return (
     <div className="container">
