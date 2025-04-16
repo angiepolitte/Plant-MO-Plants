@@ -42,53 +42,54 @@ public class GardenPlantService {
         return gardenPlantDTO;
     }
 
-//Add a plant to a garden. Create a DTO to send back with flag that plant was added
-public GardenPlantDTO addPlantToGarden(Integer gardenId, Integer plantId) {
-    Optional<Garden> gardenResult = gardenRepository.findById(gardenId);
-    if (!gardenResult.isPresent()) {
-        throw new IllegalArgumentException("Garden not found with ID" + gardenId);
+    //Add a plant to a garden. Create a DTO to send back with flag that plant was added
+    public GardenPlantDTO addPlantToGarden(Integer gardenId, Integer plantId) {
+        Optional<Garden> gardenResult = gardenRepository.findById(gardenId);
+        if (!gardenResult.isPresent()) {
+            throw new IllegalArgumentException("Garden not found with ID" + gardenId);
+        }
+        Garden garden = gardenResult.get();
+
+        Optional<Plant> plantResult = plantRepository.findById(plantId);
+        if (!plantResult.isPresent()) {
+            throw new IllegalArgumentException("Plant not found with ID" + plantId);
+        }
+        Plant plant = plantResult.get();
+
+        if (!garden.getPlants().contains(plant)) {
+            garden.addPlant(plant);
+            gardenRepository.save(garden);
+        }
+        GardenPlantDTO gardenPlantDTO = new GardenPlantDTO();
+        gardenPlantDTO.setGarden(garden);
+        gardenPlantDTO.setPlantInGarden(true);
+
+        return gardenPlantDTO;
     }
-    Garden garden = gardenResult.get();
 
-    Optional<Plant> plantResult = plantRepository.findById(plantId);
-    if (!plantResult.isPresent()) {
-        throw new IllegalArgumentException("Plant not found with ID" + plantId);
+    //Remove a plant from a garden. send DTO back with flag that plant was removed.
+    public GardenPlantDTO removePlantFromGarden(Integer gardenId, Integer plantId) {
+        Optional<Garden> gardenResult = gardenRepository.findById(gardenId);
+        if (!gardenResult.isPresent()) {
+            throw new IllegalArgumentException("Garden not found with ID" + gardenId);
+        }
+        Garden garden = gardenResult.get();
+
+        Optional<Plant> plantResult = plantRepository.findById(plantId);
+        if (!plantResult.isPresent()) {
+            throw new IllegalArgumentException("Plant not found with ID" + plantId);
+        }
+        Plant plant = plantResult.get();
+
+        if (garden.getPlants().contains(plant)) {
+            garden.removePlant(plant);
+            gardenRepository.save(garden);
+        }
+        GardenPlantDTO gardenPlantDTO = new GardenPlantDTO();
+        gardenPlantDTO.setGarden(garden);
+        gardenPlantDTO.setPlant(plant);
+        gardenPlantDTO.setPlantInGarden(false);
+
+        return gardenPlantDTO;
     }
-    Plant plant = plantResult.get();
-
-    if (!garden.getPlants().contains(plant)) {
-        garden.addPlant(plant);
-        gardenRepository.save(garden);
-    }
-    GardenPlantDTO gardenPlantDTO = new GardenPlantDTO();
-    gardenPlantDTO.setGarden(garden);
-    gardenPlantDTO.setPlantInGarden(true);
-
-    return gardenPlantDTO;
-}
-
-//Remove a plant from a garden. send DTO back with flag that plant was removed.
-public GardenPlantDTO removePlantFromGarden(Integer gardenId, Integer plantId) {
-    Optional<Garden> gardenResult = gardenRepository.findById(gardenId);
-    if (!gardenResult.isPresent()) {
-        throw new IllegalArgumentException("Garden not found with ID" + gardenId);
-    }
-    Garden garden = gardenResult.get();
-
-    Optional<Plant> plantResult = plantRepository.findById(plantId);
-    if (!plantResult.isPresent()) {
-        throw new IllegalArgumentException("Plant not found with ID" + plantId);
-    }
-    Plant plant = plantResult.get();
-
-    if (garden.getPlants().contains(plant)) {
-        garden.removePlant(plant);
-        gardenRepository.save(garden);
-    }
-    GardenPlantDTO gardenPlantDTO = new GardenPlantDTO();
-    gardenPlantDTO.setGarden(garden);
-    gardenPlantDTO.setPlantInGarden(false);
-
-    return gardenPlantDTO;
-}
 }
