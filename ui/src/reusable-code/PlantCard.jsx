@@ -1,14 +1,45 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import "../custom-css/PlantCard.css";
 import { Link } from "react-router-dom";
 
 //get plant and gardenId from PlantSearch and pass as props
 function PlantCard({ plant, gardenId }) {
   const [inGarden, setInGarden] = useState(false);
+  const plantId = plant.id;
+
+  useEffect(() => {
+    let ignore = false;
+    async function fetchPlantInGardenStatus() {
+      const token = localStorage.getItem("JWT_TOKEN");
+      const csrfToken = localStorage.getItem("CSRF_TOKEN");
+
+      const response = await fetch(
+        `http://localhost:8080/api/garden/${gardenId}/get-status/${plantId}`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-XSRF-TOKEN": csrfToken,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          credentials: "include",
+        }
+      );
+      const currentStatus = await response.json();
+
+      if (!ignore) {
+        setInGarden(currentStatus.plantInGarden);
+      }
+    }
+    fetchPlantInGardenStatus();
+    return () => {
+      ignore = true;
+    };
+  }, [gardenId, plantId]);
 
   //on ADD TO GARDEN button click, POST request at "/{gardenId}/add-plants/{plantId}"
   async function handleAddPlantToGardenClick() {
-    const plantId = plant.id;
     const dto = { plant: plant, gardenId: gardenId };
     const token = localStorage.getItem("JWT_TOKEN");
     const csrfToken = localStorage.getItem("CSRF_TOKEN");
@@ -57,7 +88,6 @@ function PlantCard({ plant, gardenId }) {
           onClick={handleAddPlantToGardenClick}
         >
           {inGarden ? "PLANT ADDED!" : "ADD TO GARDEN"}
-          {/*  handle submit (in angie's photos) */}
         </button>
       </div>
     </div>
