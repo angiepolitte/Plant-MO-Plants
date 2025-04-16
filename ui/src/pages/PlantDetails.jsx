@@ -5,6 +5,7 @@ import StarRating from "../reusable-code/StarRating";
 import { useParams } from "react-router-dom";
 import Comment from "../reusable-code/Comment";
 import PlantRatingAverage from "../reusable-code/PlantRatingAverage";
+import PlantSearch from "./PlantSearch";
 
 function PlantDetails() {
   const { plantId } = useParams(); //grabs the plantId from the URL.
@@ -46,47 +47,52 @@ function PlantDetails() {
 
   return (
     <div className="plant-container">
-      <img
-        className="plant-image"
-        src={`http://localhost:8080/${plant.plantImagePath}`}
-        alt={`Picture of ${plant.commonName}`}
-      />
-      <div className="plant-info">
-        <h2>{plant.commonName}</h2>
-        <h3>{plant.scientificName}</h3>
-        <ol className="plant-info-list">
-          <li>{plant.plantCycle}</li>
-          {plant.isEdible && <li>Edible</li>}
-          {plant.toxicToAnimals && <li>Toxic to Animals</li>}
-          {plant.attractsBirds && <li>Attract Birds</li>}
-          {plant.attractsButterflies && <li>Attract Butterflies</li>}
-          {plant.attractsPollinators && <li>Attract Pollinators</li>}
-          {plant.resistsDeer && <li>Deer Resistant</li>}
-          <li>Season of Interest: {plant.seasonOfInterest}</li>
-          <li>Color of Interest: {plant.colorOfInterest}</li>
-          <li>Light: {plant.plantLight}</li>
-          <li>Water: {plant.plantWater}</li>
-          <li>Soil: {plant.plantSoil}</li>
-        </ol>
-        <div className="your-star-rating">
-          <h3>Community Rating</h3>
-          <PlantRatingAverage />
-          <h3>Rate your success with this plant!</h3>
-          <StarRating />
+      <h3> BACK TO RESULTS</h3>
+      <br></br>
+      <br></br>
+      <div className="plant-container">
+        <img
+          className="plant-image"
+          src={`http://localhost:8080/${plant.plantImagePath}`}
+          alt={`Picture of ${plant.commonName}`}
+        />
+        <div className="plant-info">
+          <h2>{plant.commonName}</h2>
+          <h3>{plant.scientificName}</h3>
+          <ol className="plant-info-list">
+            <li>{plant.plantCycle}</li>
+            {plant.isEdible && <li>Edible</li>}
+            {plant.toxicToAnimals && <li>Toxic to Animals</li>}
+            {plant.attractsBirds && <li>Attract Birds</li>}
+            {plant.attractsButterflies && <li>Attract Butterflies</li>}
+            {plant.attractsPollinators && <li>Attract Pollinators</li>}
+            {plant.resistsDeer && <li>Deer Resistant</li>}
+            <li>Season of Interest: {plant.seasonOfInterest}</li>
+            <li>Color of Interest: {plant.colorOfInterest}</li>
+            <li>Light: {plant.plantLight}</li>
+            <li>Water: {plant.plantWater}</li>
+            <li>Soil: {plant.plantSoil}</li>
+          </ol>
+          <div className="your-star-rating">
+            <h3>Community Rating</h3>
+            <PlantRatingAverage />
+            <h3>Rate your success with this plant!</h3>
+            <StarRating />
+          </div>
         </div>
-      </div>
-      <div className="plant-description">
-        <h2 className="description-header">Description</h2>
-        <ol className="description-info-list">
-          <li>Height: {plant.plantHeight}</li>
-          <li>Spread: {plant.plantSpread}</li>
-        </ol>
-        <p>{plant.plantDescription}</p>
-        <div />
-        <br></br>
-        <br></br>
-        <div className="community-tips">
-          <Comment />
+        <div className="plant-description">
+          <h2 className="description-header">Description</h2>
+          <ol className="description-info-list">
+            <li>Height: {plant.plantHeight}</li>
+            <li>Spread: {plant.plantSpread}</li>
+          </ol>
+          <p>{plant.plantDescription}</p>
+          <div />
+          <br></br>
+          <br></br>
+          <div className="community-tips">
+            <Comment />
+          </div>
         </div>
       </div>
     </div>

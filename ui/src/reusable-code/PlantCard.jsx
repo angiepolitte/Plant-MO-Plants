@@ -69,6 +69,37 @@ function PlantCard({ plant, gardenId }) {
     }
   }
 
+  //on  REMOVE PLANT button click, DELETE request at "api/garden/{gardenId}/remove-plant/{plantId}"
+  async function handleRemovePlantFromGardenClick() {
+    const dto = { plant: plant, gardenId: gardenId };
+    const token = localStorage.getItem("JWT_TOKEN");
+    const csrfToken = localStorage.getItem("CSRF_TOKEN");
+
+    try {
+      const response = await fetch(
+        `http://localhost:8080/api/garden/${gardenId}/remove-plant/${plantId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+            "X-XSRF-TOKEN": csrfToken,
+            "Content-Type": "application/json",
+            Accept: "application/json",
+          },
+          body: JSON.stringify(dto),
+          credentials: "include",
+        }
+      );
+
+      const dtoData = await response.json();
+      if (response.ok) {
+        setInGarden(dtoData.plantInGarden);
+      }
+    } catch (error) {
+      console.error("Error removing plant:", error);
+    }
+  }
+
   return (
     <div className="plantCard">
       <div>
@@ -86,8 +117,18 @@ function PlantCard({ plant, gardenId }) {
         <button
           className="plantCard-button"
           onClick={handleAddPlantToGardenClick}
+          disabled={inGarden === true}
         >
           {inGarden ? "PLANT ADDED!" : "ADD TO GARDEN"}
+        </button>
+      </div>
+      <div>
+        <button
+          className="plantCard-secondary-button"
+          disabled={inGarden === false}
+          onClick={handleRemovePlantFromGardenClick}
+        >
+          {inGarden ? "REMOVE PLANT" : "REMOVED"}
         </button>
       </div>
     </div>
