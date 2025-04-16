@@ -37,8 +37,8 @@ public class PlantFilteringService {
                     plant.getPlantLight().contains(garden.getGardenLight()) &&
                     plant.getPlantWater().contains(garden.getGardenWater()) &&
                     plant.getPlantSoil().contains(garden.getGardenSoil())) {
-                matchingGardenPlants.add(plant);
             }
+            matchingGardenPlants.add(plant);
         }
         return matchingGardenPlants;
     }
