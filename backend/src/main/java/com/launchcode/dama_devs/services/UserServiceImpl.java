@@ -9,6 +9,7 @@ import com.launchcode.dama_devs.models.data.RoleRepository;
 import com.launchcode.dama_devs.models.data.UserRepository;
 import com.launchcode.dama_devs.models.data.UserService;
 import com.launchcode.dama_devs.models.dto.UserDTO;
+import com.launchcode.dama_devs.security.jwt.JwtUtils;
 import com.launchcode.dama_devs.util.EmailService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -37,6 +38,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     EmailService emailService;
+
+    @Autowired
+    private JwtUtils jwtUtils;
 
     @Override
     public void updateUserRole(Integer userId, String roleName) {
@@ -176,5 +180,32 @@ public class UserServiceImpl implements UserService {
         passwordRestetTokenRepository.save(resetToken);
     }
 
+    @Override
+    public boolean updateCredentials(String token, String newUsername, String newPassword) {
+        String currentUsername;
+        try {
+            currentUsername = jwtUtils.getUserNameFromJwtToken(token);
+        } catch (Exception e) {
+            return false; // Invalid or expired token
+        }
+
+        Optional<User> optionalUser = userRepository.findByUsername(currentUsername);
+        if (!optionalUser.isPresent()) {
+            return false;
+        }
+
+        // Optional: Check if new username is already taken
+        if (!newUsername.equals(currentUsername) &&
+                userRepository.findByUsername(newUsername).isPresent()) {
+            return false; // New username already taken
+        }
+
+        User user = optionalUser.get();
+        user.setUsername(newUsername);
+        user.setPassword(passwordEncoder.encode(newPassword));
+
+        userRepository.save(user);
+        return true;
+    }
 
 }
