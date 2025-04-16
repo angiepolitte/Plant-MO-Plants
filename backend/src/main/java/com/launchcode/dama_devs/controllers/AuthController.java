@@ -6,12 +6,14 @@ import com.launchcode.dama_devs.models.User;
 import com.launchcode.dama_devs.models.data.RoleRepository;
 import com.launchcode.dama_devs.models.data.UserRepository;
 import com.launchcode.dama_devs.models.data.UserService;
+import com.launchcode.dama_devs.models.dto.UpdateCredentialsRequestDTO;
 import com.launchcode.dama_devs.models.request.LoginRequest;
 import com.launchcode.dama_devs.models.request.SignupRequest;
 import com.launchcode.dama_devs.models.response.LoginResponse;
 import com.launchcode.dama_devs.models.response.MessageResponse;
 import com.launchcode.dama_devs.models.response.UserInfoResponse;
 import com.launchcode.dama_devs.security.jwt.JwtUtils;
+import com.launchcode.dama_devs.services.UserDetailsImpl;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -70,7 +72,7 @@ public class AuthController {
 //      set the authentication
         SecurityContextHolder.getContext().setAuthentication(authentication);
 
-        UserDetails userDetails = (UserDetails) authentication.getPrincipal();
+        UserDetailsImpl userDetails = (UserDetailsImpl) authentication.getPrincipal();
 
         String jwtToken = jwtUtils.generateTokenFromUsername(userDetails);
 
@@ -176,6 +178,21 @@ public class AuthController {
         } catch (RuntimeException e) {
             return ResponseEntity.status(HttpStatus.BAD_REQUEST)
                     .body(new MessageResponse(e.getMessage()));
+        }
+    }
+
+    @PostMapping(value = "/update-credentials")
+    public ResponseEntity<String> updateCredentials(UpdateCredentialsRequestDTO request) {
+        boolean updated = userService.updateCredentials(
+                request.getToken(),
+                request.getNewUsername(),
+                request.getNewPassword()
+        );
+
+        if (updated) {
+            return ResponseEntity.ok("Credentials updated successfully");
+        } else {
+            return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("Update failed: invalid token or username");
         }
     }
 
