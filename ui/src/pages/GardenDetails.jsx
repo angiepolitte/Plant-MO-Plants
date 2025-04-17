@@ -1,8 +1,11 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import React, { useEffect, useState, useContext } from 'react';
-import PlantCard from '../reusable-code/PlantCard.jsx';
-import '../custom-css/PlantCard.css';
-import '../custom-css/GardenDetail.css';
+
+import { useNavigate, useParams, useLocation } from "react-router-dom";
+import React, { useEffect, useState, useContext } from "react";
+import PlantCard from "../reusable-code/PlantCard.jsx";
+import "../custom-css/PlantCard.css";
+import "../custom-css/GardenDetail.css";
+
+
 import { GardenContext } from "../store/GardenContext.jsx";
 import { lightOptions, waterOptions, soilOptions } from "../reusable-code/gardenConditionsSelect";
 import html2pdf from 'html2pdf.js';
@@ -19,6 +22,8 @@ function GardenDetails() {
   const [currentUser, setCurrentUser] = useState(null);
   const { gardenData } = useContext(GardenContext);
   const printRef = useRef();
+  const location = useLocation();
+  const photo = location.state?.photo;
 
 
   // Utility to match selected value with image/label
@@ -261,7 +266,36 @@ function GardenDetails() {
           </div>
 
           <div className="main-content">
-            <img src={garden.imageUrl || '/images/garden-placeholder-photo.jpg'} alt="Garden" className="feature-image" />
+
+            {photo ? (
+              <img
+                src={`data:image/jpeg;base64,${photo.photoImage}`}
+                alt={photo.photoName}
+                style={{
+                  width: "800px",
+                  height: "400px",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                }}
+              />
+            ) : (
+              <div
+                style={{
+                  width: "800px",
+                  height: "400px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "8px",
+                  backgroundColor: "#f0f0f0",
+                  border: "2px dashed #ccc",
+                  color: "#666",
+                  fontStyle: "italic",
+                }}
+              >
+                No photo has been uploaded for this garden yet.
+              </div>
+            )}
 
             <div className="conditions-box">
               <p><strong>Zone:</strong> {garden.gardenZone}</p>
