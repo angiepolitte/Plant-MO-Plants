@@ -116,14 +116,6 @@ function App() {
                 }
               />
               <Route
-                path="/garden-details"
-                element={
-                  <ProtectedRoute>
-                    <GardenDetails />
-                  </ProtectedRoute>
-                }
-              />
-              <Route
                 path="/dashboard"
                 element={
                   <ProtectedRoute>
