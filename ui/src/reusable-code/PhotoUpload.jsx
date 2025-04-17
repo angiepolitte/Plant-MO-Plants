@@ -59,7 +59,10 @@ const PhotoUpload = () => {
         setFile(null);
         setPhotoName("");
         setGardenId("");
-        navigate("/dashboard");
+        navigate(`/garden-details/${gardenId}`, {
+          state: { photoUploaded: true },
+        });
+        // navigate("/dashboard");
         return true;
       } else {
         alert("Failed to upload photo.");
@@ -85,7 +88,7 @@ const PhotoUpload = () => {
             onSubmit={async (e) => {
               e.preventDefault();
               const success = await handleUpload();
-              if (success) navigate("/dashboard");
+              if (success) navigate("/garden-details/${gardenId}");
             }}
           >
             <label className="form-label">Select Photo:</label>
@@ -125,7 +128,7 @@ const PhotoUpload = () => {
               <button
                 type="button"
                 className="dashboard-button"
-                onClick={() => navigate("/dashboard")}
+                onClick={() => navigate("/garden-details/${gardenId}")}
               >
                 Cancel
               </button>

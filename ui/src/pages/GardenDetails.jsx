@@ -279,7 +279,7 @@ function GardenDetails() {
           </div>
 
           <div className="main-content">
-            {photo && (
+            {photo ? (
               <img
                 src={`data:image/jpeg;base64,${photo.photoImage}`}
                 alt={photo.photoName}
@@ -290,6 +290,23 @@ function GardenDetails() {
                   borderRadius: "8px",
                 }}
               />
+            ) : (
+              <div
+                style={{
+                  width: "800px",
+                  height: "400px",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "center",
+                  borderRadius: "8px",
+                  backgroundColor: "#f0f0f0",
+                  border: "2px dashed #ccc",
+                  color: "#666",
+                  fontStyle: "italic",
+                }}
+              >
+                No photo has been uploaded for this garden yet.
+              </div>
             )}
 
             <div className="conditions-box">
