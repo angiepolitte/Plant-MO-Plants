@@ -69,7 +69,7 @@ public class GardenController {
     }
 
     //Delete an existing garden
-    @DeleteMapping("/{gardenId}")
+    @DeleteMapping("/delete/{gardenId}")
     public ResponseEntity<Void> deleteGarden(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Integer gardenId, @RequestBody Garden garden) {
         Integer userId = userDetails.getId();
         Optional<Garden> gardenToDelete = gardenService.getGardenById(userId, gardenId);
@@ -80,6 +80,7 @@ public class GardenController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
     @GetMapping("/{gardenId}/get-status/{plantId}")
     public ResponseEntity<GardenPlantDTO> getPlantInGardenStatus(@PathVariable Integer plantId, @PathVariable Integer gardenId) {
         GardenPlantDTO getStatus = gardenPlantService.getPlantInGardenStatus(plantId, gardenId);

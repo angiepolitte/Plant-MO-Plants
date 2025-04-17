@@ -46,7 +46,7 @@ function GardenZone() {
       </select>
 
       {showError && (
-        <div className="error-message">Please select a hardiness zone before continuing.</div>
+        <div className="error-message">Please select a Hardiness Zone before continuing.</div>
       )}
 
       <button className="garden-button" onClick={handleNext}>
