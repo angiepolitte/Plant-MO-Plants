@@ -25,7 +25,6 @@ const Dashboard = () => {
   }, []);
 
   const handleView = () => {
-
     fetch("http://localhost:8080/api/garden", {
       method: "GET",
       headers: {
@@ -82,7 +81,6 @@ const Dashboard = () => {
             placeholder="e.g. 90210"
             className="dashboard-form"
           />
-
           <button className="garden-button" onClick={handleSubmit}>
             Personalize!
           </button>
@@ -94,34 +92,34 @@ const Dashboard = () => {
         <div className="dashboard-left">
           <div className="card garden-card">
             <h2 className="personalize-label">{username}'s Gardens</h2>
-            {showError && <p className="error-message">Failed to load gardens.</p>}
+            {showError && (
+              <p className="error-message">Failed to load gardens.</p>
+            )}
             <div className="card-content">
-              {/* this validates the user on the backend */}
               <div className="gardens-list">
                 {gardens.length > 0 ? (
                   gardens.map((garden) => (
-                    <div key={garden.id} className="garden-item">
-                      <h3 className="personalize-label"><Link to={`/garden-details/${garden.id}`}>
-                        {garden.gardenName}
+                    <div key={garden.id} className="garden-card">
+                      <Link
+                        to={`/garden-details/${garden.id}`}
+                        className="garden-link"
+                      >
+                        <img
+                          src="/images/little-green-plant.jpg"
+                          alt="Green Leaf"
+                          className="garden-icon"
+                        />
                       </Link>
-                      </h3>
+                      <h3 className="garden-name">{garden.gardenName}</h3>
                     </div>
                   ))
                 ) : (
                   <p>No gardens found.</p>
                 )}
               </div>
-              <PhotoFetching userId={userId} />
             </div>
           </div>
-
           <div className="personalize-container">
-            <button
-              className="dashboard-button"
-              onClick={() => navigate("/photo-upload")}
-            >
-              Upload a Photo of your Garden!
-            </button>
             <button
               className="dashboard-button"
               onClick={() => navigate("/create-garden")}
@@ -138,9 +136,8 @@ const Dashboard = () => {
               <Forecast />
             </div>
           </div>
-
           <div className="card nursery-card">
-            <div className="card-content">
+            <div className="card-content-nursery">
               <h2>Nurseries in Your Area</h2>
               <div className="nursery-scroll">
                 <NurserySearch />

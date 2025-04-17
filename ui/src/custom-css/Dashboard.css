@@ -5,21 +5,36 @@
 .dashboard-main {
   display: flex;
   padding-top: 2rem;
-  flex-direction: row;
+  flex-direction: row; /* Left and right containers side by side */
   gap: 2rem;
-  justify-content: center;
-  align-items: flex-start;
-  flex-wrap: wrap;
+  justify-content: center; /* Center the left and right containers horizontally */
+  align-items: flex-start; /* Align top of left and right containers */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
   min-height: 100vh;
 }
 
-.dashboard-left,
+.dashboard-left {
+  display: flex;
+  flex-direction: column; /* Stack garden list and button vertically */
+  gap: 1rem;
+  flex: 1 1 350px; /* Adjust width as needed */
+  max-width: 600px; /* Adjust max width as needed */
+  align-items: center; /* Center content horizontally within the left container */
+  background-color: #cce3de; /* Keep your background color */
+  padding: 1rem; /* Add some padding inside the left container */
+  border-radius: 8px; /* Optional rounded corners */
+}
+
 .dashboard-right {
   display: flex;
-  flex-direction: column;
+  flex-direction: column; /* Stack weather and nurseries vertically */
   gap: 1rem;
-  flex: 1 1 500px;
-  max-width: 600px;
+  flex: 1 1 350px; /* Adjust width as needed */
+  max-width: 600px; /* Adjust max width as needed */
+  align-items: center; /* Center content horizontally within the right container */
+  background-color: #cce3de; /* Keep your background color */
+  padding: 1rem; /* Add some padding inside the right container */
+  border-radius: 8px; /* Optional rounded corners */
 }
 
 .card {
@@ -27,15 +42,28 @@
   border-radius: 8px;
   box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
   padding: 1rem;
-  width: 500px;
   max-height: 600px;
   overflow-y: auto;
+  width: 100%; /* Make the card take full width of its parent */
 }
 
-.card-content {
+.upload-content {
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: center; /* Center content within the card */
+  text-align: center;
+}
+
+.card-content-nursery {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content within the card */
+  text-align: center;
+}
+.card-content {
+  display: flex;
+  flex-direction: row;
+  align-items: center; /* Center content within the card */
   text-align: center;
 }
 
@@ -150,4 +178,67 @@ button.dashboard-button:focus-visible {
   justify-content: space-between;
   gap: 1rem;
   margin-top: 1.5rem;
+}
+.gardens-list {
+  display: flex;
+  flex-direction: row; /* Arrange items in a row */
+  flex-wrap: wrap; /* Allow items to wrap to the next line */
+  gap: 10px; /* Adjust spacing between garden cards */
+  padding: 10px; /* Optional padding for the list within the card */
+  background-color: #f4f1f5;
+  justify-content: center; /* Center the garden cards within the list */
+}
+@media (min-width: 1024px) {
+  .garden-card {
+    border: 1px solid #ccc; /* Optional border for each card */
+    border-radius: 8px;
+    overflow: hidden;
+    /* width: 100%;  Let it take the full width of the .gardens-list */
+    min-height: 80px; /* Adjust as needed for just the name */
+    display: flex;
+    flex-direction: column; /* Ensure content inside card is also column */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    background-color: #f3e5f5; /* Optional background color for the card */
+  }
+}
+@media (min-width: 1024px) {
+  .card.garden-card {
+    /* Using a more specific selector for clarity */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    width: calc(100% - 10px);
+    height: auto;
+    min-width: 100px;
+    align-items: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 20px; /* Increased padding - try different values */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
+}
+
+.garden-link {
+  text-decoration: none;
+  color: inherit;
+  display: block; /* Make the link take up the full width of its container */
+  width: 80px; /* Adjust the size of the link container */
+  height: 80px; /* Adjust the size of the link container */
+  border-radius: 50%; /* Make it circular (optional) */
+  overflow: hidden; /* Clip the image if it overflows the circle */
+  margin-bottom: 5px; /* Space between the icon and the name */
+}
+
+.garden-icon {
+  width: 100%;
+  height: 100%;
+  object-fit: cover; /* Make the image fill the circular container */
+}
+
+.garden-name {
+  font-size: 1em;
+  margin: 0;
+  color: #51035d; /* Adjust text color */
 }
