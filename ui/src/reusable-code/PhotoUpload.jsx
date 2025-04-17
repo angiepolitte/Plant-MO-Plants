@@ -95,7 +95,7 @@ const PhotoUpload = () => {
   return (
     <div className="dashboard-wrapper center">
       <div className="card photo-upload-card">
-        <div className="card-content">
+        <div className="upload-content">
           <h2 className="personalize-label">Upload a Garden Photo</h2>
           <p style={{ color: "#4F6F52", fontSize: "1rem" }}>
             Add a beautiful moment to your garden 🌿

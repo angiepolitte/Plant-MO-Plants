@@ -47,6 +47,12 @@
   width: 100%; /* Make the card take full width of its parent */
 }
 
+.upload-content {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Center content within the card */
+  text-align: center;
+}
 .card-content {
   display: flex;
   flex-direction: row;
@@ -175,17 +181,18 @@ button.dashboard-button:focus-visible {
   background-color: #f4f1f5;
   justify-content: center; /* Center the garden cards within the list */
 }
-
-.garden-card {
-  border: 1px solid #ccc; /* Optional border for each card */
-  border-radius: 8px;
-  overflow: hidden;
-  /* width: 100%;  Let it take the full width of the .gardens-list */
-  min-height: 80px; /* Adjust as needed for just the name */
-  display: flex;
-  flex-direction: column; /* Ensure content inside card is also column */
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
-  background-color: #f3e5f5; /* Optional background color for the card */
+@media (min-width: 1024px) {
+  .garden-card {
+    border: 1px solid #ccc; /* Optional border for each card */
+    border-radius: 8px;
+    overflow: hidden;
+    /* width: 100%;  Let it take the full width of the .gardens-list */
+    min-height: 80px; /* Adjust as needed for just the name */
+    display: flex;
+    flex-direction: column; /* Ensure content inside card is also column */
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
+    background-color: #f3e5f5; /* Optional background color for the card */
+  }
 }
 @media (min-width: 1024px) {
   .card.garden-card {
@@ -227,13 +234,4 @@ button.dashboard-button:focus-visible {
   font-size: 1em;
   margin: 0;
   color: #51035d; /* Adjust text color */
-}
-
-.gardens-list {
-  display: flex;
-  flex-direction: row;
-  flex-wrap: wrap;
-  gap: 10px;
-  padding: 10px;
-  background-color: #f4f1f5;
 }
