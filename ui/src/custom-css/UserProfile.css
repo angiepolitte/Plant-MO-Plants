@@ -1,0 +1,131 @@
+/* Overall Page */
+.user-profile-container {
+  min-height: calc(100vh - 74px);
+  padding: 40px 20px;
+  background: linear-gradient(
+    to right,
+    #f3f4f6,
+    #e5e7eb
+  ); /* soft gray gradient */
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+}
+
+/* Loader Section */
+.loader-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 300px;
+  font-size: 1.2rem;
+  color: #4b5563;
+}
+
+/* Main Card */
+.profile-wrapper {
+  max-width: 1000px;
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.profile-card {
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 30px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.08);
+  transition: box-shadow 0.3s ease;
+}
+
+.profile-card:hover {
+  box-shadow: 0 6px 25px rgba(0, 0, 0, 0.12);
+}
+
+/* Avatar Section */
+.avatar-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+}
+
+.avatar-section h3 {
+  font-size: 1.8rem;
+  color: #1e3a8a; /* blue-900 */
+  font-weight: 600;
+}
+
+/* User Info Section */
+.info-section {
+  margin-top: 30px;
+  padding: 0 20px;
+}
+
+.info-section p {
+  font-size: 1rem;
+  color: #374151; /* slate-700 */
+  margin-bottom: 12px;
+}
+
+.info-section strong {
+  color: #111827; /* darker slate */
+}
+
+/* Update Form Section */
+.update-form {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  margin-top: 20px;
+}
+
+/* Button Styles */
+.update-button {
+  background-color: #ef4444; /* red-500 */
+  color: #fff;
+  padding: 10px 16px;
+  font-weight: 600;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.update-button:hover {
+  background-color: #dc2626; /* red-600 */
+}
+
+/* Last Login Section */
+.session-info {
+  margin-top: 30px;
+  background-color: #dbeafe; /* light blue-100 */
+  padding: 15px 20px;
+  border-left: 4px solid #3b82f6; /* blue-500 */
+  border-radius: 6px;
+}
+
+.session-info h4 {
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: #1d4ed8; /* blue-700 */
+  margin-bottom: 8px;
+}
+
+.session-info p {
+  color: #1e293b; /* slate-800 */
+  font-size: 0.95rem;
+}
+
+/* Accordion override (optional if using MUI styles) */
+.MuiAccordion-root {
+  margin-top: 20px;
+  background-color: #f9fafb;
+  border-radius: 5px;
+  border: 1px solid #e5e7eb;
+}
+
+.MuiAccordionSummary-root {
+  font-weight: bold;
+  color: #1f2937;
+}

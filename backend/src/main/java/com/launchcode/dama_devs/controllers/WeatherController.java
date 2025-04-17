@@ -53,6 +53,7 @@ public class WeatherController {
     //weather widget not being used at this time, not necessary and blocks certain images/descriptions
     @GetMapping("/current")
     public Mono<String> getCurrentWeather(@RequestParam String city) {
+
         return fetchWeatherData("/weather", "q", city);
     }
     // gets forecast by city name, again, this will be changed to automatically default to user's zip code/city once entered
