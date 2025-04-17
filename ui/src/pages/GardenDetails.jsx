@@ -289,12 +289,12 @@ function GardenDetails() {
               <button className="garden-button" onClick={handlePrint}>
                 PRINT GARDEN PLAN
               </button>
-              <button
+              {/* <button
                 className="garden-button" // You might want to adjust the className
                 onClick={() => navigate("/photo-upload")}
               >
                 Upload a Photo of your Garden!
-              </button>
+              </button> */}
 
               <a href="/dashboard">
                 <button className="nursery-button">FIND A NURSERY 🌱</button>

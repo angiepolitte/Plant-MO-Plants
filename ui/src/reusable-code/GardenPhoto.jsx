@@ -1,9 +1,12 @@
 import React, { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import "../custom-css/GardenPhoto.css";
 
 const GardenPhoto = ({ gardenId }) => {
   const [photo, setPhoto] = useState(null);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchGardenPhoto = async () => {
@@ -60,6 +63,10 @@ const GardenPhoto = ({ gardenId }) => {
   if (loading) return <p>Loading garden photo...</p>;
   if (error) return <p>{error}</p>;
 
+  const handleUploadClick = () => {
+    navigate("/photo-upload");
+  };
+
   return (
     <>
       {photo ? (
@@ -75,20 +82,50 @@ const GardenPhoto = ({ gardenId }) => {
         />
       ) : (
         <div
+          className="placeholder-image-container"
           style={{
+            position: "relative",
             width: "800px",
             height: "400px",
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "center",
             borderRadius: "8px",
-            backgroundColor: "#f0f0f0",
-            border: "2px dashed #ccc",
-            color: "#666",
-            fontStyle: "italic",
+            overflow: "hidden",
+            cursor: "pointer", // Indicate it's clickable
           }}
+          onClick={handleUploadClick}
         >
-          No photo has been uploaded for this garden yet.
+          <img
+            src="/images/upload-garden-pic.jpeg"
+            alt="Upload Garden Photo"
+            style={{
+              width: "100%",
+              height: "100%",
+              objectFit: "contain",
+              transition: "opacity 0.3s ease",
+            }}
+            className="placeholder-image"
+          />
+          <div
+            className="upload-text-overlay"
+            style={{
+              position: "absolute",
+              top: 0,
+              left: 0,
+              width: "100%",
+              height: "100%",
+              display: "flex",
+              justifyContent: "center",
+              alignItems: "center",
+              color: "white", // Set back to white
+              fontSize: "1.5em",
+              fontWeight: "bold",
+              backgroundColor: "rgba(0, 0, 0, 0)",
+              opacity: 0, // Should be 0 initially
+              transition: "opacity 0.3s ease, background-color 0.3s ease",
+              textAlign: "center",
+            }}
+          >
+            Upload Photo
+          </div>
         </div>
       )}
     </>

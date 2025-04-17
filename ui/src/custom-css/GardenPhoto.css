@@ -1,0 +1,25 @@
+.placeholder-image {
+  opacity: 1; /* Initial opacity */
+  transition: opacity 0.3s ease; /* Ensure transition is here */
+}
+
+.upload-text-overlay {
+  opacity: 0; /* Initial opacity - hidden */
+  background-color: rgba(0, 0, 0, 0); /* Initially transparent */
+  transition: opacity 0.3s ease, background-color 0.3s ease; /* Ensure transition is here */
+  text-shadow: 0 0 10px rgba(255, 255, 255, 0.8); /* Add a subtle white glow */
+}
+
+.placeholder-image-container:hover .placeholder-image {
+  opacity: 0.6; /* Opacity on hover (blur effect) */
+}
+
+.placeholder-image-container:hover .upload-text-overlay {
+  opacity: 1; /* Show text on hover */
+  background-color: rgba(
+    0,
+    0,
+    0,
+    0.4
+  ); /* Optional: Darken background slightly */
+}
