@@ -27,21 +27,16 @@ const NavBar = () => {
 
   const { token, setToken, setCurrentUser, isAdmin, setIsAdmin } =
     useMyContext();
-  const isLoggedIn = !!localStorage.getItem("JWT_TOKEN");
 
   const handleLogout = () => {
-    if (isLoggedIn) {
-      localStorage.removeItem("JWT_TOKEN"); // Updated to remove token from localStorage
-      localStorage.removeItem("USER"); // Remove user details as well
-      localStorage.removeItem("CSRF_TOKEN");
-      localStorage.removeItem("IS_ADMIN");
-      setToken(null);
-      setCurrentUser(null);
-      setIsAdmin(false);
-      navigate("/login");
-    } else {
-      navigate("/login");
-    }
+    localStorage.removeItem("JWT_TOKEN"); // Updated to remove token from localStorage
+    localStorage.removeItem("USER"); // Remove user details as well
+    localStorage.removeItem("CSRF_TOKEN");
+    localStorage.removeItem("IS_ADMIN");
+    setToken(null);
+    setCurrentUser(null);
+    setIsAdmin(false);
+    navigate("/login");
   };
 
   return (
