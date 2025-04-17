@@ -137,7 +137,7 @@ const Dashboard = () => {
             </div>
           </div>
           <div className="card nursery-card">
-            <div className="card-content">
+            <div className="card-content-nursery">
               <h2>Nurseries in Your Area</h2>
               <div className="nursery-scroll">
                 <NurserySearch />
