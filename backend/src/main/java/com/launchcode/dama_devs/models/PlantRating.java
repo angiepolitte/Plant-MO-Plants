@@ -39,8 +39,6 @@ public class PlantRating extends AbstractEntity{
     public String toString() {
         return "PlantRating{" +
                 "plantRating=" + plantRating +
-                ", user=" + user +
-                ", plant=" + plant +
                 '}';
     }
 }

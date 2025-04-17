@@ -7,6 +7,8 @@ import "../custom-css/PlantSearch.css";
 function PlantSearch() {
   const { gardenId } = useParams(); //grabs the gardenId from the URL.
   const [plants, setPlants] = useState(null);
+  const [selectedPlantType, setSelectedPlantType] = useState("");
+
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -16,7 +18,7 @@ function PlantSearch() {
       const csrfToken = localStorage.getItem("CSRF_TOKEN");
 
       const response = await fetch(
-        `http://localhost:8080/api/plant/${gardenId}/search-plants`,
+        `http://localhost:8080/api/plant/${gardenId}/search-plants?selectedPlantType=${selectedPlantType}`,
         {
           method: "GET",
           headers: {
@@ -39,7 +41,7 @@ function PlantSearch() {
     return () => {
       ignore = true;
     };
-  }, [gardenId]);
+  }, [gardenId, selectedPlantType]);
 
   if (!plants) {
     return (
@@ -62,13 +64,38 @@ function PlantSearch() {
     navigate(`/garden-details/${gardenId}`);
   };
 
+  async function handleSelectPlantTypeChange(event) {
+    setSelectedPlantType(event.target.value);
+  }
+
   return (
     <div className="container">
       <h2 className="title">Find plants for your garden!</h2>
       <button className="garden-button" onClick={handleNavigateGardenDetails}>
         VIEW YOUR GARDEN
       </button>
-      <div className="plant-grid">{plantList}</div>
+
+      <div>
+        <br></br>
+        <div className="dropdown-container">
+          <select
+            className="plant-type-filter"
+            value={selectedPlantType}
+            onChange={handleSelectPlantTypeChange}
+          >
+            <option value="">All Plant Types</option>
+            <option value="fern">fern</option>
+            <option value="grass">Grasses</option>
+            <option value="herbaceous - flowering">
+              Herbaceous and/or Flowering
+            </option>
+            <option value="shrub">Shrubs</option>
+            <option value="tree">Trees</option>
+            <option value="vine">Vines</option>
+          </select>
+        </div>
+        <div className="plant-grid">{plantList}</div>
+      </div>
     </div>
   );
 }

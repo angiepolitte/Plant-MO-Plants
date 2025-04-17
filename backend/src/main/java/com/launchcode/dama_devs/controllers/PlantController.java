@@ -23,10 +23,18 @@ public class PlantController {
     @Autowired
     private PlantFilteringService plantFilteringService;
 
+    //combined method calls in this controller because I wanted to try using the @RequestParam
+    //if the request param is not null or empty (i.e. someone has chosen a type from the plantType filter, run the type filter method.
+    //otherwise, get all matching garden plants.
     @GetMapping("/{gardenId}/search-plants")
-    public ResponseEntity<List<Plant>> getMatchingGardenPlants(@PathVariable Integer gardenId) {
-        List<Plant> matchingGardenPlants = plantFilteringService.filterPlantsByGardenFields(gardenId);
-        return ResponseEntity.status(HttpStatus.OK).body(matchingGardenPlants);
+    public ResponseEntity<List<Plant>> getMatchingGardenPlants(@PathVariable Integer gardenId, @RequestParam(required = false) String selectedPlantType) {
+        if (selectedPlantType != null && !selectedPlantType.isEmpty()) {
+            List<Plant> matchingTypePlants = plantFilteringService.filterGardenPlantsByType(gardenId, selectedPlantType);
+            return ResponseEntity.status(HttpStatus.OK).body(matchingTypePlants);
+        } else {
+            List<Plant> matchingGardenPlants = plantFilteringService.filterPlantsByGardenFields(gardenId);
+            return ResponseEntity.status(HttpStatus.OK).body(matchingGardenPlants);
+        }
     }
 
     @GetMapping("/{plantId}")
