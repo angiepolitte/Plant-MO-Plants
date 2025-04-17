@@ -124,6 +124,15 @@ const NavBar = () => {
                   Create Garden
                 </li>
               </Link>
+              <Link to="/garden-details">
+                <li
+                  className={` py-2 cursor-pointer  hover:text-slate-300 ${
+                    pathName === "/garden-details" ? "font-semibold " : ""
+                  } `}
+                >
+                  Garden Details
+                </li>
+              </Link>
             </>
           )}
           {token ? (

@@ -36,12 +36,9 @@ import AccessDenied from "./reusable-code/AccessDenied";
 import Admin from "./AdminAccess/Admin";
 import ProtectedRoute from "./AdminAccess/ProtectedRoute";
 
-
 import ForgotPassword from "./auth/ForgotPassword";
 import ResetPassword from "./auth/ResetPassword";
 import UserProfile from "./auth/UserProfile";
-
-
 
 function App() {
   return (
@@ -68,24 +65,22 @@ function App() {
           }}
         >
           <GardenProvider>
-
-
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/signup" element={<Signup />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/reset-password" element={<ResetPassword />} />
-            <Route
-              path="/oauth2/redirect"
-              element={<OAuth2RedirectHandler />}
-            />
-            <Route path="/dashboard" element={<Dashboard />} />
-            <Route path="/admin-dashboard" element={<DashboardAdmin />} />
-            <Route path="/create-garden" element={<CreateGarden />} />
-            <Route path="/garden-zone" element={<GardenZone />} />
-            <Route path="/garden-conditions" element={<GardenConditions />} />
-            <Route
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/login" element={<Login />} />
+              <Route path="/signup" element={<Signup />} />
+              <Route path="/forgot-password" element={<ForgotPassword />} />
+              <Route path="/reset-password" element={<ResetPassword />} />
+              <Route
+                path="/oauth2/redirect"
+                element={<OAuth2RedirectHandler />}
+              />
+              <Route path="/dashboard" element={<Dashboard />} />
+              <Route path="/admin-dashboard" element={<DashboardAdmin />} />
+              <Route path="/create-garden" element={<CreateGarden />} />
+              <Route path="/garden-zone" element={<GardenZone />} />
+              <Route path="/garden-conditions" element={<GardenConditions />} />
+              <Route
                 path="/garden-success/:gardenId"
                 element={<GardenSuccess />}
               />
@@ -94,47 +89,57 @@ function App() {
                 path="/garden-details/:gardenId"
                 element={<GardenDetails />}
               />
-            <Route path="/comment/:plantId" element={<Comment />} />
-            <Route path="/photo-upload" element={<PhotoUpload />} />
-            <Route path="/results" element={<NurseryList />} />
-            <Route path="/nursery-search" element={<NurserySearch />} />
-            <Route path="/plant-details/:plantId" element={<PlantDetails />} />
-            <Route path="star-rating" element={<StarRating />} />
-            <Route path="/access-denied" element={<AccessDenied />} />
-            <Route
-              path="/admin/*"
-              element={
-                <ProtectedRoute adminPage={true}>
-                  <Admin />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/create-garden"
-              element={
-                <ProtectedRoute>
-                  <CreateGarden />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/dashboard"
-              element={
-                <ProtectedRoute>
-                  <Dashboard />
-                </ProtectedRoute>
-              }
-            />
-            <Route
-              path="/profile"
-              element={
-                <ProtectedRoute>
-                  <UserProfile />
-                </ProtectedRoute>
-              }
-            />
-          </Routes>
-
+              <Route path="/comment/:plantId" element={<Comment />} />
+              <Route path="/photo-upload" element={<PhotoUpload />} />
+              <Route path="/results" element={<NurseryList />} />
+              <Route path="/nursery-search" element={<NurserySearch />} />
+              <Route
+                path="/plant-details/:plantId"
+                element={<PlantDetails />}
+              />
+              <Route path="star-rating" element={<StarRating />} />
+              <Route path="/access-denied" element={<AccessDenied />} />
+              <Route
+                path="/admin/*"
+                element={
+                  <ProtectedRoute adminPage={true}>
+                    <Admin />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/create-garden"
+                element={
+                  <ProtectedRoute>
+                    <CreateGarden />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/garden-details"
+                element={
+                  <ProtectedRoute>
+                    <GardenDetails />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/dashboard"
+                element={
+                  <ProtectedRoute>
+                    <Dashboard />
+                  </ProtectedRoute>
+                }
+              />
+              <Route
+                path="/profile"
+                element={
+                  <ProtectedRoute>
+                    <UserProfile />
+                  </ProtectedRoute>
+                }
+              />
+            </Routes>
           </GardenProvider>
         </Box>
 
