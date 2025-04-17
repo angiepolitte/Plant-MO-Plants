@@ -101,12 +101,14 @@ const Dashboard = () => {
               <div className="gardens-list">
                 {gardens.length > 0 ? (
                   gardens.map((garden) => (
-                    <div key={garden.id} className="garden-item">
-                      <h3 className="personalize-label">
-                        <Link to={`/garden-details/${garden.id}`}>
-                          {garden.gardenName}
-                        </Link>
-                      </h3>
+                    <div key={garden.id} className="garden-card">
+                      <Link
+                        to={`/garden-details/${garden.id}`}
+                        className="garden-link"
+                      >
+                        <h3 className="garden-name">{garden.gardenName}</h3>
+                        {/* We'll add the photo thumbnail here later */}
+                      </Link>
                     </div>
                   ))
                 ) : (
