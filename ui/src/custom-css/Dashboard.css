@@ -187,22 +187,23 @@ button.dashboard-button:focus-visible {
   box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1); /* Optional shadow */
   background-color: #f3e5f5; /* Optional background color for the card */
 }
-
-.card.garden-card {
-  /* Using a more specific selector for clarity */
-  border: 1px solid #ccc;
-  border-radius: 8px;
-  overflow: hidden;
-  width: calc(25% - 10px);
-  height: auto;
-  min-width: 100px;
-  align-items: center;
-  box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
-  background-color: white;
-  padding: 20px; /* Increased padding - try different values */
-  text-align: center;
-  display: flex;
-  flex-direction: column;
+@media (min-width: 1024px) {
+  .card.garden-card {
+    /* Using a more specific selector for clarity */
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    overflow: hidden;
+    width: calc(100% - 10px);
+    height: auto;
+    min-width: 100px;
+    align-items: center;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    background-color: white;
+    padding: 20px; /* Increased padding - try different values */
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+  }
 }
 
 .garden-link {
