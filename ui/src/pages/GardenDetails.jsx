@@ -96,7 +96,12 @@ function GardenDetails() {
   const handleDelete = () => {
 
     const confirm = window.confirm("Are you sure you want to delete this garden?");
-    if (!confirm) return;
+    if (!confirm) {
+      console.log("User canceled delete.");
+      return;
+    }
+
+    console.log("User confirmed delete.");
 
     fetch(`http://localhost:8080/api/garden/delete/${gardenId}`, {
       method: 'DELETE',
@@ -250,8 +255,8 @@ function GardenDetails() {
               <button className="print-button" onClick={handlePrint}>PRINT GARDEN PLAN</button>
               <a href="/dashboard">
                 <button className="nursery-button">FIND A NURSERY &gt;</button>
-                <button onClick={handleDelete}>DELETE</button>
               </a>
+              <button onClick={handleDelete}>DELETE</button>
             </div>
           </div>
 

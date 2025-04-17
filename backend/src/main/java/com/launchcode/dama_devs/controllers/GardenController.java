@@ -70,7 +70,7 @@ public class GardenController {
 
     //Delete an existing garden
     @DeleteMapping("/delete/{gardenId}")
-    public ResponseEntity<Void> deleteGarden(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Integer gardenId, @RequestBody Garden garden) {
+    public ResponseEntity<Void> deleteGarden(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Integer gardenId) {
         Integer userId = userDetails.getId();
         Optional<Garden> gardenToDelete = gardenService.getGardenById(userId, gardenId);
         if (gardenToDelete.isPresent()) {
