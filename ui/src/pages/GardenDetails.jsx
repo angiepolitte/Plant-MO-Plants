@@ -3,6 +3,7 @@ import React, { useEffect, useState, useContext } from "react";
 import PlantCard from "../reusable-code/PlantCard.jsx";
 import "../custom-css/PlantCard.css";
 import "../custom-css/GardenDetail.css";
+import "../custom-css/GardenConditions.css";
 
 import { GardenContext } from "../store/GardenContext.jsx";
 import {
@@ -287,13 +288,12 @@ function GardenDetails() {
               )}
             </div>
             <div className="right">
-              <button className="print-button" onClick={handlePrint}>
+              <button className="garden-button" onClick={handlePrint}>
                 PRINT GARDEN PLAN
               </button>
               <a href="/dashboard">
-                <button className="nursery-button">FIND A NURSERY &gt;</button>
+                <button className="nursery-button">FIND A NURSERY 🌱</button>
               </a>
-              <button onClick={handleDelete}>DELETE</button>
             </div>
           </div>
 
@@ -329,7 +329,7 @@ function GardenDetails() {
             )}
 
             <div className="conditions-box">
-              <p>
+              <p className="condition-item">
                 <strong>Zone:</strong> {garden.gardenZone}
               </p>
 
@@ -371,9 +371,12 @@ function GardenDetails() {
           <div className="plants-section">
             <div className="plants-header">
               <h1 className="garden-name">Plants in this Garden:</h1>
-              <a href={`/plant-search/${garden.id}`}>
-                <button className="print-button">ADD MORE PLANTS</button>
-              </a>
+              <div className="right">
+                <a href={`/plant-search/${garden.id}`}>
+                  <button className="garden-button">ADD MORE PLANTS</button>
+                </a>
+                <button className="delete-button" onClick={handleDelete}>DELETE GARDEN</button>
+              </div>
             </div>
             {garden.plants && garden.plants.length > 0 ? (
               <div className="plant-list">
