@@ -79,14 +79,16 @@ function GardenConditions() {
         soilOptions
       )}
 
+      {showError && (
+        <p className="gardenErrorMsg">
+          Please select an option for each before continuing.
+        </p>
+      )}
+
       <button className="garden-button" onClick={handleSubmit}>
         Create Garden
       </button>
-      {showError && (
-        <p className="gardenErrorMsg">
-          Please select an option for light, water, and soil conditions.
-        </p>
-      )}
+
     </div>
   );
 }
