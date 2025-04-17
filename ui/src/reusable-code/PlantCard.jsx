@@ -3,7 +3,7 @@ import "../custom-css/PlantCard.css";
 import { Link } from "react-router-dom";
 
 //get plant and gardenId from PlantSearch and pass as props
-function PlantCard({ plant, gardenId }) {
+function PlantCard({ plant, gardenId, setRefresh }) {
   const [inGarden, setInGarden] = useState(false);
   const plantId = plant.id;
 
@@ -63,6 +63,9 @@ function PlantCard({ plant, gardenId }) {
       const dtoData = await response.json();
       if (response.ok) {
         setInGarden(dtoData.plantInGarden);
+        if (setRefresh) {
+          setRefresh(prev => !prev);
+        }
       }
     } catch (error) {
       console.error("Error adding plant:", error);
@@ -94,6 +97,9 @@ function PlantCard({ plant, gardenId }) {
       const dtoData = await response.json();
       if (response.ok) {
         setInGarden(dtoData.plantInGarden);
+        if (setRefresh) {
+          setRefresh(prev => !prev);
+        }
       }
     } catch (error) {
       console.error("Error removing plant:", error);

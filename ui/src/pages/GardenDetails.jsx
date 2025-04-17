@@ -18,6 +18,7 @@ function GardenDetails() {
   const [garden, setGarden] = useState(null);
   const [editMode, setEditMode] = useState(false);
   const [newName, setNewName] = useState("");
+  const [refresh, setRefresh] = useState("");
   const navigate = useNavigate();
   const token = localStorage.getItem("JWT_TOKEN");
   const csrfToken = localStorage.getItem("CSRF_TOKEN");
@@ -58,8 +59,10 @@ function GardenDetails() {
       .then((data) => {
         setGarden(data);
         setNewName(data.name);
-      });
-  }, [gardenId]);
+      })
+      .catch((err) => console.error("Error fetching garden details:", err));
+  }, [gardenId, refresh]);
+
 
   const handleNameSave = () => {
     const confirm = window.confirm(
@@ -378,7 +381,7 @@ function GardenDetails() {
             {garden.plants && garden.plants.length > 0 ? (
               <div className="plant-list">
                 {garden.plants.map((plant) => (
-                  <PlantCard key={plant.id} plant={plant} gardenId={gardenId} />
+                  <PlantCard key={plant.id} plant={plant} gardenId={gardenId} setRefresh={setRefresh} />
                 ))}
               </div>
             ) : (
