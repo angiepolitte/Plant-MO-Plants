@@ -17,7 +17,7 @@
   display: flex;
   flex-direction: column; /* Stack garden list and button vertically */
   gap: 1rem;
-  flex: 1 1 400px; /* Adjust width as needed */
+  flex: 1 1 350px; /* Adjust width as needed */
   max-width: 600px; /* Adjust max width as needed */
   align-items: center; /* Center content horizontally within the left container */
   background-color: #cce3de; /* Keep your background color */
@@ -29,7 +29,7 @@
   display: flex;
   flex-direction: column; /* Stack weather and nurseries vertically */
   gap: 1rem;
-  flex: 1 1 400px; /* Adjust width as needed */
+  flex: 1 1 350px; /* Adjust width as needed */
   max-width: 600px; /* Adjust max width as needed */
   align-items: center; /* Center content horizontally within the right container */
   background-color: #cce3de; /* Keep your background color */
