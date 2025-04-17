@@ -15,16 +15,17 @@ function GardenSuccess() {
   };
   return (
     <div style={{ textAlign: "center", marginTop: "50px" }}>
-      <h1>You've Successfully Created a Garden!</h1>
-      <button onClick={handleNavigateDashboard}>Go to your Dashboard</button>
-      <button onClick={handleNavigatePlantSearch}>
-        Add Plants to your Garden
-      </button>
-      <button onClick={handleNavigateGardenDetails}>
-        Go to your Garden Details
-      </button>
+
+      <h1 className="garden-heading">You've Successfully Created a Garden!</h1>
+
+      <div style={{ display: "flex", flexDirection: "column", alignItems: "center", gap: "15px", marginTop: "30px" }}>
+      <button className="garden-button" onClick={handleNavigatePlantSearch}>FIND PLANTS</button>
+      <button className="garden-button" onClick={handleNavigateGardenDetails}>GO TO GARDEN</button>
+      <button className="garden-button" onClick={handleNavigateDashboard}>GO TO DASHBOARD</button>
+      </div>
     </div>
   );
 }
+
 
 export default GardenSuccess;
