@@ -16,12 +16,4 @@ public class GardenPlantDTO {
     private Plant plant;
     private Boolean plantInGarden=false;
 
-    @Override
-    public String toString() {
-        return "GardenPlantDTO{" +
-                "garden=" + garden +
-                ", plant=" + plant +
-                ", plantInGarden=" + plantInGarden +
-                '}';
-    }
 }

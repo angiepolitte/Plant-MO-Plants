@@ -13,11 +13,4 @@ public class AverageRatingDTO {
     private int averageRating;
     private int plantId;
 
-    @Override
-    public String toString() {
-        return "AverageRatingDTO{" +
-                "averageRating=" + averageRating +
-                ", plantId=" + plantId +
-                '}';
-    }
 }

@@ -16,12 +16,4 @@ public class PlantRatingDTO {
     private Integer userId;
     private int plantId;
 
-    @Override
-    public String toString() {
-        return "PlantRatingDTO{" +
-                "plantId=" + plantId +
-                ", userId=" + userId +
-                ", plantRating=" + plantRating +
-                '}';
-    }
 }
