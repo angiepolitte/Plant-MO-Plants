@@ -45,3 +45,18 @@ button.garden-button:focus-visible {
   flex-wrap: wrap;
   gap: 1rem; /* = 16px this will be more responsive if a user changes their default font size in their browser */
 }
+.plant-type-filter {
+  align-self: flex-start;
+  margin-right: auto;
+  width: flex;
+  padding: 12px;
+  font-size: 1rem;
+  border-radius: 8px;
+  border: 2px solid #000;
+  margin-bottom: 20px;
+  background-color: #ffffff;
+  box-sizing: border-box;
+}
+.dropdown-container {
+  display: flex;
+}

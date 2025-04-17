@@ -103,8 +103,6 @@ public class Plant extends AbstractEntity {
                 ", isEdible=" + isEdible +
                 ", resistsDeer=" + resistsDeer +
                 ", toxicToAnimals=" + toxicToAnimals +
-                ", gardens=" + gardens +
-                ", comments=" + comments +
                 '}';
     }
 }

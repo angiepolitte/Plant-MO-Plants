@@ -72,8 +72,6 @@ public class Garden extends AbstractEntity {
                 ", gardenLight='" + gardenLight + '\'' +
                 ", gardenWater='" + gardenWater + '\'' +
                 ", gardenSoil='" + gardenSoil + '\'' +
-                ", plants=" + plants +
-                ", user=" + user +
                 '}';
     }
 

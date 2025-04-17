@@ -47,4 +47,17 @@ public class PlantFilteringService {
         System.out.println(matchingGardenPlants);
         return matchingGardenPlants;
     }
+
+    public List<Plant> filterGardenPlantsByType(Integer gardenId, String selectedPlantType) {
+        List<Plant> matchingGardenPlants = filterPlantsByGardenFields(gardenId);
+
+        List<Plant> matchingPlantTypes = new ArrayList<>();
+
+        for (Plant plant : matchingGardenPlants) {
+            if (plant.getPlantType().equals(selectedPlantType)) {
+                matchingPlantTypes.add(plant);
+            }
+        }
+        return matchingPlantTypes;
+    }
 }
