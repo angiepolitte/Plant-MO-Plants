@@ -59,8 +59,9 @@ img.selected {
 
   .garden-button {
     border-radius: 8px;
+    margin: 0 12px;
     border: 1px solid transparent;
-    padding: 12px;
+    padding: 14px;
     color: white;
     font-size: 14px;
     font-weight: bold;
