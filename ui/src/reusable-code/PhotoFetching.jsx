@@ -1,13 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import {
-  Grid,
-  Card,
-  CardContent,
-  Typography,
-  Box,
-  Button,
-} from "@mui/material";
+import { Grid, Card, CardContent, Typography } from "@mui/material";
 
 const PhotoFetching = ({ userId }) => {
   const [photos, setPhotos] = useState([]);
@@ -17,26 +10,6 @@ const PhotoFetching = ({ userId }) => {
   const [hoveredPhoto, setHoveredPhoto] = useState(null);
   const navigate = useNavigate();
 
-  const updateFeaturedPhoto = async (photoId) => {
-    try {
-      const token = localStorage.getItem("JWT_TOKEN");
-      const csrfToken = localStorage.getItem("CSRF_TOKEN");
-
-      await fetch(`http://localhost:8080/api/photo/featured/${photoId}`, {
-        method: "PUT",
-        headers: {
-          Authorization: `Bearer ${token}`,
-          "X-XSRF-TOKEN": csrfToken,
-          "Content-Type": "application/json",
-        },
-        credentials: "include",
-      });
-
-      setFeaturedPhoto(photos.find((p) => p.id === photoId));
-    } catch (err) {
-      console.error("Failed to update featured photo", err);
-    }
-  };
   const fetchPhotos = async () => {
     setLoading(true);
     setError(null);
@@ -58,7 +31,11 @@ const PhotoFetching = ({ userId }) => {
       if (response.ok) {
         const data = await response.json();
         setPhotos(data);
-        if (data.length > 0) setFeaturedPhoto(data[0]);
+        if (data.length > 0) {
+          setPhotos(data);
+          setFeaturedPhoto(data[0]); // pick first as default
+        }
+        // if (data.length > 0) setFeaturedPhoto(data[0]);
       } else {
         setError("Failed to fetch photos.");
       }
@@ -69,18 +46,6 @@ const PhotoFetching = ({ userId }) => {
       setLoading(false);
     }
   };
-
-  useEffect(() => {
-    if (userId) {
-      fetchPhotos();
-    }
-  }, [userId]);
-
-  if (loading) return <p>Loading photos...</p>;
-  if (error) return <p>{error}</p>;
-  if (photos.length === 0) return <p>No photos available.</p>;
-
-  const otherPhotos = photos.filter((photo) => photo.id !== featuredPhoto?.id);
 
   // *****************  DELETE PHOTO  done in the fetch so you can view the photos you are wanting to edit/delete
 
@@ -143,104 +108,76 @@ const PhotoFetching = ({ userId }) => {
     }
   };
 
+  useEffect(() => {
+    if (userId) {
+      fetchPhotos();
+    }
+  }, [userId]);
+
+  const otherPhotos = photos.filter((photo) => photo.id !== featuredPhoto?.id);
+
+  if (loading) return <p>Loading photos...</p>;
+  if (error) return <p>{error}</p>;
+  if (photos.length === 0) return <p>No photos available.</p>;
+
   return (
     <>
-      <div
-        style={{ cursor: "pointer" }}
-        onClick={() => navigate(`/garden-details/${featuredPhoto.garden.id}`)}
-      >
-        {/* <h3>{featuredPhoto.photoName}</h3> */}
-        <img
-          src={`data:image/jpeg;base64,${featuredPhoto.photoImage}`}
-          alt={featuredPhoto.photoName}
-          style={{
-            width: "100%",
-            height: "300px",
-            objectFit: "cover",
-            borderRadius: "8px",
-            display: "block",
-          }}
-        />
-        <Typography variant="h6" align="center" sx={{ mt: 1 }}>
-          {featuredPhoto.photoName}
-        </Typography>
-      </div>
-
-      <Grid container spacing={2} sx={{ mt: 2 }}>
-        {otherPhotos.map((photo) => (
-          <Grid item xs={6} sm={3} key={photo.id}>
-            <Card
-              sx={{
-                position: "relative",
-                height: 150,
-                display: "flex",
-                alignItems: "center",
-                justifyContent: "center",
-                flexDirection: "column",
-                backgroundColor: "white",
-                cursor: "pointer",
-                overflow: "hidden",
+      <div style={{ display: "flex", flexDirection: "column" }}>
+        {/* Featured Photo Section */}
+        {featuredPhoto && (
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() =>
+              navigate(`/garden-details/${featuredPhoto.garden.id}`, {
+                state: { photo: featuredPhoto },
+              })
+            }
+          >
+            <img
+              src={`data:image/jpeg;base64,${featuredPhoto.photoImage}`}
+              alt={featuredPhoto.photoName}
+              style={{
+                width: "100%",
+                height: "300px",
+                objectFit: "cover",
+                borderRadius: "8px",
+                display: "block",
               }}
-              onMouseEnter={() => setHoveredPhoto(photo)}
-              onMouseLeave={() => setHoveredPhoto(null)}
-            >
-              <CardContent
-                sx={{
-                  textAlign: "center",
-                }}
-              >
-                <img
-                  src={`data:image/jpeg;base64,${photo.photoImage}`}
-                  alt={photo.photoName}
-                  style={{
-                    width: "100%",
-                    height: "auto",
-                    maxHeight: "80px",
-                    borderRadius: "6px",
-                  }}
-                />
-                <Typography variant="body1" sx={{ mt: 1 }}>
-                  {photo.photoName}
-                </Typography>
-              </CardContent>
+            />
+            {/* <Typography variant="h6" align="center" sx={{ mt: 1 }}>
+            {featuredPhoto.photoName}
+          </Typography> */}
+          </div>
+        )}
 
-              {hoveredPhoto?.id === photo.id && (
-                <Box
-                  sx={{
-                    position: "absolute",
-                    top: 0,
-                    left: 0,
-                    width: "100%",
-                    height: "100%",
-                    backgroundColor: "rgba(0, 0, 0, 0.6)",
-                    display: "flex",
-                    flexDirection: "column",
-                    alignItems: "center",
-                    justifyContent: "center",
-                    color: "white",
-                    zIndex: 1,
-                  }}
-                >
-                  <Typography variant="body2" sx={{ mb: 1 }}>
-                    Change your featured photo to this?
-                  </Typography>
-                  <Button
-                    size="small"
-                    variant="contained"
-                    color="secondary"
-                    onClick={() => {
-                      updateFeaturedPhoto(photo.id);
-                      setHoveredPhoto(null);
-                    }}
-                  >
-                    Yes, Set Photo
-                  </Button>
-                </Box>
-              )}
-            </Card>
-          </Grid>
-        ))}
-      </Grid>
+        {/* Other Photos Section */}
+        <Grid container spacing={2}>
+          {otherPhotos.map((photo) => (
+            <div
+              key={photo.id}
+              style={{ cursor: "pointer", marginBottom: "1rem" }}
+              onClick={() =>
+                navigate(`/garden-details/${photo.garden.id}`, {
+                  state: { photo: photo },
+                })
+              }
+            >
+              <img
+                src={`data:image/jpeg;base64,${photo.photoImage}`}
+                alt={photo.photoName}
+                style={{
+                  width: "100%",
+                  height: "300px",
+                  objectFit: "cover",
+                  borderRadius: "8px",
+                  display: "block",
+                }}
+              />
+              {/* <p>{photo.photoName}</p> */}
+            </div>
+          ))}
+        </Grid>
+      </div>
     </>
   );
 };
