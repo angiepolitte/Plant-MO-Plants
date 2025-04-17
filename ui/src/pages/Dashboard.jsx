@@ -25,7 +25,6 @@ const Dashboard = () => {
   }, []);
 
   const handleView = () => {
-
     fetch("http://localhost:8080/api/garden", {
       method: "GET",
       headers: {
@@ -94,16 +93,19 @@ const Dashboard = () => {
         <div className="dashboard-left">
           <div className="card garden-card">
             <h2 className="personalize-label">{username}'s Gardens</h2>
-            {showError && <p className="error-message">Failed to load gardens.</p>}
+            {showError && (
+              <p className="error-message">Failed to load gardens.</p>
+            )}
             <div className="card-content">
               {/* this validates the user on the backend */}
               <div className="gardens-list">
                 {gardens.length > 0 ? (
                   gardens.map((garden) => (
                     <div key={garden.id} className="garden-item">
-                      <h3 className="personalize-label"><Link to={`/garden-details/${garden.id}`}>
-                        {garden.gardenName}
-                      </Link>
+                      <h3 className="personalize-label">
+                        <Link to={`/garden-details/${garden.id}`}>
+                          {garden.gardenName}
+                        </Link>
                       </h3>
                     </div>
                   ))
@@ -111,17 +113,17 @@ const Dashboard = () => {
                   <p>No gardens found.</p>
                 )}
               </div>
-              <PhotoFetching userId={userId} />
+              {/* <PhotoFetching userId={userId} /> */}
             </div>
           </div>
 
           <div className="personalize-container">
-            <button
+            {/* <button
               className="dashboard-button"
               onClick={() => navigate("/photo-upload")}
             >
               Upload a Photo of your Garden!
-            </button>
+            </button> */}
             <button
               className="dashboard-button"
               onClick={() => navigate("/create-garden")}

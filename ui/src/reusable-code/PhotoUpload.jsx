@@ -31,6 +31,7 @@ const PhotoUpload = () => {
   };
 
   const handleUpload = async () => {
+    console.log("handleUpload called"); // Add this line
     if (!file || !photoName || !gardenId) {
       alert("All fields are required!");
       return false;
@@ -41,30 +42,47 @@ const PhotoUpload = () => {
     formData.append("photoName", photoName);
     formData.append("gardenId", gardenId);
 
+    console.log("FormData created:", formData); // Add this line
+    for (const value of formData.values()) {
+      console.log("FormData Value:", value); // Add this line
+    }
+    for (const key of formData.keys()) {
+      console.log("FormData Key:", key); // Add this line
+    }
+
     try {
       const token = localStorage.getItem("JWT_TOKEN");
       const csrfToken = localStorage.getItem("CSRF_TOKEN");
+      console.log("Token:", token); // Add this line
+      console.log("CSRF Token:", csrfToken); // Add this line
+
       const response = await fetch("http://localhost:8080/api/photo/upload", {
         method: "POST",
         headers: {
           Authorization: `Bearer ${token}`,
           "X-XSRF-TOKEN": csrfToken,
-          Accept: "application/json",
+          Accept: "application/json", // Keep this for the expected response type
         },
         credentials: "include",
         body: formData,
       });
 
+      console.log("Response:", response); // Add this line
+
       if (response.ok) {
+        const uploadedPhotoData = await response.json();
+        console.log("Upload successful, response data:", uploadedPhotoData);
         setFile(null);
         setPhotoName("");
-        setGardenId("");
-        navigate(`/garden-details/${gardenId}`, {
-          state: { photoUploaded: true },
-        });
-        // navigate("/dashboard");
-        return true;
+        return uploadedPhotoData.garden.id; // Assuming your backend returns the garden object within the uploadedPhotoData
       } else {
+        const errorData = await response.json(); // Try to get error details from the backend
+        console.error(
+          "Failed to upload photo. Status:",
+          response.status,
+          "Error Data:",
+          errorData
+        );
         alert("Failed to upload photo.");
         return false;
       }
@@ -87,8 +105,12 @@ const PhotoUpload = () => {
             className="photo-form"
             onSubmit={async (e) => {
               e.preventDefault();
-              const success = await handleUpload();
-              if (success) navigate("/garden-details/${gardenId}");
+              const uploadedGardenId = await handleUpload(); // Get the returned gardenId
+              if (uploadedGardenId) {
+                navigate(`/garden-details/${uploadedGardenId}`, {
+                  state: { photoUploaded: true },
+                });
+              }
             }}
           >
             <label className="form-label">Select Photo:</label>
@@ -128,7 +150,7 @@ const PhotoUpload = () => {
               <button
                 type="button"
                 className="dashboard-button"
-                onClick={() => navigate("/garden-details/${gardenId}")}
+                onClick={() => navigate(`/dashboard`)}
               >
                 Cancel
               </button>

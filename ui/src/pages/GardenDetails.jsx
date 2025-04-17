@@ -1,10 +1,10 @@
-import { useNavigate, useParams, useLocation } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import React, { useEffect, useState, useContext } from "react";
 import PlantCard from "../reusable-code/PlantCard.jsx";
 import "../custom-css/PlantCard.css";
 import "../custom-css/GardenDetail.css";
 import "../custom-css/GardenConditions.css";
-
+import GardenPhoto from "../reusable-code/GardenPhoto.jsx";
 import { GardenContext } from "../store/GardenContext.jsx";
 import {
   lightOptions,
@@ -25,8 +25,6 @@ function GardenDetails() {
   const [currentUser, setCurrentUser] = useState(null);
   const { gardenData } = useContext(GardenContext);
   const printRef = useRef();
-  const location = useLocation();
-  const photo = location.state?.photo;
 
   // Utility to match selected value with image/label
   const getConditionDetails = (options, value) =>
@@ -291,6 +289,13 @@ function GardenDetails() {
               <button className="garden-button" onClick={handlePrint}>
                 PRINT GARDEN PLAN
               </button>
+              <button
+                className="garden-button" // You might want to adjust the className
+                onClick={() => navigate("/photo-upload")}
+              >
+                Upload a Photo of your Garden!
+              </button>
+
               <a href="/dashboard">
                 <button className="nursery-button">FIND A NURSERY 🌱</button>
               </a>
@@ -298,36 +303,7 @@ function GardenDetails() {
           </div>
 
           <div className="main-content">
-            {photo ? (
-              <img
-                src={`data:image/jpeg;base64,${photo.photoImage}`}
-                alt={photo.photoName}
-                style={{
-                  width: "800px",
-                  height: "400px",
-                  objectFit: "cover",
-                  borderRadius: "8px",
-                }}
-              />
-            ) : (
-              <div
-                style={{
-                  width: "800px",
-                  height: "400px",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "center",
-                  borderRadius: "8px",
-                  backgroundColor: "#f0f0f0",
-                  border: "2px dashed #ccc",
-                  color: "#666",
-                  fontStyle: "italic",
-                }}
-              >
-                No photo has been uploaded for this garden yet.
-              </div>
-            )}
-
+            <GardenPhoto gardenId={gardenId} />{" "}
             <div className="conditions-box">
               <p className="condition-item">
                 <strong>Zone:</strong> {garden.gardenZone}
@@ -375,7 +351,9 @@ function GardenDetails() {
                 <a href={`/plant-search/${garden.id}`}>
                   <button className="garden-button">ADD MORE PLANTS</button>
                 </a>
-                <button className="delete-button" onClick={handleDelete}>DELETE GARDEN</button>
+                <button className="delete-button" onClick={handleDelete}>
+                  DELETE GARDEN
+                </button>
               </div>
             </div>
             {garden.plants && garden.plants.length > 0 ? (
