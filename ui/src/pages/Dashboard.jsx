@@ -1,5 +1,5 @@
-import { useNavigate } from "react-router-dom";
-import { useState } from "react";
+import { useNavigate, Link } from "react-router-dom";
+import { useState, useEffect } from "react";
 import React from "react";
 import Forecast from "../reusable-code/FiveDayForecast";
 import PhotoFetching from "../reusable-code/PhotoFetching";
@@ -15,6 +15,40 @@ const Dashboard = () => {
   const username = currentUser?.username;
   const { zipCode, updateZipCode } = useMyContext();
   const [inputZip, setInputZip] = useState("");
+  const [gardens, setGardens] = useState([]);
+  const [showError, setShowError] = useState(false);
+  const token = localStorage.getItem("JWT_TOKEN");
+  const csrfToken = localStorage.getItem("CSRF_TOKEN");
+
+  useEffect(() => {
+    handleView(); // Fetch gardens when the page loads
+  }, []);
+
+  const handleView = () => {
+
+    fetch("http://localhost:8080/api/garden", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+        "X-XSRF-TOKEN": csrfToken,
+        Accept: "application/json",
+      },
+      credentials: "include",
+    })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Error: ${response.status}`);
+        }
+        return response.json();
+      })
+      .then((gardens) => {
+        setGardens(gardens);
+        setShowError(false);
+      })
+      .catch((err) => console.error("Garden display failed:", err));
+    setShowError(true);
+  };
 
   const handleSubmit = () => {
     const trimmedZip = inputZip.trim();
@@ -59,9 +93,24 @@ const Dashboard = () => {
         {/* Left Section */}
         <div className="dashboard-left">
           <div className="card garden-card">
-            {/* <h2>{username}'s Gardens</h2> */}
+            <h2 className="personalize-label">{username}'s Gardens</h2>
+            {showError && <p className="error-message">Failed to load gardens.</p>}
             <div className="card-content">
               {/* this validates the user on the backend */}
+              <div className="gardens-list">
+                {gardens.length > 0 ? (
+                  gardens.map((garden) => (
+                    <div key={garden.id} className="garden-item">
+                      <h3 className="personalize-label"><Link to={`/garden-details/${garden.id}`}>
+                        {garden.gardenName}
+                      </Link>
+                      </h3>
+                    </div>
+                  ))
+                ) : (
+                  <p>No gardens found.</p>
+                )}
+              </div>
               <PhotoFetching userId={userId} />
             </div>
           </div>

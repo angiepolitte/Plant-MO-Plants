@@ -30,18 +30,17 @@ public class GardenController {
     private GardenService gardenService;
 
     //Show all gardens in dashboard
-//    @GetMapping("/{userId}")
-//    public Iterable<Garden> getGardensByUserId(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-//        Integer userId = userDetails.getId();
-//        return gardenService.getGardensByUserId(userId);
-//    }
+    @GetMapping
+    public Iterable<Garden> getGardensByUserId(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Integer userId = userDetails.getId();
+        return gardenService.getGardensByUserId(userId);
+    }
 
     @GetMapping("/user")
     public ResponseEntity<CommentUserDTO> getCurrentUser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         CommentUserDTO dto = new CommentUserDTO(userDetails.getId(), userDetails.getUsername());
         return ResponseEntity.ok(dto);
     }
-
 
     //Go to a specific garden
     @GetMapping("/garden-details/{gardenId}")
@@ -69,8 +68,8 @@ public class GardenController {
     }
 
     //Delete an existing garden
-    @DeleteMapping("/{gardenId}")
-    public ResponseEntity<Void> deleteGarden(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Integer gardenId, @RequestBody Garden garden) {
+    @DeleteMapping("/delete/{gardenId}")
+    public ResponseEntity<Void> deleteGarden(@AuthenticationPrincipal UserDetailsImpl userDetails, @PathVariable Integer gardenId) {
         Integer userId = userDetails.getId();
         Optional<Garden> gardenToDelete = gardenService.getGardenById(userId, gardenId);
         if (gardenToDelete.isPresent()) {
@@ -80,6 +79,7 @@ public class GardenController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).build();
         }
     }
+
     @GetMapping("/{gardenId}/get-status/{plantId}")
     public ResponseEntity<GardenPlantDTO> getPlantInGardenStatus(@PathVariable Integer plantId, @PathVariable Integer gardenId) {
         GardenPlantDTO getStatus = gardenPlantService.getPlantInGardenStatus(plantId, gardenId);

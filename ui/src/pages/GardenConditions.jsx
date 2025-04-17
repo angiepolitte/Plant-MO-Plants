@@ -7,41 +7,24 @@ import axios from "axios";
 import "../custom-css/GardenConditions.css";
 import { lightOptions, waterOptions, soilOptions } from "../reusable-code/gardenConditionsSelect";
 
-// const lightOptions = [
-//   { label: "Full Sun", value: "full sun", img: "/images/full-sun.jpg" },
-//   {
-//     label: "Part Sun/Shade",
-//     value: "part sun-part shade",
-//     img: "/images/part-sun-part-shade.jpg",
-//   },
-//   { label: "Full Shade", value: "full shade", img: "/images/full-shade.jpg" },
-// ];
-
-// const waterOptions = [
-//   { label: "Dry", value: "dry", img: "/images/single-raindrop.jpg" },
-//   {
-//     label: "Moderate",
-//     value: "moderate",
-//     img: "/images/moderate-raindrops.jpg",
-//   },
-//   { label: "Wet", value: "wet", img: "/images/heavy-raindrops.jpg" },
-// ];
-
-// const soilOptions = [
-//   { label: "Light (sandy)", value: "light", img: "/images/light-soil.jpg" },
-//   { label: "Medium (loamy)", value: "medium", img: "/images/medium-soil.jpg" },
-//   { label: "Heavy (clay)", value: "heavy", img: "/images/heavy-soil.jpg" },
-// ];
-
 function GardenConditions() {
   const navigate = useNavigate();
   const { gardenData, setGardenData } = useContext(GardenContext);
+  const [showError, setShowError] = useState(false);
 
   const handleSelection = (name, value) => {
     setGardenData((prevData) => ({ ...prevData, [name]: value }));
   };
 
   const handleSubmit = async () => {
+
+    if (!gardenData.gardenLight || !gardenData.gardenWater || !gardenData.gardenSoil) {
+      setShowError(true);
+      return;
+    }
+
+    setShowError(false);
+
     try {
       const response = await api.post(`/garden/create`, {
         gardenName: gardenData.gardenName,
@@ -99,6 +82,11 @@ function GardenConditions() {
       <button className="garden-button" onClick={handleSubmit}>
         Create Garden
       </button>
+      {showError && (
+        <p className="gardenErrorMsg">
+          Please select an option for light, water, and soil conditions.
+        </p>
+      )}
     </div>
   );
 }
