@@ -37,9 +37,14 @@ public class PlantFilteringService {
                     plant.getPlantLight().contains(garden.getGardenLight()) &&
                     plant.getPlantWater().contains(garden.getGardenWater()) &&
                     plant.getPlantSoil().contains(garden.getGardenSoil())) {
+                System.out.println("Plant zone: " + plant.getPlantZone() + " | Garden zone: " + garden.getGardenZone());
+                System.out.println("Plant light: " + plant.getPlantLight() + " | Garden zone: " + garden.getGardenLight());
+                System.out.println("Plant zone: " + plant.getPlantWater() + " | Garden zone: " + garden.getGardenWater());
+                System.out.println("Plant zone: " + plant.getPlantSoil() + " | Garden zone: " + garden.getGardenSoil());
+                matchingGardenPlants.add(plant);
             }
-            matchingGardenPlants.add(plant);
         }
+        System.out.println(matchingGardenPlants);
         return matchingGardenPlants;
     }
 }
