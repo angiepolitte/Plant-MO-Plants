@@ -30,18 +30,17 @@ public class GardenController {
     private GardenService gardenService;
 
     //Show all gardens in dashboard
-//    @GetMapping("/{userId}")
-//    public Iterable<Garden> getGardensByUserId(@AuthenticationPrincipal UserDetailsImpl userDetails) {
-//        Integer userId = userDetails.getId();
-//        return gardenService.getGardensByUserId(userId);
-//    }
+    @GetMapping
+    public Iterable<Garden> getGardensByUserId(@AuthenticationPrincipal UserDetailsImpl userDetails) {
+        Integer userId = userDetails.getId();
+        return gardenService.getGardensByUserId(userId);
+    }
 
     @GetMapping("/user")
     public ResponseEntity<CommentUserDTO> getCurrentUser(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         CommentUserDTO dto = new CommentUserDTO(userDetails.getId(), userDetails.getUsername());
         return ResponseEntity.ok(dto);
     }
-
 
     //Go to a specific garden
     @GetMapping("/garden-details/{gardenId}")
